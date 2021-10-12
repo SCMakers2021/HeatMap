@@ -1,0 +1,29 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'>
+<title>Heat Map</title>
+
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="sample.js" type="text/javascript" charset="shift_jis"></script>
+<script src="https://maps.google.com/maps/api/js?v=3.exp&libraries=visualization&key=AIzaSyAKcRxDRA1Tp_dnyacfpJh7DNH5uqIgF-o"></script>
+</head>
+<body onload="initialize()">
+<section>
+  <h1>Heat Map</h1>
+  <div id="mapWrapper">
+    <div id="map-canvas"></div>
+  </div>
+</section>
+<ul class="location">
+  <li><a href="#" data-title="ポイント1">ポイント1</a></li>
+</ul>
+<div id="map_canvas" style="width: 700px; height: 700px"></div>
+<input type="text" id="input-message">
+<div><input type="button" value="データベースに登録" onclick="RegisterDB()" onkeypress="RegisterDB()" /></div>
+<div><input type="button" value="ヒートマップを表示" onclick="visualize()" onkeypress="visualize()" /></div>
+<div><input type="button" value="データベースからリード" onclick="ReadDB()" onkeypress="ReadDB()" /></div>
+</body>
