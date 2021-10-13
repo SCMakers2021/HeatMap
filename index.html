@@ -8,7 +8,7 @@
 <title>Heat Map</title>
 
 <script src="js/jquery-1.11.3.min.js"></script>
-<script src="sample.js" type="text/javascript" charset="shift_jis"></script>
+<script src="js/sample.js" type="text/javascript" charset="shift_jis"></script>
 <script src="https://maps.google.com/maps/api/js?v=3.exp&libraries=visualization&key=AIzaSyAKcRxDRA1Tp_dnyacfpJh7DNH5uqIgF-o"></script>
 </head>
 <body onload="initialize()">
@@ -26,4 +26,8 @@
 <div><input type="button" value="データベースに登録" onclick="RegisterDB()" onkeypress="RegisterDB()" /></div>
 <div><input type="button" value="ヒートマップを表示" onclick="visualize()" onkeypress="visualize()" /></div>
 <div><input type="button" value="データベースからリード" onclick="ReadDB()" onkeypress="ReadDB()" /></div>
+<select name="category" id="category">
+<option selected>カテゴリを選択してください</option>
+</select>
+<div><input type="button" value="test2" onclick="visualize()" onkeypress="visualize()" /></div>
 </body>
