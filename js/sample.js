@@ -161,7 +161,7 @@ function initialize() {
     mapTypeControl: false, //マップタイプ コントロール
     fullscreenControl: false, //全画面表示コントロール
     streetViewControl: false, //ストリートビュー コントロール
-    zoomControl: false //ズーム コントロール
+    zoomControl: true //ズーム コントロール
   };
   // Mapを作成
   map = new google.maps.Map(target, options);
