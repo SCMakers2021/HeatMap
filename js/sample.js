@@ -157,7 +157,11 @@ function initialize() {
   var latlng = {lat: 35.383575, lng: 139.344170};
   var options = {
     zoom: 10, // ズーム1は一番小さい
-    center: latlng //Mapの中央:上の座標
+    center: latlng, //Mapの中央:上の座標
+    mapTypeControl: false, //マップタイプ コントロール
+    fullscreenControl: false, //全画面表示コントロール
+    streetViewControl: false, //ストリートビュー コントロール
+    zoomControl: false //ズーム コントロール
   };
   // Mapを作成
   map = new google.maps.Map(target, options);
