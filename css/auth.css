@@ -32,11 +32,16 @@
 
 .auth-content_inner {
   position: relative;
-  padding: 24px;
+  padding: 3px;
 }
 
 .auth-close {
   position: absolute;
   top: 13px;
   right: 10px;
+}
+
+.auth-login-tab {
+  margin-top: 2em;
+  height: 200px;
 }

@@ -17,4 +17,5 @@ $( function() {
 		$( '.js-modal' ).fadeOut( 300 );
 		return false;
 	});
+	$('#login-tab').tabs();
 });
