@@ -1,4 +1,4 @@
-.c-modal {
+.auth-base {
   display: none;
   height: 100vh;
   position: fixed;
@@ -9,14 +9,14 @@
   z-index: 1;
 }
 
-.c-modal_bg {
+.auth-bg {
   background: rgba(0, 0, 0, 0.6);
   height: 100vh;
   width: 100%;
 
 }
 
-.c-modal_content {
+.auth-content {
   background: #fff;
   left: 50%;
   position: absolute;
@@ -25,17 +25,17 @@
   border-radius: 5px;
 }
 
-.c-modal_auth {
+.auth-auth {
   width: 300px;
   height: 400px;
 }
 
-.c-modal_content_inner {
+.auth-content_inner {
   position: relative;
   padding: 24px;
 }
 
-.c-modal_close {
+.auth-close {
   position: absolute;
   top: 13px;
   right: 10px;
