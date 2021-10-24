@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 	<title>Heat Map</title>
 
 	<link rel="stylesheet" href="css/jquery-ui.min.css">
@@ -48,13 +48,32 @@
 		<div class="auth-content auth-auth">
 			<div class="auth-content_inner">
 				<a class="js-modal-close auth-close" href=""><span>閉じる</span></a>
-				<div id="login-tab" class="auth-login-tab">
+				<div id="login-tab" class="auth-login_tab">
 					<ul>
 						<li><a href="#tabs-login">ログイン</a></li>
 						<li><a href="#tabs-signup">ユーザ登録</a></li>
 					</ul>
-					<div id="tabs-login"><p>ログインのコンテンツ</p></div>
-					<div id="tabs-signup"><p>ユーザ登録のコンテンツ</p></div>
+					<div id="tabs-login">
+						<div id="tabs-login-input">
+							<input id="login-email" class="auth-login auth-login_email" type="text" placeholder="E-mail"/><br>
+							<input id="login-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
+							<input id="login-button" class="auth-login auth-login_button" type="button" value="ログイン"/><br>
+							<input id="login-ishold" class="auth-login_hold" type="checkbox"/>
+							<label class="auth-login_hold_label" for="login-ishold">次回から自動的にログインする</label>
+							<p/>
+							<a class="auth-password_reset" href="#">パスワードを忘れた方はこちら</a>
+						</div>
+						<div id="tabs-signup-confirm">
+						</div>
+					</div>
+					<div id="tabs-signup">
+						<div id="tabs-signup-input">
+							<input id="signup-email" class="auth-login auth-login_email" type="text" placeholder="E-mail"/><br>
+							<input id="signup-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
+							<input id="signup-pass-repeat" class="auth-login auth-login_pass" type="password" placeholder="Repeat Password"/><br>
+							<input id="signup-button" class="auth-login auth-login_button" type="button" value="登録"/><br>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

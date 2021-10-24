@@ -41,7 +41,32 @@
   right: 10px;
 }
 
-.auth-login-tab {
+.auth-login_tab {
   margin-top: 2em;
-  height: 200px;
+  height: 300px;
+}
+
+/* ログイン用のコントロール */
+.auth-login {
+  margin: 5px;
+  width: 90%;
+}
+
+.auth-login_hold_label {
+  font-size: xx-small;
+}
+
+/* 画面P-U1：ログイン画面 */
+#tabs-login-input {
+  display: block;
+}
+
+/* 画面P-U2：ユーザ登録画面 */
+#tabs-signup-input {
+  display: block;
+}
+
+/* 画面P-U3：ユーザ登録認証画面 */
+#tabs-signup-confirm {
+  display: none;
 }
