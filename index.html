@@ -54,8 +54,8 @@
 						<li><a href="#tabs-signup">ユーザ登録</a></li>
 					</ul>
 					<div id="tabs-login">
-						<div id="tabs-login-input">
-							<input id="login-email" class="auth-login auth-login_email" type="text" placeholder="E-mail"/><br>
+						<div id="div-login-input">
+							<input id="login-email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
 							<input id="login-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
 							<input id="login-button" class="auth-login auth-login_button" type="button" value="ログイン"/><br>
 							<input id="login-ishold" class="auth-login_hold" type="checkbox"/>
@@ -63,12 +63,24 @@
 							<p/>
 							<a class="auth-password_reset" href="#">パスワードを忘れた方はこちら</a>
 						</div>
-						<div id="tabs-signup-confirm">
+						<div id="div-signup-confirm">
+							<span class="auth-conf-title">認証コードを入力してください</span><br>
+							<table class="auth-conf-table">
+								<tr>
+									<td><input id="auth-conf-text_0" class="auth-conf-text" type="number" maxlength="1"/></td>
+									<td><input id="auth-conf-text_1" class="auth-conf-text" type="number" maxlength="1"/></td>
+									<td><input id="auth-conf-text_2" class="auth-conf-text" type="number" maxlength="1"/></td>
+									<td><input id="auth-conf-text_3" class="auth-conf-text" type="number" maxlength="1"/></td>
+									<td><input id="auth-conf-text_4" class="auth-conf-text" type="number" maxlength="1"/></td>
+									<td><input id="auth-conf-text_5" class="auth-conf-text" type="number" maxlength="1"/></td>
+								</tr>
+							</table>
+							<input id="signup-confirm-button" class="auth-login auth-login_button" type="button" value="登録"/><br>
 						</div>
 					</div>
 					<div id="tabs-signup">
-						<div id="tabs-signup-input">
-							<input id="signup-email" class="auth-login auth-login_email" type="text" placeholder="E-mail"/><br>
+						<div id="div-signup-input">
+							<input id="signup-email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
 							<input id="signup-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
 							<input id="signup-pass-repeat" class="auth-login auth-login_pass" type="password" placeholder="Repeat Password"/><br>
 							<input id="signup-button" class="auth-login auth-login_button" type="button" value="登録"/><br>
