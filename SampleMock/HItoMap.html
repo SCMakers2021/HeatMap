@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
+        <title>HitoMap</title>
+
+        <!-- meta情報 -->
         <meta charset="UTF-8">
-        <title>HTML5サンプル</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <!-- ライブラリインクルード -->
         <link rel="stylesheet" href="lib/jquery-ui.min.css">
         <script src="lib/jquery-1.11.3.min.js"></script>
@@ -10,7 +14,8 @@
         <script src="https://maps.google.com/maps/api/js?v=3.exp&libraries=visualization&key=AIzaSyD1f5Z-Rqkh3z8HMuhd_sszHw2N1-RYBfk"></script>
 
         <!-- システム固有インクルード -->
-        <link rel="stylesheet" href="style.main.css">
+        <link rel="stylesheet" href="style.main.css">    <!-- CSS@PC/タブレット用 -->
+        <link rel="stylesheet" href="style.mobile.css">  <!-- CSS@スマホ用        -->
         <script src="./sample.js"></script>
 
         <!-- スクリプト実装部 -->
@@ -22,6 +27,22 @@
             function searchCategoryClicked( key ){
                 var id = "searchCategory" + key;
                 console.log("TODO:検索 = " + id);
+            }
+
+            // GoogleMap初期化
+            function googleMapInitialize(){
+                // 「./sample.js」の関数呼び出し
+                initialize();
+            }
+
+            function onEntryBtnClicked(){
+                var isHidden = $('#map_modal').attr('hidden');
+                if( 'hidden' == isHidden  ){
+                    $('#map_modal').attr('hidden',false);
+                    $('#map_hidden').attr('hidden',false);
+                }else{
+                    $('#map_modal').attr('hidden',true);
+                }
             }
 
             //====================================================
@@ -63,6 +84,15 @@
                     console.log("TODO：ログインしたい");
                 })
 
+                // アマリ「次へ」ボタン押下
+                $('#amariNext').click(function(){
+                    console.log("TODO：「次へ」したい");
+                })
+                // アマリ「キャンセル」ボタン押下
+                $('#amariCancel').click(function(){
+                    $('#map_modal').attr('hidden',true);
+                    $('#map_hidden').attr('hidden',true);
+                })
             })
 
             //====================================================
@@ -70,30 +100,69 @@
             //====================================================
             $(window).on('load', function() {
                 //実行処理
-                initialize();
+                googleMapInitialize();
+
+                $('#map_modal').attr('hidden',true);                // モーダルレイヤをhiddenに設定
+                $('#map_hidden').attr('hidden',true);            　 // サイドバーレイヤをhiddenに設定
+                $('#SagasuSidebar').attr('hidden',true);            // サイドバーレイヤをhiddenに設定
             });
         </script>
     </head>
     <body>
+        <!-- ================================================ -->
+        <!--　コンテンツエリア（配置順に注意）  -->
+        <!-- ================================================ -->
         <div class='contents'>
-            <div id="map_canvas" class='mapArea'></div>
-            <div class='sidebar' id="SagasuSidebar" hidden='true'>
-                <table id='searchCategoryArea'>
-                    <tr>
-                        <td><input type="image" class='searchCategory' src="image/ケーキのアイコン3.png" onclick="searchCategoryClicked('Cake')" id='searchCategoryCake' ><br>ケーキ</td>
-                        <td><input type="image" class='searchCategory' src="image/日の丸弁当アイコン1.png" onclick="searchCategoryClicked('Bento')" id='searchCategoryBento' ><br>お弁当</td>
-                        <td><input type="image" class='searchCategory' src="image/寿司アイコン.png" onclick="searchCategoryClicked('Sushi')" id='searchCategorySushi' ><br>お寿司</td>
-                    </tr>
-                    <tr>
-                        <td><input type="image" class='searchCategory' src="image/たまねぎイラスト1.png" onclick="searchCategoryClicked('Onion')" id='searchCategoryOnion' ><br>たまねぎ</td>
-                        <td><input type="image" class='searchCategory' src="image/トマトのアイコン2.png" onclick="searchCategoryClicked('Tomato')" id='searchCategoryTomato' ><br>トマト</td>
-                        <td><input type="image" class='searchCategory' src="image/ブロッコリーアイコン1.png" onclick="searchCategoryClicked('Broccoli')" id='searchCategoryBroccoli' ><br>ブロッコリー</td>
-                    </tr>
-                </table>
-            
+            <!-- ## レイヤ0 ##-->
+            <div id="map_canvas" class='mapArea'></div>             <!-- 地図表示 -->
+            <!-- ## レイヤ1 ##-->
+            <div id="map_modal"  class='mapModal'></div>            <!-- 地図用モーダルフィルタ -->
+
+            <!-- ## レイヤ2 ##-->
+            <div id="map_hidden"  class='mapHide'>           <!-- アマリ投稿用隠しエリア -->
+                <div id='AmariFormEdit'>
+                    <div class='AmariForm'>
+                        <div class='currentPointArea'></div>
+                        <div class='entryArea'>
+                            <table>
+                                <tr><td>カテゴリ</td><td>
+                                    <select id="category">
+                                        <option value="Bento">お弁当</option>
+                                        <option value="Tomoto">トマト</option>
+                                    </select>
+                                </td></tr>
+                                <tr><td>ユーザ名</td><td><input type='text' value=''></td></tr>
+                                <tr><td>内容    </td><td><input type='text' value=''></td></tr>
+                            </table>
+                        </div>
+                        <div class='actionArea'>
+                            <input class='okButton' id='amariNext'  type='button' value='次へ'>
+                            <input class='cancelButton' id='amariCancel' type='button' value='キャンセル'>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <!-- ## レイヤ3 ##-->
+            <div class='sidebar' id="SagasuSidebar">                <!-- サガス用サイドバー -->
+                <table id='searchCategoryArea'>
+                    <tr>
+                        <td onclick="searchCategoryClicked('Cake')"     id='searchCategoryCake'    ><input type="image" class='searchCategory' src="image/ケーキのアイコン3.png"><br>ケーキ</td>
+                        <td onclick="searchCategoryClicked('Bento')"    id='searchCategoryBento'   ><input type="image" class='searchCategory' src="image/日の丸弁当アイコン1.png"><br>お弁当</td>
+                        <td onclick="searchCategoryClicked('Sushi')"    id='searchCategorySushi'   ><input type="image" class='searchCategory' src="image/寿司アイコン.png"><br>お寿司</td>
+                    </tr>
+                    <tr>
+                        <td onclick="searchCategoryClicked('Onion')"    id='searchCategoryOnion'   ><input type="image" class='searchCategory' src="image/たまねぎイラスト1.png"><br>たまねぎ</td>
+                        <td onclick="searchCategoryClicked('Tomato')"   id='searchCategoryTomato'  ><input type="image" class='searchCategory' src="image/トマトのアイコン2.png"><br>トマト</td>
+                        <td onclick="searchCategoryClicked('Broccoli')" id='searchCategoryBroccoli'><input type="image" class='searchCategory' src="image/ブロッコリーアイコン1.png"><br>ブロッコリー</td>
+                    </tr>
+                </table>
+            </div>
         </div>
+
+        <!-- ================================================ -->
+        <!--　上部バーエリア  -->
+        <!-- ================================================ -->
         <div class='topBar'>
             <div class='siteTitle'>HitoMap</div> 
             <div class='modeSwitch'>

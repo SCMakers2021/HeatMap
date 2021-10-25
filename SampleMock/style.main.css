@@ -1,8 +1,11 @@
+*{
+  font-family:  "ヒラギノ角ゴ ProN W3", HiraKakuProN-W3, 游ゴシック, "Yu Gothic", メイリオ, Meiryo, Verdana, Helvetica, Arial, sans-serif;
+}
+
 /**************************************/
 /* トップバー                     */
 /**************************************/
 .topBar {
-/*  position: absolute; */
   position: fixed;
   top: 0px;
   left: 0px;
@@ -66,40 +69,92 @@
 /* マップ内部 */
 /*****************************************************/
 .contents #map_canvas{
+  position: absolute;
+  top: 0px;
   width: 100%;
   height: 100%;
 }
 
-#map_canvas .speechBubble{
-  width: 200px;
-  height: 160px;
+
+.contents #map_modal{
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity:0.5;  /* 透明度0.0～1.0 */
 }
 
-#map_canvas #currentPointArea{
-  width: 180px;
-  height: 50px;
+.contents #map_hidden{
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+/*****************************************************/
+/* [アマリ]情報 */
+/*****************************************************/
+#speechBubble{
+  padding: 10px;
+  width: 250px;
+  height: 150px;
+  background-color: rgb(247, 248, 248);
+}
+#AmariFormEdit{
+  position: absolute;
+  top: 50px;
+  left: 200px;
+  width: 300px;
+  height: 300px;
+  padding: 20px;
+  background-color: rgb(247, 248, 248);
+}
+
+.AmariForm{
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+}
+
+.AmariForm table{
+  border-collapse: collapse;
   border-style: solid;
-  border-color: rgb(134, 134, 134);
+  width: 100%;
 }
-#map_canvas #entryForm{
-  width: 180px;
-  height: 80px;
-  margin-top: 20px;
-  text-align: right;
+.AmariForm tr{
+  height: 40px;
 }
 
-#map_canvas .okButton{
+.AmariForm .currentPointArea{
+  width: 100%;
+  height: 50px;
+  border-style: outset;
+  border-color: rgb(134, 134, 134);
+  margin-bottom: 20px;
+}
+.AmariForm .actionArea{
+  width: 100%;
+  height: 50px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+
+.AmariForm .okButton{
   width: 80px;
-  height: 20px;
-  background-color: rgb(29, 29, 93);
+  height: 30px;
+  background-color: rgb(50, 50, 73);
   color: #fff;
 }
-#map_canvas .cancelButton{
+.AmariForm .cancelButton{
   width: 80px;
-  height: 20px;
+  height: 30px;
   background-color: lightblue;
-  color: #fff;
+  border-color: rgb(214, 214, 214);
+  color: rgba(109, 108, 108, 0.979);
 }
+
 
 /*****************************************************/
 /* サイドバー */
@@ -155,5 +210,29 @@
   100% {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes SlideDown {
+  0% {
+    /*初期状態では透明に*/
+    opacity: 0;
+    transform: translateY(-64px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes SlideUp {
+  0% {
+    /*初期状態では透明に*/
+    opacity: 0;
+    transform: translateY(64px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

@@ -216,7 +216,12 @@ function initialize() {
     /* 場所の詳細の準備 */
     infoWindow = new google.maps.InfoWindow({
 //      content: '<section style="margin-top:5px;"><figure style="float: left;"><img src="' + markers[0].figure + '" width="64px"></figure><div style="margin-left: 74px;"><h2 style="margin-bottom: 5px;font-size: 1.17em;">' + markers[0].title + '</h2><p style="font-size: 0.84em;">' + markers[0].summary + '</p></div><div><input type="button" value="test2" onclick="visualize()" onkeypress="visualize()" /></div><input type="text" id="activationKey" placeholder="Activation Key"></section>'
-      content: "<div class='speechBubble' value='init'><div id='currentPointArea'></div><div id='entryForm'><input class='okButton' type='button' value='投稿'><div><div>"
+      content:   "<div id='speechBubble' value='init'>" 
+               + "  <div class='AmariForm' id='AmariFormMap'>"
+               + "  <div class='currentPointArea'></div>"
+               + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
+               + "  </div>"
+               + "</div>"
     });
     infoWindow.open(map, marker);
     
