@@ -36,6 +36,10 @@
             }
 
             function onEntryBtnClicked(){
+                var btnVal = $('#btnAmari').val();
+                if( "valid" == btnVal ){
+                    return;
+                }
                 var isHidden = $('#map_modal').attr('hidden');
                 if( 'hidden' == isHidden  ){
                     $('#map_modal').attr('hidden',false);
@@ -50,6 +54,32 @@
             //====================================================
             $(function(){
 
+                function switchAmariMode(falg){
+                    if( true == falg ){
+                        $('#btnAmari').attr('src',"image/AmariNegative.png");
+                        $('#btnAmari').val("invalid");
+                        console.log("TODO：アマリ登録モードへ");
+                    }else{
+                        $('#btnAmari').attr('src',"image/AmariActive.png");
+                        $('#btnAmari').val("valid");
+                    }
+                }
+                function switchSagasuMode(falg){
+                    if( true == falg ){
+                        $('#btnSagasu').attr('src',"image/SagasuNegative.png");
+                        $('#btnSagasu').val("invalid");
+                        $('#SagasuSidebar').attr('hidden',false);
+                        console.log("TODO：サガスモードへ");
+
+                        $('#map_modal').attr('hidden',true);
+                        $('#map_hidden').attr('hidden',true);
+                    }else{
+                        $('#btnSagasu').attr('src',"image/SagasuActive.png");
+                        $('#btnSagasu').val("valid");
+                        $('#SagasuSidebar').attr('hidden',true);
+                    }
+                }
+
                 //--------------------------------------------
                 // ハンドライベント実装
                 //--------------------------------------------
@@ -57,26 +87,22 @@
                 $('#btnSagasu').click(function(){
                     var btnVal = $('#btnSagasu').val();
                     if( "valid" == btnVal ){
-                        $('#btnSagasu').attr('src',"image/SagasuNegative.png");
-                        $('#btnSagasu').val("invalid");
-                        $('#SagasuSidebar').attr('hidden',false);
-                        console.log("TODO：サガスモードへ");
+                        switchAmariMode(false);
+                        switchSagasuMode(true);
                     }else{
-                        $('#btnSagasu').attr('src',"image/SagasuActive.png");
-                        $('#btnSagasu').val("valid");
-                        $('#SagasuSidebar').attr('hidden',true);
+                        switchAmariMode(true);
+                        switchSagasuMode(false);
                     }
                 })
                 // 「アマリ」ボタン押下
                 $('#btnAmari').click(function(){
                     var btnVal = $('#btnAmari').val();
                     if( "valid" == btnVal ){
-                        $('#btnAmari').attr('src',"image/AmariNegative.png");
-                        $('#btnAmari').val("invalid");
-                        console.log("TODO：アマリ登録モードへ");
+                        switchAmariMode(true);
+                        switchSagasuMode(false);
                     }else{
-                        $('#btnAmari').attr('src',"image/AmariActive.png");
-                        $('#btnAmari').val("valid");
+                        switchAmariMode(false);
+                        switchSagasuMode(true);
                     }
                 })
                 // 「ユーザ」ボタン押下

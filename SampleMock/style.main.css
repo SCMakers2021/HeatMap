@@ -13,6 +13,7 @@
   height: 100px;
   background: rgb(255, 255, 255);
 
+  border-left: 0px;
   border-bottom: 1px;
   border-style: solid;
   border-color: rgb(71, 71, 71);
@@ -60,6 +61,7 @@
   height: 100%;
   background: #fff;
 
+  border-left: 0px;
   border-top: 1px;
   border-style: solid;
   border-color: rgb(71, 71, 71);
@@ -112,7 +114,7 @@
 }
 
 .AmariForm{
-  width: 100%;
+  width: 90%;
   height: 100%;
   font-size: 14px;
 }
