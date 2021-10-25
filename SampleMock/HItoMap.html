@@ -7,43 +7,101 @@
         <link rel="stylesheet" href="lib/jquery-ui.min.css">
         <script src="lib/jquery-1.11.3.min.js"></script>
         <script src="lib/jquery-ui.min.js"></script>
+        <script src="https://maps.google.com/maps/api/js?v=3.exp&libraries=visualization&key=AIzaSyD1f5Z-Rqkh3z8HMuhd_sszHw2N1-RYBfk"></script>
 
         <!-- システム固有インクルード -->
         <link rel="stylesheet" href="style.main.css">
+        <script src="./sample.js"></script>
+
+        <!-- スクリプト実装部 -->
         <script>
+            //====================================================
+            // 関数定義
+            //====================================================
+            // 「カテゴリアイコン」ボタン押下
+            function searchCategoryClicked( key ){
+                var id = "searchCategory" + key;
+                console.log("TODO:検索 = " + id);
+            }
+
+            //====================================================
+            // Redy処理
+            //====================================================
             $(function(){
-                $('#sample').click(function(){
-                    alert('test');
+
+                //--------------------------------------------
+                // ハンドライベント実装
+                //--------------------------------------------
+                // 「サガス」ボタン押下
+                $('#btnSagasu').click(function(){
+                    var btnVal = $('#btnSagasu').val();
+                    if( "valid" == btnVal ){
+                        $('#btnSagasu').attr('src',"image/SagasuNegative.png");
+                        $('#btnSagasu').val("invalid");
+                        $('#SagasuSidebar').attr('hidden',false);
+                        console.log("TODO：サガスモードへ");
+                    }else{
+                        $('#btnSagasu').attr('src',"image/SagasuActive.png");
+                        $('#btnSagasu').val("valid");
+                        $('#SagasuSidebar').attr('hidden',true);
+                    }
+                })
+                // 「アマリ」ボタン押下
+                $('#btnAmari').click(function(){
+                    var btnVal = $('#btnAmari').val();
+                    if( "valid" == btnVal ){
+                        $('#btnAmari').attr('src',"image/AmariNegative.png");
+                        $('#btnAmari').val("invalid");
+                        console.log("TODO：アマリ登録モードへ");
+                    }else{
+                        $('#btnAmari').attr('src',"image/AmariActive.png");
+                        $('#btnAmari').val("valid");
+                    }
+                })
+                // 「ユーザ」ボタン押下
+                $('#btnUser').click(function(){
+                    console.log("TODO：ログインしたい");
                 })
 
-                $('#btnSagasu').click(function(){
-                    alert('test');
-                    $('#btnSagasu').attr('src',"image/SagasuNegative.png")
-                })
-                $('#btnAmari').click(function(){
-                    alert('test');
-                    $('#btnAmari').attr('src',"image/AmariNegative.png")
-                })
-                $('#btnUser').click(function(){
-                    alert('test');
-                    $('#btnAmari').attr('src',"image/AmariNegative.png")
-                })
             })
+
+            //====================================================
+            // ロード時処理
+            //====================================================
+            $(window).on('load', function() {
+                //実行処理
+                initialize();
+            });
         </script>
     </head>
     <body>
+        <div class='contents'>
+            <div id="map_canvas" class='mapArea'></div>
+            <div class='sidebar' id="SagasuSidebar" hidden='true'>
+                <table id='searchCategoryArea'>
+                    <tr>
+                        <td><input type="image" class='searchCategory' src="image/ケーキのアイコン3.png" onclick="searchCategoryClicked('Cake')" id='searchCategoryCake' ><br>ケーキ</td>
+                        <td><input type="image" class='searchCategory' src="image/日の丸弁当アイコン1.png" onclick="searchCategoryClicked('Bento')" id='searchCategoryBento' ><br>お弁当</td>
+                        <td><input type="image" class='searchCategory' src="image/寿司アイコン.png" onclick="searchCategoryClicked('Sushi')" id='searchCategorySushi' ><br>お寿司</td>
+                    </tr>
+                    <tr>
+                        <td><input type="image" class='searchCategory' src="image/たまねぎイラスト1.png" onclick="searchCategoryClicked('Onion')" id='searchCategoryOnion' ><br>たまねぎ</td>
+                        <td><input type="image" class='searchCategory' src="image/トマトのアイコン2.png" onclick="searchCategoryClicked('Tomato')" id='searchCategoryTomato' ><br>トマト</td>
+                        <td><input type="image" class='searchCategory' src="image/ブロッコリーアイコン1.png" onclick="searchCategoryClicked('Broccoli')" id='searchCategoryBroccoli' ><br>ブロッコリー</td>
+                    </tr>
+                </table>
+            
+            </div>
+
+        </div>
         <div class='topBar'>
-            <p class='siteTitle'>HitoMap</p> 
+            <div class='siteTitle'>HitoMap</div> 
             <div class='modeSwitch'>
-                <input type="image" class='topModeChange' id='btnSagasu' src="image/SagasuActive.png" alt="サガス">
-                <input type="image" class='topModeChange' id='btnAmari' src="image/AmariActive.png" alt="アマリ">
+                <input type="image" class='topModeChange' id='btnSagasu' src="image/SagasuActive.png" alt="サガス" value='valid' >
+                <input type="image" class='topModeChange' id='btnAmari' src="image/AmariActive.png" alt="アマリ" value='valid' >
             </div>
             <div class='userStatus'>
                 <input type="image" class='userIcon' id='btnUser' src="image/UserGeneral.png" alt="ゲスト">
-            </div>
-        </div>
-        <div class='contents'>
-            <div class='sidebar'>
             </div>
         </div>
     </body>

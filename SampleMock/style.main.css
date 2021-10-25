@@ -1,23 +1,31 @@
+/**************************************/
+/* トップバー                     */
+/**************************************/
 .topBar {
-  position: absolute;
+/*  position: absolute; */
+  position: fixed;
   top: 0px;
   left: 0px;
   width: 100%;
   height: 100px;
-  background: rgb(184, 141, 181);
+  background: rgb(255, 255, 255);
+
+  border-bottom: 1px;
+  border-style: solid;
+  border-color: rgb(71, 71, 71);
 }
 
 .topBar .modeSwitch{
   position: absolute;
   top: 50px;
-  right: 100px;
+  right: 30px;
 }
 
 .topBar .siteTitle{
   position: absolute;
-  top: 0px;
+  top: 10px;
   left: 10px;
-  font-size: 42px;
+  font-size: 48px;
   font-weight: bolder;
   border-width: 1px;
 }
@@ -29,8 +37,8 @@
 
 .topBar .userStatus{
   position: absolute;
-  top: 0px;
-  right: 50px;
+  top: 10px;
+  right: 30px;
 }
 
 .topBar .userStatus .userIcon{
@@ -38,7 +46,9 @@
   height: 30px;
 }
 
-
+/**************************************/
+/* コンテンツエリア                   */
+/**************************************/
 .contents {
   position: absolute;
   top: 100px;
@@ -46,13 +56,104 @@
   width: 100%;
   height: 100%;
   background: #fff;
+
+  border-top: 1px;
+  border-style: solid;
+  border-color: rgb(71, 71, 71);
 }
 
+/*****************************************************/
+/* マップ内部 */
+/*****************************************************/
+.contents #map_canvas{
+  width: 100%;
+  height: 100%;
+}
+
+#map_canvas .speechBubble{
+  width: 200px;
+  height: 160px;
+}
+
+#map_canvas #currentPointArea{
+  width: 180px;
+  height: 50px;
+  border-style: solid;
+  border-color: rgb(134, 134, 134);
+}
+#map_canvas #entryForm{
+  width: 180px;
+  height: 80px;
+  margin-top: 20px;
+  text-align: right;
+}
+
+#map_canvas .okButton{
+  width: 80px;
+  height: 20px;
+  background-color: rgb(29, 29, 93);
+  color: #fff;
+}
+#map_canvas .cancelButton{
+  width: 80px;
+  height: 20px;
+  background-color: lightblue;
+  color: #fff;
+}
+
+/*****************************************************/
+/* サイドバー */
+/*****************************************************/
 .contents div.sidebar {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 100px;
+  width: 200px;
   height: 100%;
-  background: rgb(83, 51, 81);
+  background: rgb(255, 255, 255);
+
+  border-left: 0px;
+  border-right: 1px;
+  border-style: solid;
+  border-color: rgb(71, 71, 71);
+
+  animation: SlideIn 1.0s;  /* ★スライドインアニメーション */
+}
+
+
+.contents div.sidebar td,tr {
+  border-style: solid;
+  border-color: rgb(219, 219, 219);
+  width: 65px;
+  height: 65px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.contents div.sidebar .searchCategory {
+  width: 40px;
+  height: 40px;
+}
+
+.contents div.sidebar td:active {
+  background-color: rgb(255, 166, 0);
+}
+.contents div.sidebar td:not(:active) {
+  background-color: rgb(255, 255, 255);
+}
+
+
+/*****************************************************/
+/* CSSアニメーションの設定 */
+/*****************************************************/
+@keyframes SlideIn {
+  0% {
+    /*初期状態では透明に*/
+    opacity: 0;
+    transform: translateX(-64px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
