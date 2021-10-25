@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>HTML5サンプル</title>
+        <!-- ライブラリインクルード -->
+        <link rel="stylesheet" href="lib/jquery-ui.min.css">
+        <script src="lib/jquery-1.11.3.min.js"></script>
+        <script src="lib/jquery-ui.min.js"></script>
+
+        <!-- システム固有インクルード -->
+        <link rel="stylesheet" href="style.main.css">
+        <script>
+            $(function(){
+                $('#sample').click(function(){
+                    alert('test');
+                })
+
+                $('#btnSagasu').click(function(){
+                    alert('test');
+                    $('#btnSagasu').attr('src',"image/SagasuNegative.png")
+                })
+                $('#btnAmari').click(function(){
+                    alert('test');
+                    $('#btnAmari').attr('src',"image/AmariNegative.png")
+                })
+                $('#btnUser').click(function(){
+                    alert('test');
+                    $('#btnAmari').attr('src',"image/AmariNegative.png")
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <div class='topBar'>
+            <p class='siteTitle'>HitoMap</p> 
+            <div class='modeSwitch'>
+                <input type="image" class='topModeChange' id='btnSagasu' src="image/SagasuActive.png" alt="サガス">
+                <input type="image" class='topModeChange' id='btnAmari' src="image/AmariActive.png" alt="アマリ">
+            </div>
+            <div class='userStatus'>
+                <input type="image" class='userIcon' id='btnUser' src="image/UserGeneral.png" alt="ゲスト">
+            </div>
+        </div>
+        <div class='contents'>
+            <div class='sidebar'>
+            </div>
+        </div>
+    </body>
+</html>
