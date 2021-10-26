@@ -1,9 +1,21 @@
 // @ts-check
+"use strict";
 /* jshint esversion: 6, laxbreak: true, laxcomma: true, node: true, browser: true, devel: true */
 /* globals $:false */
-"use strict";
+
 
 $( function() {
+	function passwordLogin(email, pass) {
+		// TODO:email チェックも忘れずに
+		// TODO:その他未実装
+		alert("email:" + email + ", pass:" + pass);
+	}
+
+	console.log(getStorage("testParam"));
+	setStorage("testParam", {"key1": 1});
+	console.log(getStorage("testParam"));
+	console.log(removeStorage("testParam"));
+	
 	$( '.js-modal-open' ).each( function() {
 		$( this ).on( 'click', function() {
 			// ログインダイアログを表示させる処理
@@ -22,9 +34,7 @@ $( function() {
 		// ログインをクリックした時にログインさせる処理
 		let email = $('#login-email').val();
 		let pass1 = $('#login-pass').val();
-		// TODO:email チェックも忘れずに
-		// TODO:その他未実装
-		alert("email:" + email + ", pass:" + pass1);
+		passwordLogin(email, pass1);
 		// 未認証だった応答の場合に認証コード入力に遷移させる時のコード
 		$('#div-login-input').hide();
 		$('#div-signup-confirm').show();
