@@ -20,7 +20,7 @@ $( function() {
 	if (l!=null) {
 		$('#login-email').val(l.email);
 		$('#login-pass').val(l.pass);
-		$('#login-ishold').prop('checked', true)
+		$('#login-ishold').prop('checked', true);
 	}
 
 	$( '.js-modal-open' ).each( function() {
