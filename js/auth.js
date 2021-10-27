@@ -11,16 +11,18 @@ $( function() {
 		alert("email:" + email + ", pass:" + pass);
 	}
 
-	console.log(getStorage("testParam"));
-	setStorage("testParam", {"key1": 1});
-	console.log(getStorage("testParam"));
-	console.log(removeStorage("testParam"));
-	
+	//console.log(getStorage("testParam"));
+	//setStorage("testParam", {"key1": 1});
+	//console.log(getStorage("testParam"));
+	//console.log(removeStorage("testParam"));
+
 	let l = getStorage("login");
 	if (l!=null) {
 		$('#login-email').val(l.email);
 		$('#login-pass').val(l.pass);
 		$('#login-ishold').prop('checked', true);
+		// TODO:自動ログイン処理
+		// TODO:応答で未認証だったら認証フェーズにする
 	}
 
 	$( '.js-modal-open' ).each( function() {
@@ -48,6 +50,8 @@ $( function() {
 		} else {
 			removeStorage("login");
 		}
+		// TODO:ログイン処理
+		// TODO:応答で未認証だったら認証フェーズにする
 		// 未認証だった応答の場合に認証コード入力に遷移させる時のコード
 		$('#div-login-input').hide();
 		$('#div-signup-confirm').show();
