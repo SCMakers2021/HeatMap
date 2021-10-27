@@ -16,6 +16,13 @@ $( function() {
 	console.log(getStorage("testParam"));
 	console.log(removeStorage("testParam"));
 	
+	let l = getStorage("login");
+	if (l!=null) {
+		$('#login-email').val(l.email);
+		$('#login-pass').val(l.pass);
+		$('#login-ishold').prop('checked', true)
+	}
+
 	$( '.js-modal-open' ).each( function() {
 		$( this ).on( 'click', function() {
 			// ログインダイアログを表示させる処理
@@ -34,7 +41,13 @@ $( function() {
 		// ログインをクリックした時にログインさせる処理
 		let email = $('#login-email').val();
 		let pass1 = $('#login-pass').val();
+		let isHold = $('#login-ishold').prop('checked');
 		passwordLogin(email, pass1);
+		if (isHold) {
+			setStorage("login", {"email": email, "pass": pass1});
+		} else {
+			removeStorage("login");
+		}
 		// 未認証だった応答の場合に認証コード入力に遷移させる時のコード
 		$('#div-login-input').hide();
 		$('#div-signup-confirm').show();
