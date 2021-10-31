@@ -50,6 +50,44 @@
 	}
 }
 
+/**
+ * Cognite からのトークン情報
+ */
+ class Tokens {
+	constructor(result) {
+		this.idToken = result.getIdToken().getJwtToken();		  // IDトークン
+		this.accessToken = result.getAccessToken().getJwtToken();  // アクセストークン
+		this.refreshToken = result.getRefreshToken().getToken();   // 更新トークン
+	}
+	get IdToken() {
+		return this.idToken;
+	}
+	get AccessToken() {
+		return this.accessToken;
+	}
+	get RefreshToken() {
+		return this.refreshToken;
+	}
+	get Sub() {
+		let varSub = "";
+		let value = this.idToken.split('.');
+		if (3 == value.length) {
+			let decoded = atob(value[1]);
+			let valStr = decoded.substr(1, decoded.length -2);
+			let valAry = valStr.split(',');
+			for (let intCnt = 0; intCnt < valAry.length; intCnt++){
+				let varParts = valAry[intCnt];
+				let intRet = varParts.indexOf("sub");
+				if (-1 != intRet){
+					let varCut = varParts.split(':');
+					varSub = varCut[1].substr(1, varCut[1].length -2);
+				}
+			}
+		}
+		return varSub;
+	}
+}
+
 $( function() {
 	// 共通処理
 });

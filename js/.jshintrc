@@ -3,6 +3,7 @@
 		"getStorage": true
 		, "setStorage": true
 		, "removeStorage": true
+		, "Tokens": true
 		, "AmazonCognitoIdentity": true
 		, "AWS": true
 		, "AWSCognito": true
