@@ -5,16 +5,60 @@
 
 $( function() {
 	// ユーザープールの設定
+	// TODO: 本番のIDに直すこと
 	const poolData = {
 		UserPoolId : 'us-east-1_pSoBt4yhL',
 		ClientId : '1b48a6toq62q2dirqr9ihqh01r'
 	};
 	const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 	// Amazon Cognito 認証情報プロバイダーの初期化
+	// TODO: 本番のIDに直すこと
 	AWSCognito.config.region = 'us-east-1'; // リージョン
 	AWSCognito.config.credentials = new AWS.CognitoIdentityCredentials({
 		IdentityPoolId: 'us-east-1:223d4d8c-f8ac-4836-b349-3f4eed02d17a'
 	});
+
+	/**
+	 * サインアップ
+	 * @param {string} email メールアドレス
+	 * @param {string} password パスワード
+	 * @return {Promise} プロミス
+	 */
+	 function signUp(email, password) {
+		return new Promise(function(onCallback, ngCallback) {
+			userPool.signUp(email, password, null, null, function(err, result) {
+				if (err) {
+					ngCallback(err);
+				} else {
+					onCallback(result);
+				}
+			});
+		});
+	}
+
+	/**
+	 * サインアップ認証
+	 * @param {string} email メールアドレス
+	 * @param {string} activationKey 認証コード
+	 * @return {Promise} プロミス
+	 */
+	 function signUpActivation(email, activationKey) {
+		return new Promise(function(onCallback, ngCallback) {
+			let userData = {
+				Username: email,
+				Pool: userPool
+			};
+			let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+
+			cognitoUser.confirmRegistration(activationKey, function(err, result) {
+				if (err) {
+					ngCallback(err);
+				} else {
+					onCallback(result);
+				}
+			});
+		});
+	}
 
 	/**
 	 * サインイン
@@ -82,30 +126,35 @@ $( function() {
 		}
 		// ログイン処理
 		signIn(email, pass1).then((tokens) => {
-			// TODO:応答で未認証だったら認証フェーズにする
+			// TODO: 何か完了時の処理
 		}).catch((err) => {
 			alert(err);
+			// TODO:応答で未認証だったら認証フェーズにする
+			// 未認証だった応答の場合に認証コード入力に遷移させる時のコード
+			$('#div-login-input').hide();
+			$('#div-signup-confirm').show();
 		});
-		// TODO:応答で未認証だったら認証フェーズにする
-		// 未認証だった応答の場合に認証コード入力に遷移させる時のコード
-		$('#div-login-input').hide();
-		$('#div-signup-confirm').show();
 		return false;
 	});
 
 	// 新規登録したユーザのアクティベーション
 	$( '#signup-confirm-button' ).on( 'click', function() {
 		// 認証コード登録をクリックした時にユーザ登録認証させる処理
+		let email = $('#login-email').val();
 		let text0 = $('#auth-conf-text_0').val();
 		let text1 = $('#auth-conf-text_1').val();
 		let text2 = $('#auth-conf-text_2').val();
 		let text3 = $('#auth-conf-text_3').val();
 		let text4 = $('#auth-conf-text_4').val();
 		let text5 = $('#auth-conf-text_5').val();
-		alert("code:"+text0+text1+text2+text3+text4+text5);
-		// ログイン入力に遷移させる時のコード
-		$('#div-signup-confirm').hide();
-		$('#div-login-input').show();
+		let activateKey = text0+text1+text2+text3+text4+text5;
+		signUpActivation(email, activateKey).then(result => {
+			// ログイン入力に遷移させる時のコード
+			$('#div-signup-confirm').hide();
+			$('#div-login-input').show();
+		}).catch(err => {
+			alert(err);
+		});
 		return false;
 	});
 

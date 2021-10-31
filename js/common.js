@@ -51,23 +51,91 @@
 }
 
 /**
+ * セッションストレージからデータを取り出す
+ * @param {string} keyName キー
+ * @return {object} 値
+ */
+ function getSession(keyName) {
+	try {
+		let param = sessionStorage.getItem(keyName);
+		return JSON.parse(param);
+	} catch (error) {
+		// file:// のスクリプトで実行したなどでエラー
+		console.log("keyName:" + keyName + ": " + error);
+		return {};
+	}
+}
+
+/**
+ * セッションストレージにデータを設定する
+ * @param {string} keyName キー
+ * @param {object} value 値
+ */
+ function setSession(keyName, value) {
+	try {
+		sessionStorage.setItem(keyName, JSON.stringify(value));
+	} catch (error) {
+		// file:// のスクリプトで実行したなどでエラー
+		console.log("keyName:" + keyName + ": " + error);
+	}
+}
+
+/**
+ * セッションストレージからデータを削除する
+ * @param {string} keyName キー
+ * @return {object} 値
+ */
+ function removeSession(keyName) {
+	try {
+		let oldValue = getStorage(keyName);
+		sessionStorage.removeItem(keyName);
+		return oldValue;
+	} catch (error) {
+		// file:// のスクリプトで実行したなどでエラー
+		console.log("keyName:" + keyName + ": " + error);
+		return {};
+	}
+}
+
+/**
  * Cognite からのトークン情報
  */
  class Tokens {
-	constructor(result) {
-		this.idToken = result.getIdToken().getJwtToken();		  // IDトークン
-		this.accessToken = result.getAccessToken().getJwtToken();  // アクセストークン
-		this.refreshToken = result.getRefreshToken().getToken();   // 更新トークン
+	constructor(result=null) {
+		this.idToken = "";
+		this.accessToken = "";
+		this.refreshToken = "";
+		if (result) {
+			this.idToken = result.getIdToken().getJwtToken();		  // IDトークン
+			this.accessToken = result.getAccessToken().getJwtToken();  // アクセストークン
+			this.refreshToken = result.getRefreshToken().getToken();   // 更新トークン
+			setSession("tokens", {
+				"idToken": this.idToken
+				, "accessToken": this.accessToken
+				, "refreshToken": this.refreshToken
+			});
+		} else {
+			let obj = getSession("tokens");
+			if (obj.idToken) {
+				this.idToken = obj.idToken;
+				this.accessToken = obj.accessToken;
+				this.refreshToken = obj.refreshToken;
+			}
+		}
 	}
+	/** @return {string} IDトークン */
 	get IdToken() {
 		return this.idToken;
 	}
+	/** @return {string} アクセストークン */
 	get AccessToken() {
 		return this.accessToken;
 	}
+	/** @return {string} 更新トークン */
 	get RefreshToken() {
 		return this.refreshToken;
 	}
+	/** @return {string} サブジェクト */
 	get Sub() {
 		let varSub = "";
 		let value = this.idToken.split('.');
@@ -87,7 +155,7 @@
 		return varSub;
 	}
 }
-
+ 
 $( function() {
 	// 共通処理
 });
