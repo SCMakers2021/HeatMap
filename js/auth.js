@@ -17,6 +17,9 @@ $( function() {
 	AWSCognito.config.credentials = new AWS.CognitoIdentityCredentials({
 		IdentityPoolId: 'us-east-1:223d4d8c-f8ac-4836-b349-3f4eed02d17a'
 	});
+	AWSCognito.config.credentials.refresh(err => {
+		alert(err);
+	});
 
 	/**
 	 * サインアップ
