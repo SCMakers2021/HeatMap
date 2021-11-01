@@ -17,9 +17,12 @@ $( function() {
 	AWSCognito.config.credentials = new AWS.CognitoIdentityCredentials({
 		IdentityPoolId: 'us-east-1:223d4d8c-f8ac-4836-b349-3f4eed02d17a'
 	});
+
+	/*
 	AWSCognito.config.credentials.refresh(err => {
 		alert(err);
 	});
+	*/
 
 	/**
 	 * サインアップ
@@ -29,7 +32,13 @@ $( function() {
 	 */
 	 function signUp(email, password) {
 		return new Promise(function(onCallback, ngCallback) {
-			userPool.signUp(email, password, null, null, function(err, result) {
+			// ユーザ属性リストの生成
+			let dataFamilyName = {Name : "family_name",	Value : "dummyLastName"};
+			let dataGivenName = {Name : "given_name", Value : "dummyFirstName"};
+			let attributeFamilyName = new AmazonCognitoIdentity.CognitoUserAttribute(dataFamilyName);
+			let attributeGivenName = new AmazonCognitoIdentity.CognitoUserAttribute(dataGivenName);
+			let attributeList = [attributeFamilyName, attributeGivenName];
+			userPool.signUp(email, password, attributeList, null, function(err, result) {
 				if (err) {
 					ngCallback(err);
 				} else {
@@ -170,7 +179,11 @@ $( function() {
 		// TODO:email チェックも忘れずに
 		// TODO:その他未実装
 		if (pass1==pass2) {
-			alert("succ email:" + email + ", pass:" + pass1);
+			signUp(email, pass1).then(res => {
+				alert(res);
+			}).catch(err => {
+				alert(err);
+			});
 			// ログインダイアログをクローズさせる処理
 			$( '.js-modal' ).fadeOut( 300 );
 		} else {
