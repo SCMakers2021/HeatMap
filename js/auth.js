@@ -62,7 +62,7 @@ $( function() {
 			};
 			let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
 
-			cognitoUser.confirmRegistration(activationKey, function(err, result) {
+			cognitoUser.confirmRegistration(activationKey, true, function(err, result) {
 				if (err) {
 					ngCallback(err);
 				} else {
@@ -140,11 +140,14 @@ $( function() {
 		signIn(email, pass1).then((tokens) => {
 			// TODO: 何か完了時の処理
 		}).catch((err) => {
-			alert(err);
-			// TODO:応答で未認証だったら認証フェーズにする
-			// 未認証だった応答の場合に認証コード入力に遷移させる時のコード
-			$('#div-login-input').hide();
-			$('#div-signup-confirm').show();
+			if (err.code=='UserNotConfirmedException') {
+				// 応答で未認証だったら認証フェーズにする
+				// 未認証だった応答の場合に認証コード入力に遷移させる時のコード
+				$('#div-login-input').hide();
+				$('#div-signup-confirm').show();
+			} else {
+				alert(err);
+			}
 		});
 		return false;
 	});
@@ -208,7 +211,14 @@ $( function() {
 			// TODO:応答で未認証だったら認証フェーズにする
 			// 未認証かどうかの検知方法は未定
 		}).catch((err) => {
-			alert(err);
+			if (err.code=='UserNotConfirmedException') {
+				// 応答で未認証だったら認証フェーズにする
+				// 未認証だった応答の場合に認証コード入力に遷移させる時のコード
+				$('#div-login-input').hide();
+				$('#div-signup-confirm').show();
+			} else {
+				alert(err);
+			}
 		});
 	}
 });
