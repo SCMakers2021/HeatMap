@@ -49,6 +49,29 @@ $( function() {
 	}
 
 	/**
+	 * サインアップ認証メール再送
+	 * @param {string} email メールアドレス
+	 * @return {Promise} プロミス
+	 */
+	 function signUpResend(email) {
+		return new Promise(function(onCallback, ngCallback) {
+			let userData = {
+				Username: email,
+				Pool: userPool
+			};
+			let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+
+			cognitoUser.resendConfirmationCode(function(err, result) {
+				if (err) {
+					ngCallback(err);
+				} else {
+					onCallback(result);
+				}
+			});
+		});
+	}
+
+	/**
 	 * サインアップ認証
 	 * @param {string} email メールアドレス
 	 * @param {string} activationKey 認証コード
@@ -138,7 +161,8 @@ $( function() {
 		}
 		// ログイン処理
 		signIn(email, pass1).then((tokens) => {
-			// TODO: 何か完了時の処理
+			// ログインダイアログをクローズさせる処理
+			$( '.js-modal' ).fadeOut( 300 );
 		}).catch((err) => {
 			if (err.code=='UserNotConfirmedException') {
 				// 応答で未認証だったら認証フェーズにする
@@ -170,6 +194,18 @@ $( function() {
 		}).catch(err => {
 			alert(err);
 		});
+		return false;
+	});
+
+	// ユーザの新規登録メール再送
+	$( '#resend-button' ).on( 'click', function() {
+		// 登録メール再送をクリックした時に再送させる処理
+		let email = $('#login-email').val();
+		if (email) {
+			signUpResend(email).catch(err => {
+				alert(err);
+			});
+		}
 		return false;
 	});
 
