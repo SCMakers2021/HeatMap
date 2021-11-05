@@ -1,0 +1,85 @@
+.auth-base {
+  display: none;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.auth-bg {
+  background: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  width: 100%;
+
+}
+
+.auth-content {
+  background: #fff;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+}
+
+.auth-auth {
+  width: 300px;
+  height: 400px;
+}
+
+.auth-content_inner {
+  position: relative;
+  padding: 3px;
+}
+
+.auth-close {
+  position: absolute;
+  top: 13px;
+  right: 10px;
+}
+
+.auth-login_tab {
+  margin-top: 2em;
+  height: 300px;
+}
+
+/* ログイン用のコントロール */
+.auth-login {
+  margin: 5px;
+  width: 90%;
+}
+
+.auth-login_hold_label {
+  font-size: xx-small;
+}
+
+/* 画面P-U1：ログイン画面 */
+#div-login-input {
+  display: block;
+}
+
+/* 画面P-U2：ユーザ登録画面 */
+#div-signup-input {
+  display: block;
+}
+
+/* 画面P-U3：ユーザ登録認証画面 */
+#div-signup-confirm {
+  display: none;
+}
+/* 認証コードタイトル */
+.auth-conf-title {
+  font-size: x-large;
+  color: blue;
+}
+#auth-conf-table {
+  width: 100%;
+}
+.auth-conf-text {
+  border-radius: 3px;
+  width: 28px;
+  height: 24px;
+}
