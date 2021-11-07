@@ -1,0 +1,15 @@
+@startuml signIn
+
+start
+switch (ログイン)
+case (エラーなし)
+  :ログイン成功;
+  :ログインダイアログ\nのクローズ;
+case (NotAuthorizedException)
+  :ユーザもしくは\nパスワードが\n違います;
+case (UserNotConfirmedException)
+  :確認コード入力\nに切り替え;
+endswitch
+stop
+
+@enduml

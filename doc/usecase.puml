@@ -1,0 +1,28 @@
+@startuml usecase
+
+left to right direction
+
+"ゲストページを\n表示する" as (Guest) #orange;line:yellow
+"「余っている」\nを表示する" as (Amari)
+"「余っている」\nを検索する" as (Search)
+"ユーザを評価する" as (Hiyouka)
+"検索カテゴリを\n設定する" as (Define)
+
+"新規ユーザを\n登録する" as (Signup) #orange;line:yellow
+"ログインする" as (Signin)
+"ログインページを\n表示する" as (SigninPage)
+"サードパーティ\nログイン" as (SigninThird)
+
+
+:ゲストユーザ: -- (Guest)
+:ゲストユーザ: -- (Amari)
+:ゲストユーザ: -- (Signup)
+:ゲストユーザ: -- (Signin)
+(Amari) .> (Hiyouka) : extend
+(Search) .> (Amari) : include
+(Define) .> (Amari) : include
+
+(SigninPage) .> (Signin) : include
+(Signin) .> (SigninThird) : extend
+
+@enduml

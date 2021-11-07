@@ -1,0 +1,33 @@
+@startuml usecase
+
+left to right direction
+
+:新規: as nsu
+:確認: as csu
+
+package "ユーザ登録" {
+	usecase signUp as "ユーザ登録
+--
+signUp()
+"
+	"登録確認\nメール送信" as (mail)
+	usecase resend as "認証コード\nメール再送信
+--
+signUpResend()
+"
+	usecase activate as "ユーザ登録確認
+--
+signUpActivation()
+"
+}
+nsu --> signUp
+
+signUp .> mail
+mail ..> csu
+
+csu --> resend
+resend .> mail
+
+csu --> activate
+
+@enduml
