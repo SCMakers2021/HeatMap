@@ -1,0 +1,32 @@
+@startuml operation
+
+title API呼び出し
+
+skinparam responseMessageBelowArrow true
+
+actor User as user
+participant signIn order 10 #Lime
+participant apiFetch order 10 #Lime
+participant sessionStorage order 50 #pink
+participant Cognito order 50 #Yellow
+participant HeatMap order 50 #Yellow
+
+user->signIn: ユーザ、パスワード
+signIn-->Cognito: authenticateUser()
+... 非同期 ...
+signIn<--Cognito: トークン
+sessionStorage<-signIn: トークン記録
+user<-signIn: then(トークン)
+
+...
+
+user->apiFetch: API呼び出し
+apiFetch->sessionStorage: トークン読み込み
+apiFetch<-sessionStorage: トークン
+apiFetch-->HeatMap: fetch()
+... 非同期 ...
+apiFetch<--HeatMap: then()
+user<-apiFetch: then(結果)
+
+
+@enduml

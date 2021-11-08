@@ -100,7 +100,7 @@
 /**
  * Cognite からのトークン情報
  */
- class Tokens {
+class Tokens {
 	constructor(result=null) {
 		this.idToken = "";
 		this.accessToken = "";
@@ -155,7 +155,24 @@
 		return varSub;
 	}
 }
- 
+
+/**
+ * HeatMap API 呼び出し時の fetch をラップして認証情報を付加する
+ * @param {string} url APIのURL
+ * @param {object} options オプション
+ * @return Promise<Response>
+ */
+function apiFetch(url, options) {
+	if (options) {
+		let tokens = new Tokens();
+		if (tokens.Sub()) {
+			// TODO: 認証情報
+			options.headers.append("X-Subject", tokens.Sub());
+		}
+	}
+	return fetch(url, options);
+}
+
 $( function() {
 	// 共通処理
 });
