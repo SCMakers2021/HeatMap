@@ -1,256 +1,174 @@
 
 <!DOCTYPE HTML>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-	<title>Heat Map</title>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<title>Heat Map</title>
 
-	<link rel="stylesheet" href="lib/jquery-ui.min.css">
-	<script src="lib/jquery-1.11.3.min.js"></script>
-	<script src="lib/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="lib/jquery-ui.min.css">
+		<script src="lib/jquery-1.11.3.min.js"></script>
+		<script src="lib/jquery-ui.min.js"></script>
 
-	<script src="js/common.js"></script>
-	<link rel="stylesheet" href="css/auth.css">
-	<script src="js/auth.js"></script>
-	<script src="js/sample.js" type="text/javascript" charset="shift_jis"></script>
+		<script src="js/common.js"></script>
+		<link rel="stylesheet" href="css/auth.css">
+		<script src="js/auth.js"></script>
+		<script src="js/screenTransition.js" charset="shift_jis"></script>
+		<script src="js/map.js" charset="shift_jis"></script>
+		<script src="js/DBAccess.js" type="text/javascript" charset="shift_jis"></script>
+		
 
-	<script src="https://maps.google.com/maps/api/js?v=3.exp&libraries=visualization&key=AIzaSyD1f5Z-Rqkh3z8HMuhd_sszHw2N1-RYBfk"></script>
+		<script src="https://maps.google.com/maps/api/js?v=3.exp&libraries=visualization&key=AIzaSyD1f5Z-Rqkh3z8HMuhd_sszHw2N1-RYBfk"></script>
 
-	<!-- システム固有インクルード -->
-	<link rel="stylesheet" href="css/style.main.css">    <!-- CSS@PC/タブレット用 -->
-	<link rel="stylesheet" href="css/style.mobile.css">  <!-- CSS@スマホ用        -->
-	<script src="./sample.js"></script>
+		<!-- システム固有インクルード -->
+		<link rel="stylesheet" href="css/style.main.css">    <!-- CSS@PC/タブレット用 -->
+		<link rel="stylesheet" href="css/style.mobile.css">  <!-- CSS@スマホ用        -->
 
-	<!-- スクリプト実装部 -->
-	<script>
-	
-	//====================================================
-	// 関数定義
-	//====================================================
-	// 「カテゴリアイコン」ボタン押下
-	function searchCategoryClicked( key ){
-		var id = "searchCategory" + key;
-		console.log("TODO:検索 = " + id);
-	}
+		<!-- スクリプト実装部 -->
+		<script>
+		
+		//====================================================
+		// 関数定義
+		//====================================================
 
-	// GoogleMap初期化
-    function googleMapInitialize(){
-    	// 「./sample.js」の関数呼び出し
-		initialize();
-	}
-
-	function onEntryBtnClicked(){
-		var btnVal = $('#btnAmari').val();
-		if( "valid" == btnVal ){
-			return;
+		// GoogleMap初期化
+	    function googleMapInitialize(){
+	    	// 「./sample.js」の関数呼び出し
+			initialize();
 		}
-		var isHidden = $('#map_modal').attr('hidden');
-		if( 'hidden' == isHidden  ){
-			$('#map_modal').attr('hidden',false);
-			$('#map_hidden').attr('hidden',false);
-		}else{
-			$('#map_modal').attr('hidden',true);
-		}
-	}
 
-	//====================================================
-	// Redy処理
-	//====================================================
-	$(function(){
+		//====================================================
+		// ロード時処理
+		//====================================================
+		$(window).on('load', function() {
+		//実行処理
+			googleMapInitialize();
+			$('#map_modal').attr('hidden',true);                // モーダルレイヤをhiddenに設定
+			$('#map_hidden').attr('hidden',true);            　 // サイドバーレイヤをhiddenに設定
+			$('#SagasuSidebar').attr('hidden',true);            // サイドバーレイヤをhiddenに設定
+		});
+		
+		
+		</script>
 
-	function switchAmariMode(falg){
-		if( true == falg ){
-			$('#btnAmari').val("invalid");
-				console.log("TODO：アマリ登録モードへ");
-		}else{
-			$('#btnAmari').val("valid");
-		}
-	}
-	function switchSagasuMode(falg){
-		if( true == falg ){
-			$('#btnSagasu').val("invalid");
-			$('#SagasuSidebar').attr('hidden',false);
-			console.log("TODO：サガスモードへ");
+	</head>
+	<body onload="initialize()">
+		<!-- ================================================ -->
+		<!--　コンテンツエリア（配置順に注意）                -->
+		<!-- ================================================ -->
+		<div class='contents'>
+			<!-- ## レイヤ0 ##-->
+			<div id="map_canvas" class='mapArea'></div>   <!-- 地図表示 -->
 
-			$('#map_modal').attr('hidden',true);
-			$('#map_hidden').attr('hidden',true);
-		}else{
-			$('#btnSagasu').val("valid");
-			$('#SagasuSidebar').attr('hidden',true);
-		}
-	}
+			<!-- ## レイヤ1 ##-->
+			<div id="map_modal"  class='mapModal'></div>  <!-- 地図用モーダルフィルタ -->
 
-	//--------------------------------------------
-	// ハンドライベント実装
-	//--------------------------------------------
-	// 「サガス」ボタン押下
-	$('#btnSagasu').click(function(){
-		var btnVal = $('#btnSagasu').val();
-		if( "valid" == btnVal ){
-			switchAmariMode(false);
-			switchSagasuMode(true);
-		}else{
-		switchAmariMode(true);
-		switchSagasuMode(false);
-		}
-	})
-	// 「アマリ」ボタン押下
-	$('#btnAmari').click(function(){
-	var btnVal = $('#btnAmari').val();
-		if( "valid" == btnVal ){
-			switchAmariMode(true);
-			switchSagasuMode(false);
-		}else{
-			switchAmariMode(false);
-			switchSagasuMode(true);
-		}
-	})
-	// 「ユーザ」ボタン押下
-	$('#btnUser').click(function(){
-		console.log("TODO：ログインしたい");
-	})
-
-	// アマリ「次へ」ボタン押下
-	$('#amariNext').click(function(){
-		console.log("TODO：「次へ」したい");
-	})
-	// アマリ「キャンセル」ボタン押下
-	$('#amariCancel').click(function(){
-		$('#map_modal').attr('hidden',true);
-		$('#map_hidden').attr('hidden',true);
-		})
-	})
-	//====================================================
-	// ロード時処理
-	//====================================================
-	$(window).on('load', function() {
-	//実行処理
-		googleMapInitialize();
-		$('#map_modal').attr('hidden',true);                // モーダルレイヤをhiddenに設定
-		$('#map_hidden').attr('hidden',true);            　 // サイドバーレイヤをhiddenに設定
-		$('#SagasuSidebar').attr('hidden',true);            // サイドバーレイヤをhiddenに設定
-	});
-	</script>
-
-</head>
-<body onload="initialize()">
-	<!-- ================================================ -->
-	<!--　コンテンツエリア（配置順に注意）                -->
-	<!-- ================================================ -->
-	<div class='contents'>
-		<!-- ## レイヤ0 ##-->
-		<div id="map_canvas" class='mapArea'></div>   <!-- 地図表示 -->
-
-		<!-- ## レイヤ1 ##-->
-		<div id="map_modal"  class='mapModal'></div>  <!-- 地図用モーダルフィルタ -->
-
-		<!-- ## レイヤ2 ##-->
-		<div id="map_hidden"  class='mapHide'>        <!-- アマリ投稿用隠しエリア -->
-			<div id='AmariFormEdit'>
-				<div class='AmariForm'>
-					<div class='currentPointArea'></div>
-					<div class='entryArea'>
-						<table>
-							<tr><td>カテゴリ</td><td>
-								<select id="category">
-									<option value="Bento">お弁当</option>
-									<option value="Tomoto">トマト</option>
-								</select>
-							</td></tr>
-							<tr><td>ユーザ名</td><td><input type='text' value=''></td></tr>
-							<tr><td>内容    </td><td><input type='text' value=''></td></tr>
-						</table>
-					</div>
-					<div class='actionArea'>
-						<input class='okButton' id='amariNext'  type='button' value='次へ'>
-						<input class='cancelButton' id='amariCancel' type='button' value='キャンセル'>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- ## レイヤ3 ##-->
-		<div class='sidebar' id="SagasuSidebar">                <!-- サガス用サイドバー -->
-			<table id='searchCategoryArea'>
-				<tr>
-					<td onclick="searchCategoryClicked('Cake')"     id='searchCategoryCake'    ><input type="image" class='searchCategory' src="image/ケーキのアイコン3.png"><br>ケーキ</td>
-					<td onclick="searchCategoryClicked('Bento')"    id='searchCategoryBento'   ><input type="image" class='searchCategory' src="image/日の丸弁当アイコン1.png"><br>お弁当</td>
-					<td onclick="searchCategoryClicked('Sushi')"    id='searchCategorySushi'   ><input type="image" class='searchCategory' src="image/寿司アイコン.png"><br>お寿司</td>
-				</tr>
-				<tr>
-					<td onclick="searchCategoryClicked('Onion')"    id='searchCategoryOnion'   ><input type="image" class='searchCategory' src="image/たまねぎイラスト1.png"><br>たまねぎ</td>
-					<td onclick="searchCategoryClicked('Tomato')"   id='searchCategoryTomato'  ><input type="image" class='searchCategory' src="image/トマトのアイコン2.png"><br>トマト</td>
-					<td onclick="searchCategoryClicked('Broccoli')" id='searchCategoryBroccoli'><input type="image" class='searchCategory' src="image/ブロッコリーアイコン1.png"><br>ブロッコリー</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<!-- ================================================ -->
-	<!--　上部バーエリア                                  -->
-	<!-- ================================================ -->
-	<div class='topBar'>
-		<div class='siteTitle'>HitoMap</div> 
-		<div class='modeSwitch'>
-          <a class="topModeChange-Sagasu" id='btnSagasu' type="button">サガス</a>
-          <a class="topModeChange-Amari" id='btnAmari' type="button">アマリ</a>
-        </div>
-        <div class='userStatus'>
-			<input type="image" class='userIcon' id='btnUser' src="image/UserGeneral.png" alt="ゲスト">
-		</div>
-	</div>
-
-<!-- login-modal -->
-	<!-- このブロックは担当者のみ更新 (Git での差分がはっきりとしてマージしやすくなる) -->
-	<!-- このブロックはまるごと移動してもＯＫ -->
-	<div id="modalAuth" class="auth-base js-modal">
-		<div class="auth-bg js-modal-close"></div>
-		<div class="auth-content auth-auth">
-			<div class="auth-content_inner">
-				<a class="js-modal-close auth-close" href=""><span>閉じる</span></a>
-				<div id="login-tab" class="auth-login_tab">
-					<ul>
-						<li><a href="#tabs-login">ログイン</a></li>
-						<li><a href="#tabs-signup">ユーザ登録</a></li>
-					</ul>
-					<div id="tabs-login">
-						<div id="div-login-input">
-							<input id="login-email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
-							<input id="login-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
-							<input id="login-button" class="auth-login auth-login_button" type="button" value="ログイン"/><br>
-							<input id="login-ishold" class="auth-login_hold" type="checkbox"/>
-							<label class="auth-login_hold_label" for="login-ishold">次回から自動的にログインする</label>
-							<p/>
-							<a class="auth-password_reset" href="#">パスワードを忘れた方はこちら</a>
-						</div>
-						<div id="div-signup-confirm">
-							<span class="auth-conf-title">認証コードを入力してください</span><br>
-							<table class="auth-conf-table">
-								<tr>
-									<td><input id="auth-conf-text_0" class="auth-conf-text" type="number" maxlength="1"/></td>
-									<td><input id="auth-conf-text_1" class="auth-conf-text" type="number" maxlength="1"/></td>
-									<td><input id="auth-conf-text_2" class="auth-conf-text" type="number" maxlength="1"/></td>
-									<td><input id="auth-conf-text_3" class="auth-conf-text" type="number" maxlength="1"/></td>
-									<td><input id="auth-conf-text_4" class="auth-conf-text" type="number" maxlength="1"/></td>
-									<td><input id="auth-conf-text_5" class="auth-conf-text" type="number" maxlength="1"/></td>
-								</tr>
+			<!-- ## レイヤ2 ##-->
+			<div id="map_hidden"  class='mapHide'>        <!-- アマリ投稿用隠しエリア -->
+				<div id='AmariFormEdit'>
+					<div class='AmariForm'>
+						<div class='currentPointArea'></div>
+						<div class='entryArea'>
+							<table>
+								<tr><td>カテゴリ</td><td>
+									<select id="category">
+										<option value="Bento">お弁当</option>
+										<option value="Tomoto">トマト</option>
+									</select>
+								</td></tr>
+								<tr><td>ユーザ名</td><td><input type='text' value=''></td></tr>
+								<tr><td>内容    </td><td><input type='text' value=''></td></tr>
 							</table>
-							<input id="signup-confirm-button" class="auth-login auth-login_button" type="button" value="登録"/><br>
+						</div>
+						<div class='actionArea'>
+							<input class='okButton' id='amariNext'  type='button' value='次へ'>
+							<input class='cancelButton' id='amariCancel' type='button' value='キャンセル'>
 						</div>
 					</div>
-					<div id="tabs-signup">
-						<div id="div-signup-input">
-							<input id="signup-email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
-							<input id="signup-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
-							<input id="signup-pass-repeat" class="auth-login auth-login_pass" type="password" placeholder="Repeat Password"/><br>
-							<input id="signup-button" class="auth-login auth-login_button" type="button" value="登録"/><br>
+				</div>
+			</div>
+
+			<!-- ## レイヤ3 ##-->
+			<div class='sidebar' id="SagasuSidebar">                <!-- サガス用サイドバー -->
+				<table id='searchCategoryArea'>
+					<tr>
+						<td onclick="searchCategoryClicked('Cake')"     id='searchCategoryCake'    ><input type="image" class='searchCategory' src="image/ケーキのアイコン3.png"><br>ケーキ</td>
+						<td onclick="searchCategoryClicked('Bento')"    id='searchCategoryBento'   ><input type="image" class='searchCategory' src="image/日の丸弁当アイコン1.png"><br>お弁当</td>
+						<td onclick="searchCategoryClicked('Sushi')"    id='searchCategorySushi'   ><input type="image" class='searchCategory' src="image/寿司アイコン.png"><br>お寿司</td>
+					</tr>
+					<tr>
+						<td onclick="searchCategoryClicked('Onion')"    id='searchCategoryOnion'   ><input type="image" class='searchCategory' src="image/たまねぎイラスト1.png"><br>たまねぎ</td>
+						<td onclick="searchCategoryClicked('Tomato')"   id='searchCategoryTomato'  ><input type="image" class='searchCategory' src="image/トマトのアイコン2.png"><br>トマト</td>
+						<td onclick="searchCategoryClicked('Broccoli')" id='searchCategoryBroccoli'><input type="image" class='searchCategory' src="image/ブロッコリーアイコン1.png"><br>ブロッコリー</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- ================================================ -->
+		<!--　上部バーエリア                                  -->
+		<!-- ================================================ -->
+		<div class='topBar'>
+			<div class='siteTitle'>HitoMap</div> 
+			<div class='modeSwitch'>
+	          <a class="topModeChange-Sagasu" id='btnSagasu' type="button">サガス</a>
+	          <a class="topModeChange-Amari" id='btnAmari' type="button">アマリ</a>
+	        </div>
+	        <div class='userStatus'>
+				<input type="image" class='userIcon' id='btnUser' src="image/UserGeneral.png" alt="ゲスト">
+			</div>
+		</div>
+
+	<!-- login-modal -->
+		<!-- このブロックは担当者のみ更新 (Git での差分がはっきりとしてマージしやすくなる) -->
+		<!-- このブロックはまるごと移動してもＯＫ -->
+		<div id="modalAuth" class="auth-base js-modal">
+			<div class="auth-bg js-modal-close"></div>
+			<div class="auth-content auth-auth">
+				<div class="auth-content_inner">
+					<a class="js-modal-close auth-close" href=""><span>閉じる</span></a>
+					<div id="login-tab" class="auth-login_tab">
+						<ul>
+							<li><a href="#tabs-login">ログイン</a></li>
+							<li><a href="#tabs-signup">ユーザ登録</a></li>
+						</ul>
+						<div id="tabs-login">
+							<div id="div-login-input">
+								<input id="login-email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
+								<input id="login-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
+								<input id="login-button" class="auth-login auth-login_button" type="button" value="ログイン"/><br>
+								<input id="login-ishold" class="auth-login_hold" type="checkbox"/>
+								<label class="auth-login_hold_label" for="login-ishold">次回から自動的にログインする</label>
+								<p/>
+								<a class="auth-password_reset" href="#">パスワードを忘れた方はこちら</a>
+							</div>
+							<div id="div-signup-confirm">
+								<span class="auth-conf-title">認証コードを入力してください</span><br>
+								<table class="auth-conf-table">
+									<tr>
+										<td><input id="auth-conf-text_0" class="auth-conf-text" type="number" maxlength="1"/></td>
+										<td><input id="auth-conf-text_1" class="auth-conf-text" type="number" maxlength="1"/></td>
+										<td><input id="auth-conf-text_2" class="auth-conf-text" type="number" maxlength="1"/></td>
+										<td><input id="auth-conf-text_3" class="auth-conf-text" type="number" maxlength="1"/></td>
+										<td><input id="auth-conf-text_4" class="auth-conf-text" type="number" maxlength="1"/></td>
+										<td><input id="auth-conf-text_5" class="auth-conf-text" type="number" maxlength="1"/></td>
+									</tr>
+								</table>
+								<input id="signup-confirm-button" class="auth-login auth-login_button" type="button" value="登録"/><br>
+							</div>
+						</div>
+						<div id="tabs-signup">
+							<div id="div-signup-input">
+								<input id="signup-email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
+								<input id="signup-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
+								<input id="signup-pass-repeat" class="auth-login auth-login_pass" type="password" placeholder="Repeat Password"/><br>
+								<input id="signup-button" class="auth-login auth-login_button" type="button" value="登録"/><br>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-<!-- login-modal -->
-</body>
+	<!-- login-modal -->
+	</body>
 </html>
