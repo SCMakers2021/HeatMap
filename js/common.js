@@ -165,9 +165,9 @@ class Tokens {
 function apiFetch(url, options) {
 	if (options) {
 		let tokens = new Tokens();
-		if (tokens.Sub()) {
+		if (tokens.Sub) {
 			// TODO: 認証情報
-			options.headers.append("X-Subject", tokens.Sub());
+			options.headers.append("X-Subject", tokens.Sub);
 		}
 	}
 	return fetch(url, options);

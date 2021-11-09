@@ -36,7 +36,7 @@ function RegisterDB(){
         redirect: 'follow'
     };
     // make API call with parameters and use promises to get response
-    fetch(HeatMapURL, requestOptions)
+    apiFetch(HeatMapURL, requestOptions)
     .then(response => response.text())
     .then(result => alert(JSON.parse(result).body))
     .catch(error => console.log('error', error));
@@ -80,7 +80,7 @@ function ReadDB(){
         redirect: 'follow'
     };
     // make API call with parameters and use promises to get response
-    fetch(HeatMapURL, requestOptions)
+    apiFetch(HeatMapURL, requestOptions)
     .then(response => response.text())
     .then(result => alert(JSON.parse(result).body))
     .catch(error => console.log('error', error));
