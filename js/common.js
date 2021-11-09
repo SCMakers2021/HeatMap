@@ -167,7 +167,16 @@ function apiFetch(url, options) {
 		let tokens = new Tokens();
 		if (tokens.Sub) {
 			// TODO: 認証情報
-			options.headers.append("X-Subject", tokens.Sub);
+			// @see https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/RESTAuthentication.html
+			//    Authorization: AWS AWSAccessKeyId:Signature
+			let auth = tokens.Sub;
+			options.headers.append("Authorization", auth);
+			// @see https://qiita.com/baikichiz/items/ed787c5c79059213401e
+			//    X-Api-Key は API Gateway で API ごとに定義するらしい
+			//    options.headers.append("X-Api-Key", "");
+			// @see https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/RESTAuthentication.html
+			//    X-Amz-Security-Token は IAM が提供する AWS Security Token
+			//    options.headers.append("X-Amz-Security-Token", "");
 		}
 	}
 	return fetch(url, options);
