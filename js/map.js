@@ -30,10 +30,10 @@ function initialize() {
   // 表示する場所のidを取得
   var target = document.getElementById("map_canvas") 
   // 経度：lat，緯度：lngを設定
-  var latlng = {lat: 35.383575, lng: 139.344170};
+  var centralLatLng = {lat: 34.757555, lng: 135.497010};
   var options = {
     zoom: 10, // ズーム1は一番小さい
-    center: latlng, //Mapの中央:上の座標
+    center: centralLatLng, //Mapの中央:上の座標
     mapTypeControl: false, //マップタイプ コントロール
     fullscreenControl: false, //全画面表示コントロール
     streetViewControl: false, //ストリートビュー コントロール
@@ -43,9 +43,9 @@ function initialize() {
   map = new google.maps.Map(target, options);
 
   /* マーカーのアイコンの設定 */
-  var image = {
-    url: "images/mark.png", //画像のURL
-    size: new google.maps.Size(32, 32), //サイズ
+  var markerImage = {
+    url: "image/maker.Red.png", //画像のURL
+    size: new google.maps.Size(64, 64), //サイズ
     origin: new google.maps.Point(0, 0), //アイコンの基準位置
     anchor: new google.maps.Point(16, 32), //アイコンのアンカーポイント
     scaledSize: new google.maps.Size(32, 32) //アイコンのサイズ
@@ -70,7 +70,7 @@ function initialize() {
     marker = new google.maps.Marker({
       position: e.latLng,
       map: map,
-      icon: image,
+      icon: markerImage,
       title: e.latLng.toString(),
       animation: google.maps.Animation.DROP // マーカーを立つときのアニメーション
     });
@@ -97,7 +97,9 @@ function initialize() {
                + "  <div class='currentPointArea'></div>"
                + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
                + "  </div>"
-               + "</div>"
+               + "</div>",
+      pixelOffset: new google.maps.Size( -225, 0 ),  // クリック箇所に対する吹き出しの位置
+      position: new google.maps.Size( -225, 0 ),
     });
     infoWindow.open(map, marker);
     
