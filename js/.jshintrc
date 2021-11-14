@@ -3,5 +3,8 @@
 		"getStorage": true
 		, "setStorage": true
 		, "removeStorage": true
+		, "AmazonCognitoIdentity": true
+		, "AWS": true
+		, "AWSCognito": true
 	}
 }
