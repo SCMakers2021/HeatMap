@@ -45,7 +45,7 @@ function initialize() {
   /* マーカーのアイコンの設定 */
   var markerImage = {
     url: "image/maker.Red.png", //画像のURL
-    size: new google.maps.Size(64, 64), //サイズ
+    size: new google.maps.Size(32, 32), //サイズ
     origin: new google.maps.Point(0, 0), //アイコンの基準位置
     anchor: new google.maps.Point(16, 32), //アイコンのアンカーポイント
     scaledSize: new google.maps.Size(32, 32) //アイコンのサイズ
@@ -80,29 +80,39 @@ function initialize() {
     //});
     
     /* マーカーの情報を設定 */
-    markers = [
-      {
-        position: e.latLng,
-        title: '投稿',
-        summary: 'getMassage()',
-        figure: 'images/figure01.jpg'
-      }
-    ];
+//    markers = [
+//      {
+//        position: e.latLng,
+//        title: '投稿',
+//        summary: 'getMassage()',
+//        figure: 'images/figure01.jpg'
+//      }
+//    ];
+    
+    // 場所の住所の準備
+    geocoder = new google.maps.Geocoder();
+    
+    geocoder.geocode({
+      latLng: e.latLng
+    }, function(results, status) {
+    
+        var address = results[0].formatted_address.replace(/^日本, /, '');
     
     /* 場所の詳細の準備 */
-    infoWindow = new google.maps.InfoWindow({
+      infoWindow = new google.maps.InfoWindow({
 //      content: '<section style="margin-top:5px;"><figure style="float: left;"><img src="' + markers[0].figure + '" width="64px"></figure><div style="margin-left: 74px;"><h2 style="margin-bottom: 5px;font-size: 1.17em;">' + markers[0].title + '</h2><p style="font-size: 0.84em;">' + markers[0].summary + '</p></div><div><input type="button" value="test2" onclick="visualize()" onkeypress="visualize()" /></div><input type="text" id="activationKey" placeholder="Activation Key"></section>'
-      content:   "<div id='speechBubble' value='init'>" 
-               + "  <div class='AmariForm' id='AmariFormMap'>"
-               + "  <div class='currentPointArea'></div>"
-               + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
-               + "  </div>"
-               + "</div>",
-      pixelOffset: new google.maps.Size( -225, 0 ),  // クリック箇所に対する吹き出しの位置
-      position: new google.maps.Size( -225, 0 ),
+        content:   "<div id='speechBubble' value='init'>" 
+                 + address
+                 + "  <div class='AmariForm' id='AmariFormMap'>"
+                 + "  <div class='currentPointArea'></div>"
+                 + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
+                 + "  </div>"
+                 + "</div>",
+//        position: new google.maps.LatLng(,),  //吹き出しの位置
+//        pixelOffset: new google.maps.Size( -225, 0 ),  // クリック箇所に対する吹き出しの先端の位置
+      });
+      infoWindow.open(map, marker);
     });
-    infoWindow.open(map, marker);
-    
     /* マーカーをクリックしたら場所の詳細を表示 */
     google.maps.event.addListener(marker, 'click', function(e) {
       for(var i = 0; i < markers.length; i++) {
