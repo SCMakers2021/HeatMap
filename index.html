@@ -21,6 +21,8 @@
 	<script src="js/common.js"></script>
 	<link rel="stylesheet" href="css/auth.css">
 	<script src="js/auth.js"></script>
+	<link rel="stylesheet" href="css/upld.css">
+	<script src="js/upld.js"></script>
 	<script src="js/sample.js"></script>
 
 	<script src="https://maps.google.com/maps/api/js?v=3.exp&libraries=visualization&key=AIzaSyD1f5Z-Rqkh3z8HMuhd_sszHw2N1-RYBfk"></script>
@@ -29,6 +31,7 @@
 	<section>
 	  <h1>Heat Map</h1>
 	  <a id="authIcon" class="js-modal-open" href="" data-target="modalAuth"><img src="images/auth.png"></a>
+	  <a id="upldIcon" class="upld-modal-open" href="" data-target="modalUpld"><img src="images/mark.png" width="32" height="32"></a>
 	  <div id="mapWrapper">
 	    <div id="map-canvas"></div>
 	  </div>
@@ -99,5 +102,18 @@
 		</div>
 	</div>
 <!-- login-modal -->
+
+<!-- upload -->
+	<div id="modalUpld" class="upld-base upld-modal">
+		<div class="upld-bg upld-modal-close"></div>
+		<div class="upld-content">
+			<div class="upld-content_inner">
+				<a class="upld-modal-close upld-close" href=""><span>閉じる</span></a>
+				<input id="upldFile" type="file" accept="image/*"><br>
+				<img id="upldPreview" src="images/mark.png" height="200" alt="画像のプレビュー...">
+			</div>
+		</div>
+	</div>
+<!-- upload -->
 </body>
 </html>
