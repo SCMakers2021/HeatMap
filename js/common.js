@@ -184,4 +184,8 @@ function apiFetch(url, options) {
 
 $( function() {
 	// 共通処理
+
 });
+
+// グローバル変数宣言
+var token = new Tokens();

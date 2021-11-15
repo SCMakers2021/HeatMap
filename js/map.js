@@ -24,6 +24,60 @@ $(function() {
   });
 });
 
+function DispStreetView(e){
+	return new Promise(function(resolve,reject) {
+		const panorama = new google.maps.StreetViewPanorama(
+		//document.getElementById("street"),
+		document.getElementById("currentPointArea"),
+		{
+		  position: e.latLng,
+		  pov: {
+		    heading: 34,
+		    pitch: 10,
+		  },
+		  visible: true,
+		}
+		);
+		map.setStreetView(panorama);
+		
+		resolve('Success!DispStreetView()');
+	});
+}
+
+function CreateInfoWindow(address){
+    infoWindow = new google.maps.InfoWindow({
+        content:   "<div id='speechBubble' value='init'>" 
+                 + address
+                 + "  <div class='AmariForm' id='AmariFormMap'>"
+                 + "  <div class='currentPointArea' id='currentPointArea'></div>"
+                 + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
+                 + "  </div>"
+                 + "</div>",
+//        position: new google.maps.LatLng(,),  //吹き出しの位置
+//        pixelOffset: new google.maps.Size( -225, 0 ),  // クリック箇所に対する吹き出しの先端の位置
+      });
+}
+
+function MakeInfoWindow(e){
+	return new Promise(function(resolve,reject) {
+	    // 場所の住所の準備
+	    geocoder = new google.maps.Geocoder();
+	    
+	    geocoder.geocode({
+	      latLng: e.latLng
+	    }, function(results, status) {
+	    
+		    var address = results[0].formatted_address.replace(/^日本, /, '');
+		    
+		    /* 場所の詳細の準備 */
+		    CreateInfoWindow(address);
+		    infoWindow.open(map, marker);
+		      
+		    resolve('Success!MakeInfoWindow()');
+    	});
+	});
+}
+
 // クリックイベントを作成
 // クリックしたらマーカーを設置
 function initialize() {
@@ -50,6 +104,9 @@ function initialize() {
     anchor: new google.maps.Point(16, 32), //アイコンのアンカーポイント
     scaledSize: new google.maps.Size(32, 32) //アイコンのサイズ
   };
+  
+  CreateInfoWindow("");	// 最初に表示しておかないと画像が表示されないため、用意だけしておく。
+  infoWindow.close();
 
   // Mapをクリックする時の動作
   map.addListener("click",function(e){
@@ -89,30 +146,21 @@ function initialize() {
 //      }
 //    ];
     
-    // 場所の住所の準備
-    geocoder = new google.maps.Geocoder();
     
-    geocoder.geocode({
-      latLng: e.latLng
-    }, function(results, status) {
-    
-        var address = results[0].formatted_address.replace(/^日本, /, '');
-    
-    /* 場所の詳細の準備 */
-      infoWindow = new google.maps.InfoWindow({
-//      content: '<section style="margin-top:5px;"><figure style="float: left;"><img src="' + markers[0].figure + '" width="64px"></figure><div style="margin-left: 74px;"><h2 style="margin-bottom: 5px;font-size: 1.17em;">' + markers[0].title + '</h2><p style="font-size: 0.84em;">' + markers[0].summary + '</p></div><div><input type="button" value="test2" onclick="visualize()" onkeypress="visualize()" /></div><input type="text" id="activationKey" placeholder="Activation Key"></section>'
-        content:   "<div id='speechBubble' value='init'>" 
-                 + address
-                 + "  <div class='AmariForm' id='AmariFormMap'>"
-                 + "  <div class='currentPointArea'></div>"
-                 + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
-                 + "  </div>"
-                 + "</div>",
-//        position: new google.maps.LatLng(,),  //吹き出しの位置
-//        pixelOffset: new google.maps.Size( -225, 0 ),  // クリック箇所に対する吹き出しの先端の位置
-      });
-      infoWindow.open(map, marker);
-    });
+    // 吹き出しを表示
+	MakeInfoWindow(e)
+		.then(resolve => {
+			console.log(resolve);
+		    // streetビューの表示(吹き出しが出た後じゃないとIDが取れないので)
+	    	return DispStreetView(e);
+	    })
+	    .then(resolve => {
+			console.log(resolve);
+		})
+		.catch(reject => {
+			console.log(reject);
+		});
+
     /* マーカーをクリックしたら場所の詳細を表示 */
     google.maps.event.addListener(marker, 'click', function(e) {
       for(var i = 0; i < markers.length; i++) {
@@ -125,6 +173,7 @@ function initialize() {
         }
       }
     });
+
     
   });
 };
