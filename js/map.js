@@ -96,7 +96,7 @@ function initialize() {
       latLng: e.latLng
     }, function(results, status) {
     
-        var address = results[0].formatted_address.replace(/^“ú–{, /, '');
+        var address = results[0].formatted_address.replace(/“ú–{A/, '');
     
     /* êŠ‚ÌÚ×‚Ì€”õ */
       infoWindow = new google.maps.InfoWindow({

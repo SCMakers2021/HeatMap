@@ -31,6 +31,7 @@
 		<script src="js/screenTransition.js" charset="shift_jis"></script>
 		<script src="js/map.js" charset="shift_jis"></script>
 		<script src="js/DBAccess.js" type="text/javascript" charset="shift_jis"></script>
+		<script src="js/heatmap.js" charset="shift_jis"></script>
 		
 
 		<script src="https://maps.google.com/maps/api/js?v=3.exp&libraries=visualization&key=AIzaSyD1f5Z-Rqkh3z8HMuhd_sszHw2N1-RYBfk"></script>
@@ -117,7 +118,7 @@
 						<td onclick="searchCategoryClicked('Broccoli')" id='searchCategoryBroccoli'><input type="image" class='searchCategory' src="image/ブロッコリーアイコン1.png"><br>ブロッコリー</td>
 					</tr>
 				</table>
-				<input type="button" name="Bunpu" value="分布表示" style="color:white;background-color:lightpink;font-size:15;width:180px;height:30px"  onclick="heatMapButton()">
+				<input type="button" name="Bunpu" value="分布表示" style="color:white;background-color:lightpink;font-size:15;width:180px;height:30px"  onclick="dispDistribution()">
 				<input type="range" name="BunpuRange" min="0" max="6" style="width:180px;">
 			</div>
 		</div>
