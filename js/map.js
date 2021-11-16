@@ -83,6 +83,22 @@ function MakeInfoWindow(e){
 	});
 }
 
+// 現在位置に移動(コールバック)
+function successGeoLocationCallback(position){
+  var lat = position.coords.latitude;
+  var lng = position.coords.longitude;
+  
+  map.panTo(new google.maps.LatLng(lat,lng));
+};
+// 現在位置に移動(エラーのコールバック)
+function errorCallback(error){
+  alert("位置情報が取得できませんでした");
+};
+// 現在位置に移動
+function MoveNowPosition(){
+  navigator.geolocation.getCurrentPosition(successGeoLocationCallback, errorCallback);
+}
+
 // クリックイベントを作成
 // クリックしたらマーカーを設置
 function initialize() {
@@ -91,7 +107,7 @@ function initialize() {
   // 経度：lat，緯度：lngを設定
   var centralLatLng = {lat: 34.757555, lng: 135.497010};
   var options = {
-    zoom: 10, // ズーム1は一番小さい
+    zoom: 16, // ズーム1は一番小さい
     center: centralLatLng, //Mapの中央:上の座標
     mapTypeControl: false, //マップタイプ コントロール
     fullscreenControl: false, //全画面表示コントロール
@@ -112,6 +128,9 @@ function initialize() {
   
   CreateInfoWindow("");	// 最初に表示しておかないと画像が表示されないため、用意だけしておく。
   infoWindow.close();
+
+  // 現在位置に移動
+  MoveNowPosition();
 
   // Mapをクリックする時の動作
   map.addListener("click",function(e){
