@@ -1,26 +1,20 @@
 /* ヒートマップ機能の定義 */
 var heatMarkers = [];
+const row = 1;
+const col = 2;
 
 function initHeatMarkers(){
+  var center = map.getCenter();
   heatMarkers = [
   {
-    position: e.latLng,
-    title: '投稿',
-    summary: 'getMassage()',
-    figure: 'images/figure01.jpg'
-  },
-  {
-    position: e.latLng,
-    title: '投稿',
-    summary: 'getMassage()',
-    figure: 'images/figure01.jpg'
-  },
-  {
-    position: e.latLng,
-    title: '投稿',
-    summary: 'getMassage()',
-    figure: 'images/figure01.jpg'
+    position: center
   }
+//  {
+//    position: e.latLng,
+//    title: '投稿',
+//    summary: 'getMassage()',
+//    figure: 'images/figure01.jpg'
+//  }
   ];
 }
 
@@ -36,6 +30,8 @@ function dispDistribution(){
 //   radius:50,	// 各データ ポイントの影響の半径 (ピクセル単位)。
 //  });
   
+  initHeatMarkers();
+  
   var latlngBounds = map.getBounds();
   var swLatlng = latlngBounds.getSouthWest();
   var swlat = swLatlng.lat();
@@ -45,38 +41,65 @@ function dispDistribution(){
   var nelat = neLatlng.lat();
   var nelng = neLatlng.lng();
 
-  var latRangeOver = swlat;  // 緯度の上限(左の線)
-  var latRangeUnder = nelat;  // 緯度の下限(右の線)
-  var lngRangeOver = nelng;  // 経度の上限(上の線)
-  var lngRangeUnder = swlng;  // 経度の下限(下の線)
+  var latRangeOver = nelat;  // 緯度の上限(上の線)
+  var latRangeUnder = swlat;  // 緯度の下限(下の線)
+  var lngRangeOver = nelng;  // 経度の上限(右の線)
+  var lngRangeUnder = swlng;  // 経度の下限(左の線)
   
-  var latBlock = (latRangeOver - latRangeUnder)/10;  // 1ブロックの緯度の大きさ
-  var lngBlock = (lngRangeOver - lngRangeUnder)/24;  // 1ブロックの経度の大きさ(正方形にするためには必要ないと思う)
+  var latBlock = (latRangeOver - latRangeUnder)/row;  // 1ブロックの緯度の大きさ
+  var lngBlock = (lngRangeOver - lngRangeUnder)/col;  // 1ブロックの経度の大きさ(正方形にするためには必要ないと思う)
   
   var latBlockOver;  // ブロックの緯度の上限
   var latBlockUnder;  // ブロックの緯度の下限
   var lngBlockOver;  // ブロックの経度の上限
   var lngBlockUnder;  // ブロックの経度の下限
   
-  var cnt;
+  var cnt = new Array(col);
+  for (var i = 0; i < cnt.length; i++){
+    cnt[i] = new Array(row).fill(0);
+  }
   
-  for(var i = 0; i < 24; i++) {
+  var lat;
+  var lng;
+  
+  var heatMapData = [];
+  
+  for(var i = 0; i < col; i++) {
     // ブロックの経度の上下限の代入
-    lngBlockOver = latRangeUnder + (i * latBlock);
-  	lngBlockUnder = latRangeUnder + ((i+1) * latBlock);
+    lngBlockOver = lngRangeUnder + ((i+1) * lngBlock);
+  	lngBlockUnder = lngRangeUnder + (i * lngBlock);
   	
-  	for(var j = 0; j < 10; j++) {
+  	for(var j = 0; j < row; j++) {
   	  // ブロックの緯度の上下限の代入
-  	  latBlockOver = latRangeUnder + (j * latBlock);
-  	  latBlockUnder = latRangeUnder + ((j+1) * latBlock);
+  	  latBlockOver = latRangeUnder + ((j+1) * latBlock);
+  	  latBlockUnder = latRangeUnder + (j * latBlock);
   	  
-  	  for(var k = 0; k < heatMarkersの最大数; k++){
-  	    if(heatMarkers[k].position.lat > latBlockUnder && heatMarkers[k].position.lat >= latBlockOver
-  	    && heatMarkers[k].position.lng > lngBlockUnder && heatMarkers[k].position.lng >= lngBlockOver){
-  	      cnt++;
+  	  for(var k = 0; k < heatMarkers.length; k++){
+  	    lat = heatMarkers[k].position.lat();
+  	    lng = heatMarkers[k].position.lng();
+  	    if((lat > latBlockUnder) && (lat <= latBlockOver)
+  	    && (lng > lngBlockUnder) && (lng <= lngBlockOver)){
+  	      cnt[i][j] = cnt[i][j] + 1;
   	    }
   	  }
-  	  // 個数によって色付け
+  	  temp = cnt[i][j] + 1;
+  	  tempHeatMapData = [
+        {location: new google.maps.LatLng((latBlockOver+latBlockUnder)/2, (lngBlockOver+lngBlockUnder)/2), weight: temp}
+      ];
+      console.log("tempHeatMapData: " + tempHeatMapData.location);
+      heatMapData.push(tempHeatMapData);
   	}
   }
+//  heatMapData = [];
+//  heatMapData = [
+    //{location: new google.maps.LatLng(marker.position.lat, marker.position.lng), weight: 0.5},
+//    {location: marker.position, weight: 4},
+//    {location: new google.maps.LatLng((latBlockOver+latBlockUnder)/2, (lngBlockOver+lngBlockUnder)/2), weight: 2},
+//  ];
+  // 個数によって色付け
+  heatmap = new google.maps.visualization.HeatmapLayer({
+   data: heatMapData,
+   map: map,
+   radius:50,
+  });
 };
