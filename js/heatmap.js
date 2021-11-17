@@ -1,7 +1,7 @@
 /* ヒートマップ機能の定義 */
 var heatMarkers = [];
-const row = 1;
-const col = 2;
+const row = 10;
+const col = 24;
 
 function initHeatMarkers(){
   var center = map.getCenter();
@@ -82,20 +82,16 @@ function dispDistribution(){
   	      cnt[i][j] = cnt[i][j] + 1;
   	    }
   	  }
-  	  temp = cnt[i][j] + 1;
-  	  tempHeatMapData = [
-        {location: new google.maps.LatLng((latBlockOver+latBlockUnder)/2, (lngBlockOver+lngBlockUnder)/2), weight: temp}
-      ];
-      console.log("tempHeatMapData: " + tempHeatMapData.location);
-      heatMapData.push(tempHeatMapData);
+  	  temp = cnt[i][j];
+      if(temp>0){
+        tempHeatMapData = {location: new google.maps.LatLng((latBlockOver+latBlockUnder)/2, (lngBlockOver+lngBlockUnder)/2), weight: temp};
+        heatMapData.push(tempHeatMapData);
+      }
   	}
   }
-//  heatMapData = [];
-//  heatMapData = [
-    //{location: new google.maps.LatLng(marker.position.lat, marker.position.lng), weight: 0.5},
-//    {location: marker.position, weight: 4},
-//    {location: new google.maps.LatLng((latBlockOver+latBlockUnder)/2, (lngBlockOver+lngBlockUnder)/2), weight: 2},
-//  ];
+
+  console.log("heatMapData");
+  console.log(heatMapData);
   // 個数によって色付け
   heatmap = new google.maps.visualization.HeatmapLayer({
    data: heatMapData,
