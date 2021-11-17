@@ -38,7 +38,7 @@ function DispStreetView(e){
       addressControl: false,      // 住所表示
       clickToGo: false ,          // クリックによる移動
       fullscreenControl: false ,  // 全画面表示
-      panControl: false ,         // コンパスの表示
+      //panControl: false ,         // コンパスの表示
       linksControl: false ,       // 座標移動の矢印の表示
       zoomControl: false ,        // ズームコントローラの表示
 		}
