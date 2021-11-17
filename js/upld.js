@@ -16,11 +16,13 @@ function dataUrlSplit(dataUrl, file) {
 	let elems = dataUrl.split(",");
 	let base64 = elems[elems.length-1];
 	// MIME タイプは image/png とか image/svg+xml, image/bmp ... など
+	elems = elems[0].split("data:");
+	let contentType = elems[1].split(";")[0];
 	// 解釈するよりも file.name から拡張子を取り出して渡したほうが良さそう
 	elems = file.name.split(".");
 	let ext = elems[elems.length-1];
-	// とりあえず ext, base というキーにした
-	return {ext: ext, base64: base64};
+	// API に送るパラメータ ext, base, contentType というキーにした
+	return {ext: ext, base64: base64, contentType: contentType};
 }
 
 $( function() {
