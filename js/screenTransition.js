@@ -1,7 +1,7 @@
-// uƒJƒeƒSƒŠƒAƒCƒRƒ“vƒ{ƒ^ƒ“‰Ÿ‰º
+// ã€Œã‚«ãƒ†ã‚´ãƒªã‚¢ã‚¤ã‚³ãƒ³ã€ãƒœã‚¿ãƒ³æŠ¼ä¸‹
 function searchCategoryClicked( key ){
 	var id = "searchCategory" + key;
-	console.log("TODO:ŒŸõ = " + id);
+	console.log("TODO:æ¤œç´¢ = " + id);
 }
 
 function onEntryBtnClicked(){
@@ -24,7 +24,7 @@ $(function(){
 		if( true == flag ){
 			$('#btnAmari').attr('src',"image/AmariNegative.png");
 			$('#btnAmari').val("invalid");
-			console.log("TODOFƒAƒ}ƒŠ“o˜^ƒ‚[ƒh‚Ö");
+			console.log("TODOï¼šã‚¢ãƒãƒªç™»éŒ²ãƒ¢ãƒ¼ãƒ‰ã¸");
 		}else{
 			$('#btnAmari').attr('src',"image/AmariActive.png");
 			$('#btnAmari').val("valid");
@@ -35,7 +35,7 @@ $(function(){
 			$('#btnSagasu').attr('src',"image/SagasuNegative.png");
 			$('#btnSagasu').val("invalid");
 			$('#SagasuSidebar').attr('hidden',false);
-			console.log("TODOFƒTƒKƒXƒ‚[ƒh‚Ö");
+			console.log("TODOï¼šã‚µã‚¬ã‚¹ãƒ¢ãƒ¼ãƒ‰ã¸");
 
 			$('#map_modal').attr('hidden',true);
 			$('#map_hidden').attr('hidden',true);
@@ -47,9 +47,9 @@ $(function(){
 	}
 
 	//--------------------------------------------
-	// ƒnƒ“ƒhƒ‰ƒCƒxƒ“ƒgÀ‘•
+	// ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ™ãƒ³ãƒˆå®Ÿè£…
 	//--------------------------------------------
-	// uƒTƒKƒXvƒ{ƒ^ƒ“‰Ÿ‰º
+	// ã€Œã‚µã‚¬ã‚¹ã€ãƒœã‚¿ãƒ³æŠ¼ä¸‹
 	$('#btnSagasu').click(function(){
 		var btnVal = $('#btnSagasu').val();
 		if( "valid" == btnVal ){
@@ -60,7 +60,7 @@ $(function(){
 			switchSagasuMode(false);
 		}
 	})
-	// uƒAƒ}ƒŠvƒ{ƒ^ƒ“‰Ÿ‰º
+	// ã€Œã‚¢ãƒãƒªã€ãƒœã‚¿ãƒ³æŠ¼ä¸‹
 	$('#btnAmari').click(function(){
 		var btnVal = $('#btnAmari').val();
 		if( "valid" == btnVal ){
@@ -71,16 +71,16 @@ $(function(){
 			switchSagasuMode(true);
 		}
 	})
-	// uƒ†[ƒUvƒ{ƒ^ƒ“‰Ÿ‰º
+	// ã€Œãƒ¦ãƒ¼ã‚¶ã€ãƒœã‚¿ãƒ³æŠ¼ä¸‹
 	$('#btnUser').click(function(){
-		console.log("TODOFƒƒOƒCƒ“‚µ‚½‚¢");
+		console.log("TODOï¼šãƒ­ã‚°ã‚¤ãƒ³ã—ãŸã„");
 	})
 
-	// ƒAƒ}ƒŠuŸ‚Övƒ{ƒ^ƒ“‰Ÿ‰º
+	// ã‚¢ãƒãƒªã€Œæ¬¡ã¸ã€ãƒœã‚¿ãƒ³æŠ¼ä¸‹
 	$('#amariNext').click(function(){
-		console.log("TODOFuŸ‚Öv‚µ‚½‚¢");
+		console.log("TODOï¼šã€Œæ¬¡ã¸ã€ã—ãŸã„");
 	})
-	// ƒAƒ}ƒŠuƒLƒƒƒ“ƒZƒ‹vƒ{ƒ^ƒ“‰Ÿ‰º
+	// ã‚¢ãƒãƒªã€Œã‚­ãƒ£ãƒ³ã‚»ãƒ«ã€ãƒœã‚¿ãƒ³æŠ¼ä¸‹
 	$('#amariCancel').click(function(){
 		$('#map_modal').attr('hidden',true);
 		$('#map_hidden').attr('hidden',true);

@@ -1,9 +1,9 @@
-/* mapŠÖŒW‚ÌƒIƒuƒWƒFƒNƒg‚ğƒOƒ[ƒoƒ‹‚Å’è‹` */
+/* mapé–¢ä¿‚ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚°ãƒ­ãƒ¼ãƒãƒ«ã§å®šç¾© */
 var heatmap;
 
 function RegisterDB(){
   if(markers != null){
-	// ƒvƒ‹ƒ_ƒEƒ“‚©‚çƒJƒeƒSƒŠ‚ğ‘I‘ğ
+	// ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã‹ã‚‰ã‚«ãƒ†ã‚´ãƒªã‚’é¸æŠ
 	let category = document.getElementById('category');
 
     var data = {
@@ -37,7 +37,7 @@ function RegisterDB(){
 
 function ReadDB(){
   if(markers != null){
-	// ƒvƒ‹ƒ_ƒEƒ“‚©‚çƒJƒeƒSƒŠ‚ğ‘I‘ğ
+	// ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã‹ã‚‰ã‚«ãƒ†ã‚´ãƒªã‚’é¸æŠ
 	let category = document.getElementById('category');
 
 //	var latUnder = markers[0].position.lat() - 1;
@@ -116,8 +116,8 @@ function ReadDB(){
 //	    return( res.json() );
 //	  })
 //	  .then((json)=>{
-//	    // ‚±‚±‚É‰½‚ç‚©‚Ìˆ—
-//	    console.log('json‚Ìƒ‹[ƒg');
+//	    // ã“ã“ã«ä½•ã‚‰ã‹ã®å‡¦ç†
+//	    console.log('jsonã®ãƒ«ãƒ¼ãƒˆ');
 //	    console.log(json);
 //	  });
 //    
@@ -126,15 +126,15 @@ function ReadDB(){
 
   
 //  const categoryList = 
-//          ["õi", "“V‚Õ‚ç", "‚¨‚Å‚ñ"];
+//          ["å¯¿å¸", "å¤©ã·ã‚‰", "ãŠã§ã‚“"];
 //
 //   const selectCategoryName = document.getElementById('category');
-//   //menuList.disabled = false; //‘I‘ğ‰Â”\‚Èó‘Ô‚É‚·‚é
-//   //‘I‘ğ‚³‚ê‚½ƒWƒƒƒ“ƒ‹‚Ìƒƒjƒ…[ˆê——‚É‘Î‚µ‚Äˆ—‚ğ‚·‚é
+//   //menuList.disabled = false; //é¸æŠå¯èƒ½ãªçŠ¶æ…‹ã«ã™ã‚‹
+//   //é¸æŠã•ã‚ŒãŸã‚¸ãƒ£ãƒ³ãƒ«ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼ä¸€è¦§ã«å¯¾ã—ã¦å‡¦ç†ã‚’ã™ã‚‹
 //   categoryList.forEach((category, index) => {
-//     const option = document.createElement('option'); //option—v‘f‚ğV‚µ‚­ì‚é
-//     option.value = index; //option—v‘f‚Ì’l‚ÉAƒƒjƒ…[‚ğ¯•Ê‚Å‚«‚é”Ô†‚ğw’è‚·‚é
-//     option.innerHTML = category; //ƒ†[ƒU[Œü‚¯‚Ì•\¦‚Æ‚µ‚Äƒƒjƒ…[–¼‚ğw’è‚·‚é
-//     selectCategoryName.appendChild(option); //ƒZƒŒƒNƒgƒ{ƒbƒNƒX‚Éoption—v‘f‚ğ’Ç‰Á‚·‚é
+//     const option = document.createElement('option'); //optionè¦ç´ ã‚’æ–°ã—ãä½œã‚‹
+//     option.value = index; //optionè¦ç´ ã®å€¤ã«ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è­˜åˆ¥ã§ãã‚‹ç•ªå·ã‚’æŒ‡å®šã™ã‚‹
+//     option.innerHTML = category; //ãƒ¦ãƒ¼ã‚¶ãƒ¼å‘ã‘ã®è¡¨ç¤ºã¨ã—ã¦ãƒ¡ãƒ‹ãƒ¥ãƒ¼åã‚’æŒ‡å®šã™ã‚‹
+//     selectCategoryName.appendChild(option); //ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã«optionè¦ç´ ã‚’è¿½åŠ ã™ã‚‹
 //   });
 };
