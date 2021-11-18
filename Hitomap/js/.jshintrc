@@ -1,7 +1,0 @@
-{
-	"globals": {
-		"getStorage": true
-		, "setStorage": true
-		, "removeStorage": true
-	}
-}
