@@ -95,7 +95,11 @@ $(function(){
 
 	// アマリ「次へ」ボタン押下
 	$('#amariNext').click(function(){
-		switchAmariButtom(false);	// 確定ボタンを有効化
+		if(token!=null){
+			switchAmariButtom(false);	// 確定ボタンを有効化
+		}else{
+			alert("ログインしてください。");
+		}
 	})
 
 	function MoveAmariTopPage(){

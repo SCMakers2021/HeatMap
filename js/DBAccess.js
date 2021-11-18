@@ -1,19 +1,26 @@
 const HeatMapURL = "https://z06c2y3yq8.execute-api.ap-northeast-1.amazonaws.com/dev";
 
+// 期限を取得
+function GetDeadTime(){
+  var date = $('#deadTime').val();
+  return date;
+}
+
 function RegisterDB(){
-    if(markers != null){
+    if(amariMarker != null){
       // プルダウンからカテゴリを選択
       let category = document.getElementById('category');
       var commnet = $('#commnet').val();
-    
+      var deadTime = GetDeadTime();
+      var userID = token.Sub;
       var data = {
           function: "AddStoreInfo",
-          userID: "0123456789",
-          position: marker.position,
+          userID: userID,
+          position: amariMarker.position,
           categoryID: category.selectedIndex,
           comment: commnet,
           imagePath: "images/mark.png",
-          deadTime: 100
+          deadTime: deadTime
       };
       
       // instantiate a headers object
