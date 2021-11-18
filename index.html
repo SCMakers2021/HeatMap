@@ -26,6 +26,7 @@
 		<script src="lib/amazon-cognito-identity-js-master/dist/amazon-cognito-identity.min.js"></script>
 
 		<script src="js/common.js"></script>
+		<script src="js/date.js"></script>
 		<link rel="stylesheet" href="css/auth.css">
 		<script src="js/auth.js"></script>
 		<script src="js/screenTransition.js"></script>
@@ -83,7 +84,10 @@
 			<div id="map_hidden"  class='mapHide'>        <!-- アマリ投稿用隠しエリア -->
 				<div id='AmariFormEdit'>
 					<div class='AmariForm'>
-						<div class='currentPointArea'></div>
+						<div id='AmariFormMapAddress' class='AmariFormMapAddress'>
+							<div id="currentPointArea2" class='currentPointArea2'></div>
+							<div id="AmariFormAddress"></div>
+						</div>
 						<div class='entryArea'>
 							<table>
 								<tr><td>カテゴリ</td><td>
@@ -92,12 +96,15 @@
 										<option value="Tomoto">トマト</option>
 									</select>
 								</td></tr>
-								<tr><td>ユーザ名</td><td><input type='text' value=''></td></tr>
-								<tr><td>内容    </td><td><input type='text' value=''></td></tr>
+								<tr><td>期限</td><td><input id="deadTime" type="date"></input></td></tr>
+								<tr><td>コメント</td><td><input id="commnet"  type='text' value=''></td></tr>
+								<tr><td>写真</td><td><input type="file" name="example" accept="image/*"></td></tr>
+								
 							</table>
 						</div>
 						<div class='actionArea'>
 							<input class='okButton' id='amariNext'  type='button' value='次へ'>
+							<input class='okButton' id='amariSubmit'  type='button' value='確定'>
 							<input class='cancelButton' id='amariCancel' type='button' value='キャンセル'>
 						</div>
 					</div>

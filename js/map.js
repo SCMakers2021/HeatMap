@@ -1,6 +1,7 @@
 /* map関係のオブジェクトをグローバルで定義 */
 var map = {};
 var marker,infoWindow,markers=[];
+var address;
 
 function getMassage(){
   const textbox = document.getElementById("input-message");
@@ -49,6 +50,31 @@ function DispStreetView(e){
 	});
 }
 
+function DispStreetView2(e){
+	return new Promise(function(resolve,reject) {
+		const panoramaAmariFormMap = new google.maps.StreetViewPanorama(
+      document.getElementById("currentPointArea2"),
+      {
+        position: e.latLng,
+        pov: {
+          heading: 34,
+          pitch: 10,
+        },
+        visible: true,
+        addressControl: false,      // 住所表示
+        clickToGo: false ,          // クリックによる移動
+        fullscreenControl: false ,  // 全画面表示
+        panControl: false ,         // コンパスの表示
+        linksControl: false ,       // 座標移動の矢印の表示
+        zoomControl: false ,        // ズームコントローラの表示
+      }
+      );
+    map.setStreetView(panoramaAmariFormMap);
+		
+		resolve('Success!DispStreetView2()');
+	});
+}
+
 function CreateInfoWindow(address){
     infoWindow = new google.maps.InfoWindow({
         content:   "<div id='speechBubble' value='init'>" 
@@ -72,8 +98,8 @@ function MakeInfoWindow(e){
 	      latLng: e.latLng
 	    }, function(results, status) {
 	    
-		    var address = results[0].formatted_address.replace(/^日本, /, '');
-		    
+		    address = results[0].formatted_address.replace(/^日本, /, '');
+		    document.getElementById("AmariFormAddress").innerText = address; // アマリ登録画面（情報入力）の住所も更新
 		    /* 場所の詳細の準備 */
 		    CreateInfoWindow(address);
 		    infoWindow.open(map, marker);
@@ -144,6 +170,10 @@ function initialize() {
 
   // 現在位置に移動
   MoveNowPosition();
+  // ボタンの初期表示
+  switchAmariButtom(true);	// 次へボタンを有効化
+  // 日付を今日にする
+  SetToday();
 
   // Mapをクリックする時の動作
   map.addListener("click",function(e){
@@ -192,8 +222,12 @@ function initialize() {
 	    	return DispStreetView(e);
 	    })
 	    .then(resolve => {
-			console.log(resolve);
-		})
+			  console.log(resolve);
+        return DispStreetView2(e);
+		    })
+        .then(resolve => {
+          console.log(resolve);
+          })
 		.catch(reject => {
 			console.log(reject);
 		});

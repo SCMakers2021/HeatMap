@@ -153,8 +153,8 @@ a {
   position: absolute;
   top: 50px;
   left: 200px;
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 500px;
   padding: 20px;
   background-color: rgb(247, 248, 248);
 }
@@ -174,6 +174,10 @@ a {
   height: 40px;
 }
 
+.AmariForm .AmariFormMapAddress{
+  display: flex;
+}
+
 .AmariForm .currentPointArea{
   width: 100%;
   height: 200px;
@@ -181,6 +185,14 @@ a {
   border-color: rgb(134, 134, 134);
   margin-bottom: 20px;
 }
+.AmariForm .currentPointArea2{
+  width: 400px;
+  height: 100px;
+  border-style: outset;
+  border-color: rgb(134, 134, 134);
+  margin-bottom: 20px;
+}
+
 .AmariForm .actionArea{
   width: 100%;
   height: 50px;
@@ -192,7 +204,7 @@ a {
 .AmariForm .okButton{
   width: 80px;
   height: 30px;
-  float: right;
+  float: left;
   background-color: blue;
   color: #fff;
 }

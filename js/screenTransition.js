@@ -18,6 +18,21 @@ function onEntryBtnClicked(){
 	}
 }
 
+// 次へと確定のボタン切り替え
+// true：次へを有効　false：確定を有効
+function switchAmariButtom(flag){
+	if( true == flag ){
+		// 次へボタンを有効
+		$('#amariSubmit').css("visibility", "hidden");
+		$('#amariNext').css("visibility", "visible");
+		console.log("TODO：次へボタンを有効");
+	}else{
+		// 確定ボタンを有効
+		$('#amariSubmit').css("visibility", "visible");
+		$('#amariNext').css("visibility", "hidden");
+		console.log("TODO：確定ボタンを有効");
+	}
+}
 
 $(function(){
 	function switchAmariMode(flag){
@@ -45,6 +60,8 @@ $(function(){
 			$('#SagasuSidebar').attr('hidden',true);
 		}
 	}
+
+
 
 	//--------------------------------------------
 	// ハンドライベント実装
@@ -78,11 +95,26 @@ $(function(){
 
 	// アマリ「次へ」ボタン押下
 	$('#amariNext').click(function(){
-		console.log("TODO：「次へ」したい");
+		switchAmariButtom(false);	// 確定ボタンを有効化
 	})
-	// アマリ「キャンセル」ボタン押下
-	$('#amariCancel').click(function(){
+
+	function MoveAmariTopPage(){
 		$('#map_modal').attr('hidden',true);
 		$('#map_hidden').attr('hidden',true);
+		switchAmariButtom(true);	// 次へボタンを有効化
+	}
+
+	// アマリ「確定」ボタン押下
+	$('#amariSubmit').click(function(){
+		// DBに登録
+		RegisterDB();
+
+		// 移動
+		MoveAmariTopPage();
+	})
+
+	// アマリ「キャンセル」ボタン押下
+	$('#amariCancel').click(function(){
+		MoveAmariTopPage();
 	})
 });
