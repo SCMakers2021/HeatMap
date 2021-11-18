@@ -7,7 +7,7 @@ function GetDeadTime(){
 }
 
 function RegisterDB(){
-    if(markers != null){
+    if(amariMarker != null){
       // プルダウンからカテゴリを選択
       let category = document.getElementById('category');
       var commnet = $('#commnet').val();
@@ -16,7 +16,7 @@ function RegisterDB(){
       var data = {
           function: "AddStoreInfo",
           userID: userID,
-          position: marker.position,
+          position: amariMarker.position,
           categoryID: category.selectedIndex,
           comment: commnet,
           imagePath: "images/mark.png",

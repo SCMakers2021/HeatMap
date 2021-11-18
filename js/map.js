@@ -1,6 +1,6 @@
 /* map関係のオブジェクトをグローバルで定義 */
 var map = {};
-var marker,infoWindow,markers=[];
+var amariMarker,infoWindow,markers=[];
 var address;
 
 function getMassage(){
@@ -13,9 +13,9 @@ $(function() {
   /* 対象となるタイトルを持ったマーカーの詳細を開く */
   $(".location a").click(function() {
     for(var i = 0; i < markers.length; i++) {
-      if(marker[i].title == $(this).attr("data-title")) {
+      if(markers[i].title == $(this).attr("data-title")) {
         //マーカーとタイトルが一致したら詳細を表示
-        infoWindow[i].open(map, marker[i]);
+        infoWindow[i].open(map, markers[i]);
       } else {
         //マーカーとタイトルが一致しなければ詳細を閉じる
         infoWindow[i].close();
@@ -102,7 +102,7 @@ function MakeInfoWindow(e){
 		    document.getElementById("AmariFormAddress").innerText = address; // アマリ登録画面（情報入力）の住所も更新
 		    /* 場所の詳細の準備 */
 		    CreateInfoWindow(address);
-		    infoWindow.open(map, marker);
+		    infoWindow.open(map, amariMarker);
 		      
 		    resolve('Success!MakeInfoWindow()');
     	});
@@ -186,32 +186,20 @@ function initialize() {
     // this.setCenter(e.latLng); // クリックする場所をMapの中心にする(画面の移動速度が速い)
     this.panTo(e.latLng); //クリックする場所をMapの中心にする(画面の移動速度がゆっくり)
     
-    if(marker != null){
-      marker.setMap(null);
+    if(amariMarker != null){
+      amariMarker.setMap(null);
     }
     
     // クリックする場所をマーカーを立てる
-    marker = new google.maps.Marker({
+    amariMarker = new google.maps.Marker({
       position: e.latLng,
       map: map,
       icon: markerImage,
       title: e.latLng.toString(),
       animation: google.maps.Animation.DROP // マーカーを立つときのアニメーション
     });
-    // 上で立てたマーカーをもう一度クリックするとマーカーを削除
-    //marker.addListener("click",function(){
-    //  this.setMap(null);
-    //});
     
-    /* マーカーの情報を設定 */
-//    markers = [
-//      {
-//        position: e.latLng,
-//        title: '投稿',
-//        summary: 'getMassage()',
-//        figure: 'images/figure01.jpg'
-//      }
-//    ];
+
     
     
     // 吹き出しを表示
@@ -233,15 +221,13 @@ function initialize() {
 		});
 
     /* マーカーをクリックしたら場所の詳細を表示 */
-    google.maps.event.addListener(marker, 'click', function(e) {
-      for(var i = 0; i < markers.length; i++) {
-        if(marker.position.G == e.latLng.G && marker.position.K == e.latLng.K) {
-          //クリックしたマーカーだったら詳細を表示
-          infoWindow.open(map, marker);
-        } else {
-          //クリックしたマーカーでなければ詳細を閉じる
-          infoWindow.close();
-        }
+    google.maps.event.addListener(amariMarker, 'click', function(e) {
+      if(amariMarker.position.G == e.latLng.G && amariMarker.position.K == e.latLng.K) {
+        //クリックしたマーカーだったら詳細を表示
+        infoWindow.open(map, amariMarker);
+      } else {
+        //クリックしたマーカーでなければ詳細を閉じる
+        infoWindow.close();
       }
     });
 
