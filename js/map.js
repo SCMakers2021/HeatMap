@@ -173,7 +173,7 @@ function initialize() {
   // ボタンの初期表示
   switchAmariButtom(true);	// 次へボタンを有効化
   // 日付を今日にする
-  SetToday();
+  //SetToday();
 
   // Mapをクリックする時の動作
   map.addListener("click",function(e){
@@ -247,6 +247,19 @@ function initialize() {
 
     
   });
+   // 現在地ボタンのエレメントを作成
+  const MoveCurrentPlaceButtonDiv = document.createElement("div");
+  AddMoveCurrentPlaceButton(MoveCurrentPlaceButtonDiv);
+
+  //Google MAPS APIに作成したボタンを渡す
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(MoveCurrentPlaceButtonDiv);
+
+  //検索バーのエレメントを作成
+  const SearchBarDiv = document.createElement("div");
+  AddSearchBar(SearchBarDiv);
+
+  //Google MAPS APIに作成した検索バーを渡す
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(SearchBarDiv);
 };
 
 function visualize(){
@@ -261,3 +274,30 @@ function visualize(){
    radius:50,	// 各データ ポイントの影響の半径 (ピクセル単位)。
   });
 };
+
+ // 受け取ったDivにimgタブとボタンとしての機能を割り当て
+function AddMoveCurrentPlaceButton(controlDiv) {
+
+  const controlUI = document.createElement("img");
+
+  controlUI.classList.add("CurrentPositionButton")
+  controlUI.setAttribute("src", "./image/三角矢印.png")
+
+   controlDiv.appendChild(controlUI);
+
+  controlUI.addEventListener("click", () => {
+    MoveNowPosition();
+  });
+}
+
+function AddSearchBar(controlDiv){
+
+  const input = document.createElement("input");
+
+  input.setAttribute("type","text")
+
+  input.classList.add("SearchBar");
+
+  controlDiv.appendChild(input);
+
+}

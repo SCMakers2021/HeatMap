@@ -140,6 +140,17 @@ a {
   height: 100%;
 }
 
+.CurrentPositionButton{
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+}
+
+.SearchBar{
+  width: 500px;
+  height: 25px;
+  margin: 20px; 
+}
 /*****************************************************/
 /* [アマリ]情報 */
 /*****************************************************/
