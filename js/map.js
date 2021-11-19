@@ -173,7 +173,7 @@ function initialize() {
   // ボタンの初期表示
   switchAmariButtom(true);	// 次へボタンを有効化
   // 日付を今日にする
-  //SetToday();
+  SetToday();
 
   // Mapをクリックする時の動作
   map.addListener("click",function(e){

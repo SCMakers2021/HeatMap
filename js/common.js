@@ -189,3 +189,4 @@ $( function() {
 
 // グローバル変数宣言
 var token = new Tokens();
+var AmariPicJson;
