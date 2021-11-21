@@ -190,3 +190,18 @@ $( function() {
 // グローバル変数宣言
 var token = new Tokens();
 var AmariPicJson;
+const ModeInit = 0;
+// 定義
+var MODE_Define = defineEnum({
+    INIT : {
+        value : 1,
+    },
+    SAGASU : {
+        value : 2,
+    },
+    AMARI : {
+        value : 3,
+    }
+});
+
+var ScreenMode = MODE_Define.INIT;	// 画面遷移の状態

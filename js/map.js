@@ -138,6 +138,20 @@ function MoveNowPosition(){
   navigator.geolocation.getCurrentPosition(successGeoLocationCallback, errorCallback);
 }
 
+// アマリモードをキャンセルした場合の処理
+function CancelAmariMode(){
+  // マーカーを非表示
+  if(amariMarker != null){
+    amariMarker.setMap(null);
+  }
+
+  // 吹き出しを非表示
+  //クリックしたマーカーでなければ詳細を閉じる
+  if(infoWindow != null){
+    infoWindow.close();
+  }
+}
+
 // クリックイベントを作成
 // クリックしたらマーカーを設置
 function initialize() {
@@ -177,6 +191,10 @@ function initialize() {
 
   // Mapをクリックする時の動作
   map.addListener("click",function(e){
+    if(ScreenMode != MODE_Define.AMARI){
+      // 「アマリ」を選択していない場合は無処理。
+      return;
+    }
     // コンソールで経度を表示
     console.log("lat: " + e.latLng.lat());
     // コンソールで緯度を表示
@@ -198,27 +216,24 @@ function initialize() {
       title: e.latLng.toString(),
       animation: google.maps.Animation.DROP // マーカーを立つときのアニメーション
     });
-    
 
-    
-    
     // 吹き出しを表示
-	MakeInfoWindow(e)
-		.then(resolve => {
-			console.log(resolve);
-		    // streetビューの表示(吹き出しが出た後じゃないとIDが取れないので)
-	    	return DispStreetView(e);
-	    })
-	    .then(resolve => {
-			  console.log(resolve);
-        return DispStreetView2(e);
-		    })
+    MakeInfoWindow(e)
+      .then(resolve => {
+        console.log(resolve);
+          // streetビューの表示(吹き出しが出た後じゃないとIDが取れないので)
+          return DispStreetView(e);
+        })
         .then(resolve => {
           console.log(resolve);
+          return DispStreetView2(e);
           })
-		.catch(reject => {
-			console.log(reject);
-		});
+          .then(resolve => {
+            console.log(resolve);
+            })
+      .catch(reject => {
+        console.log(reject);
+      });
 
     /* マーカーをクリックしたら場所の詳細を表示 */
     google.maps.event.addListener(amariMarker, 'click', function(e) {

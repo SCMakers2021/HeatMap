@@ -40,6 +40,7 @@ $(function(){
 			$("#btnSagasu").toggleClass("topModeChange-Sagasu-hover",false);	// ボタンを押した動作を削除
 			$("#btnAmari").toggleClass("topModeChange-Amari-hover",true);	// ボタンを押す動作を追加
 			$('#btnAmari').val("invalid");
+			ScreenMode = MODE_Define.AMARI;
 			console.log("TODO：アマリ登録モードへ");
 		}else{
 			//$('#btnAmari').attr('src',"image/AmariActive.png");
@@ -52,7 +53,9 @@ $(function(){
 			$("#btnAmari").toggleClass("topModeChange-Amari-hover",false);	// ボタンを押した動作を削除
 			$('#btnSagasu').val("invalid");
 			$('#SagasuSidebar').attr('hidden',false);
+			ScreenMode = MODE_Define.SAGASU;
 			console.log("TODO：サガスモードへ");
+			CancelAmariMode();	// アマリモードをキャンセルした場合の処理
 
 			$('#map_modal').attr('hidden',true);
 			$('#map_hidden').attr('hidden',true);
