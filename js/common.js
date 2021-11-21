@@ -204,4 +204,5 @@ var MODE_Define = defineEnum({
     }
 });
 
-var ScreenMode = MODE_Define.INIT;	// 画面遷移の状態
+var ScreenMode = MODE_Define.INIT.value;	// 画面遷移の状態
+console.log("common.js："+String(ScreenMode));

@@ -191,7 +191,7 @@ function initialize() {
 
   // Mapをクリックする時の動作
   map.addListener("click",function(e){
-    if(ScreenMode != MODE_Define.AMARI){
+    if(ScreenMode != MODE_Define.AMARI.value){
       // 「アマリ」を選択していない場合は無処理。
       return;
     }
