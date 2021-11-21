@@ -116,10 +116,12 @@ class Tokens {
 			});
 		} else {
 			let obj = getSession("tokens");
-			if (obj.idToken) {
-				this.idToken = obj.idToken;
-				this.accessToken = obj.accessToken;
-				this.refreshToken = obj.refreshToken;
+			if(obj != null){
+				if (obj.idToken) {
+					this.idToken = obj.idToken;
+					this.accessToken = obj.accessToken;
+					this.refreshToken = obj.refreshToken;
+				}
 			}
 		}
 	}
@@ -205,4 +207,4 @@ var MODE_Define = defineEnum({
 });
 
 var ScreenMode = MODE_Define.INIT.value;	// 画面遷移の状態
-console.log("common.js："+String(ScreenMode));
+
