@@ -72,7 +72,14 @@ a {
   box-shadow: 0 5px 0 #ff8c00;
 }
 
-.topBar .modeSwitch .topModeChange-Amari{
+.topBar .modeSwitch .topModeChange-Sagasu-hover{
+  -webkit-transform: translate(0, 3px);
+  transform: translate(0, 3px);
+  -webkit-box-shadow: 0 5px 0 #ff8c00;
+  background-color: #ffa60080;
+} 
+
+ .topBar .modeSwitch .topModeChange-Amari{
   position: absolute;
   top: 20px;
   right:100px;
@@ -95,7 +102,13 @@ a {
   transform: translate(0, 3px);
   -webkit-box-shadow: 0 5px 0 #ff8c00;
   box-shadow: 0 5px 0 #ff8c00;
-}
+} 
+.topBar .modeSwitch .topModeChange-Amari-hover{
+  -webkit-transform: translate(0, 3px);
+  transform: translate(0, 3px);
+  -webkit-box-shadow: 0 5px 0 #ff8c00;
+  background-color: #ffa60080;
+} 
 /**************************************/
 /* コンテンツエリア                   */
 /**************************************/

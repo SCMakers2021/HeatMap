@@ -52,7 +52,10 @@ function RegisterDB(){
       // make API call with parameters and use promises to get response
       fetch(HeatMapURL, requestOptions)
       .then(response => response.text())
-      .then(result => alert(JSON.parse(result).body))
+      .then(result => 
+        //alert(JSON.parse(result).body)
+        alert("投稿しました")
+        )
       .catch(error => console.log('error', error));
     }
   };
