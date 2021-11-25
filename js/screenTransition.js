@@ -106,6 +106,8 @@ $(function(){
 	$('#amariNext').click(function(){
 		if(token!=null){
 			switchAmariButtom(false);	// 確定ボタンを有効化
+			// tweetボタンを生成
+			CreateTweetButton();
 		}else{
 			alert("ログインしてください。");
 		}

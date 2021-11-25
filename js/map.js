@@ -76,17 +76,17 @@ function DispStreetView2(e){
 }
 
 function CreateInfoWindow(address){
-    infoWindow = new google.maps.InfoWindow({
-        content:   "<div id='speechBubble' value='init'>" 
-                 + address
-                 + "  <div class='AmariForm' id='AmariFormMap'>"
-                 + "  <div class='currentPointArea' id='currentPointArea'></div>"
-                 + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
-                 + "  </div>"
-                 + "</div>",
+  infoWindow = new google.maps.InfoWindow({
+      content:   "<div id='speechBubble' value='init'>" 
+                + address
+                + "  <div class='AmariForm' id='AmariFormMap'>"
+                + "  <div class='currentPointArea' id='currentPointArea'></div>"
+                + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
+                + "  </div>"
+                + "</div>",
 //        position: new google.maps.LatLng(,),  //吹き出しの位置
 //        pixelOffset: new google.maps.Size( -225, 0 ),  // クリック箇所に対する吹き出しの先端の位置
-      });
+    });
 }
 
 function MakeInfoWindow(e){
