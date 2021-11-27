@@ -135,7 +135,7 @@
 
   .contents div.sidebar {
     position: fixed;
-    top: 120px;
+    top: 25vw;
     width: 100%;
     height: 150px;
     background: rgb(255, 255, 255);

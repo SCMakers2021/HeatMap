@@ -66,6 +66,7 @@
 		$(window).on('load', function() {
 			// カテゴリの一覧を作成
 			MakeCategoryList();
+			MakeCategoryPanel();
 			//実行処理
 			googleMapInitialize();
 
@@ -132,16 +133,6 @@
 			<!-- ## レイヤ3 ##-->
 			<div class='sidebar' id="SagasuSidebar">                <!-- サガス用サイドバー -->
 				<table id='searchCategoryArea'>
-					<tr>
-						<td onclick="searchCategoryClicked('Cake')"     id='searchCategoryCake'    ><input type="image" class='searchCategory' src="image/ケーキのアイコン3.png"><br>ケーキ</td>
-						<td onclick="searchCategoryClicked('Bento')"    id='searchCategoryBento'   ><input type="image" class='searchCategory' src="image/日の丸弁当アイコン1.png"><br>お弁当</td>
-						<td onclick="searchCategoryClicked('Sushi')"    id='searchCategorySushi'   ><input type="image" class='searchCategory' src="image/寿司アイコン.png"><br>お寿司</td>
-					</tr>
-					<tr>
-						<td onclick="searchCategoryClicked('Onion')"    id='searchCategoryOnion'   ><input type="image" class='searchCategory' src="image/たまねぎイラスト1.png"><br>たまねぎ</td>
-						<td onclick="searchCategoryClicked('Tomato')"   id='searchCategoryTomato'  ><input type="image" class='searchCategory' src="image/トマトのアイコン2.png"><br>トマト</td>
-						<td onclick="searchCategoryClicked('Broccoli')" id='searchCategoryBroccoli'><input type="image" class='searchCategory' src="image/ブロッコリーアイコン1.png"><br>ブロッコリー</td>
-					</tr>
 				</table>
 				<input type="button" name="Bunpu" value="分布表示" style="color:white;background-color:lightpink;font-size:15;width:180px;height:30px"  onclick="dispDistribution()">
 				<input type="range" name="BunpuRange" min="0" max="6" style="width:180px;">
