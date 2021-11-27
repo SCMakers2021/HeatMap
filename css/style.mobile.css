@@ -38,7 +38,7 @@
   }
   .topBar .modeSwitch{
     position: absolute;
-    top: 8vw;
+    top: 7vw;
     right: 1vw;
   }
   .topBar .modeSwitch .topModeChange{
@@ -47,7 +47,7 @@
   }
   .topBar .userStatus{
     position: absolute;
-    top: 5px;
+    top: 3px;
     right: 3vw;
   }
   .topBar .userStatus .userIcon{
@@ -153,7 +153,7 @@
   /*****************************************************/
   #speechBubble{
     width: 90%;
-    height: 80vw;
+    height: 70vw;
     background-color: rgb(247, 248, 248);
   }
   #AmariFormEdit{
@@ -165,6 +165,16 @@
     /* height: 500px; */
     padding: 10px;
     background-color: rgb(247, 248, 248);
+  }
+  .AmariForm .AmariFormMapAddress{
+    /* display: flex; */
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    min-height: 75px;
+    border-top: 4px solid #ffa600;
+    border-right: 4px solid #ffa600;
+    border-left: 4px solid #ffa600;
   }
   .AmariForm .currentPointArea{
     width: 100%;
