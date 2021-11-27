@@ -80,8 +80,8 @@ function CreateInfoWindow(address){
       content:   "<div id='speechBubble' value='init'>" 
                 + address
                 + "  <div class='AmariForm' id='AmariFormMap'>"
-                + "  <div class='currentPointArea' id='currentPointArea'></div>"
-                + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
+                + "     <div class='currentPointArea' id='currentPointArea'></div>"
+                + "     <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
                 + "  </div>"
                 + "</div>",
 //        position: new google.maps.LatLng(,),  //吹き出しの位置

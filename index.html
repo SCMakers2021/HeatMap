@@ -93,23 +93,27 @@
 				<div id='AmariFormEdit'>
 					<div class='AmariForm'>
 						<div id='AmariFormMapAddress' class='AmariFormMapAddress'>
-							<div id="currentPointArea2" class='currentPointArea2'></div>
+							<div id="currentPointArea2"></div>
 							<div id="AmariFormAddress"></div>
 						</div>
 						<div class='entryArea'>
-							<table>
-								<tr><td>カテゴリ</td><td>
-									<select id="category">
-										<option value="Bento">お弁当</option>
-										<option value="Tomoto">トマト</option>
-									</select>
-								</td></tr>
-								<tr><td>期限</td><td><input id="deadTime" type="date"></input></td></tr>
-								<tr><td>コメント</td><td><input id="comment"  type='text' value=''></td></tr>
-								<tr><td>写真</td><td><input id="AmariPic" type="file" name="example" accept="image/*"><img id="upldPreview" height="200" alt="画像のプレビュー..."></td></tr>
-								
-								
-							</table>
+							<div class="box__itmes box__title">カテゴリ</div>
+							<div class="box__itmes">
+								<select id="category" style="width:95%;">
+									<option value="Bento">お弁当</option>
+									<option value="Tomoto">トマト</option>
+								</select>
+							</div>
+							<div class="box__itmes box__title">期限</div>
+							<div class="box__itmes"><input id="deadTime" type="date" style="width:95%;"></input></div>
+							<div class="box__itmes box__title">コメント</div>
+							<div class="box__itmes"><textarea id="comment"  type='text' value='' rows="5" style="width:95%;"></textarea></div>
+							<div class="box__itmes box__title">写真</div>
+							<div class="box__itmes">
+								<input id="AmariPic" type="file" name="example" accept="image/*"></input>
+								<!-- <img id="upldPreview" height="200" alt="画像のプレビュー..."> -->
+								<img id="upldPreview" alt="">
+							</div>
 						</div>
 						<div class='actionArea'>
 							<input class='okButton' id='amariNext'  type='button' value='次へ'>
