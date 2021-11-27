@@ -29,6 +29,7 @@
 
 		<script src="js/enum.js"></script>
 		<script src="js/common.js"></script>
+		<script src="js/categoryList.js"></script>
 		<script src="js/date.js"></script>
 		<link rel="stylesheet" href="css/auth.css">
 		<script src="js/auth.js"></script>
@@ -63,6 +64,8 @@
 		// ロード時処理
 		//====================================================
 		$(window).on('load', function() {
+			// カテゴリの一覧を作成
+			MakeCategoryList();
 			//実行処理
 			googleMapInitialize();
 
@@ -100,8 +103,8 @@
 							<div class="box__itmes box__title">カテゴリ</div>
 							<div class="box__itmes">
 								<select id="category" style="width:95%;">
-									<option value="Bento">お弁当</option>
-									<option value="Tomoto">トマト</option>
+									<!-- <option value="Bento">お弁当</option>
+									<option value="Tomoto">トマト</option> -->
 								</select>
 							</div>
 							<div class="box__itmes box__title">期限</div>
