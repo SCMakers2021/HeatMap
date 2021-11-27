@@ -40,16 +40,24 @@ function MakeCategoryPanel(){
     var loopNum = categoryList.length / 5 + 1;
     var ListIndex = 0;
     var row;
+    var colNum;    // 列数
+    var col;
     // creating all cells
     // for (var i = 0; i < loopNum; i++) {
     categoryList.forEach((category, index) => {
-        var col = index%5;
+        
+        if(true == isSmartPhone()){
+            colNum = 5;
+        }else{
+            colNum = 3;
+        }
+        col = index%colNum;
         
         if(0 == col){
             // creates a table row
             row = document.createElement("tr");
             MakeCategoryPanelTd(row,category,index);
-        }else if(4 == col){
+        }else if((colNum-1) == col){
             MakeCategoryPanelTd(row,category,index);
             // add the row to the end of the table body
             tblBody.appendChild(row);
@@ -58,7 +66,8 @@ function MakeCategoryPanel(){
             MakeCategoryPanelTd(row,category,index);
         }
     });
-    if(4 != col){
+    // まだ残っていれば追加
+    if(row != null){
         // add the row to the end of the table body
         tblBody.appendChild(row);
     }
