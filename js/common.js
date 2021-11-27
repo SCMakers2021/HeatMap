@@ -184,6 +184,14 @@ function apiFetch(url, options) {
 	return fetch(url, options);
 }
 
+function isSmartPhone() {
+	if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+	  return true;
+	} else {
+	  return false;
+	}
+  }
+
 $( function() {
 	// 共通処理
 

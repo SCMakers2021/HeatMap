@@ -39,7 +39,11 @@ $( function() {
 				const dataUrl = reader.result;
 				const file = reader.file;
 				// dataUrl をプレビュー表示
-				document.querySelector('#upldPreview').height = 200;
+				if(true == isSmartPhone()){
+					document.querySelector('#upldPreview').height = 50;
+				}else{
+					document.querySelector('#upldPreview').height = 200;
+				}
 				document.querySelector('#upldPreview').src = dataUrl;
 				
 				// TODO: dataUrl を Lambda に送信
