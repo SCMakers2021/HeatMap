@@ -37,14 +37,14 @@ $(function () {
 
         // エラーメッセージ
         messages: {
-            singup_email: {
+            signup_email: {
                 required: 'メールアドレスを入力してください',
                 email: 'メールアドレスの形式で入力してください',
             },
         },
         // エラーメッセージ出力箇所
         errorPlacement: function (error, element) {
-            error.appendTo($('.login-error-message'));
+            error.appendTo($('.signup-error-message'));
         },
 
         errorElement: "span",
