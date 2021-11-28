@@ -26,6 +26,9 @@
 		<script src="lib/amazon-cognito-identity-js-master/dist/amazon-cognito-identity.min.js"></script>
 
 		<script sync src="lib/widgets.js" charset="utf-8"></script>
+		
+		<link rel="stylesheet" href="lib/jRange/jquery.range.css">
+		<script src="lib/jRange/jquery.range.js""></script>
 
 		<script src="js/enum.js"></script>
 		<script src="js/common.js"></script>
@@ -135,7 +138,9 @@
 				<table id='searchCategoryArea'>
 				</table>
 				<input type="button" name="Bunpu" value="分布表示" style="color:white;background-color:lightpink;font-size:15;width:180px;height:30px"  onclick="dispDistribution()">
-				<input type="range" name="BunpuRange" min="0" max="6" style="width:180px;">
+				<div style="padding: 20px;">
+					<input class="single-slider" value="0" />
+				</div>
 			</div>
 		</div>
 		<!-- ================================================ -->

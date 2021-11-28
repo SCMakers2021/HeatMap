@@ -3,6 +3,29 @@ var heatMarkers = [];
 const row = 10;
 const col = 24;
 
+$(function () {
+  $('.single-slider').jRange({
+    from: 0,
+    to: 7,
+    step: 1.0,
+    scale: ["今日","１日前", "２日前", "３日前", "４日前", "５日前", "６日前", "７日前"],
+    format: '%s',
+    width: '90%',
+    // theme: "theme-blue",
+    showLabels: false,
+    // snap: true,
+    ondragend: function(e){
+      ChangeHistory(e);
+    }
+  });
+});
+
+function ChangeHistory (value) {
+  console.log("分布表示スライダー:"+value);
+  alert(value+"日前を表示");
+}
+
+
 function initHeatMarkers(){
   var center = map.getCenter();
   heatMarkers = [
