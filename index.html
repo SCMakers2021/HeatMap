@@ -17,6 +17,7 @@
 		<link rel="stylesheet" href="lib/jquery-ui.min.css">
 		<script src="lib/jquery-1.11.3.min.js"></script>
 		<script src="lib/jquery-ui.min.js"></script>
+		<script src="lib/jquery.validate.min.js"></script>
 
 		<script src="lib/jsbn.js"></script>
 		<script src="lib/jsbn2.js"></script>
@@ -30,6 +31,7 @@
 		<script src="js/date.js"></script>
 		<link rel="stylesheet" href="css/auth.css">
 		<script src="js/auth.js"></script>
+		<script src="js/auth-validation.js"></script>
 		<script src="js/screenTransition.js"></script>
 		<script src="js/map.js"></script>
 		<script src="js/upld.js"></script>
@@ -164,15 +166,17 @@
 							<li><a href="#tabs-signup">ユーザ登録</a></li>
 						</ul>
 						<div id="tabs-login">
-							<div id="div-login-input">
-								<input id="login-email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
+							<form id="div-login-input">
+								<input id="login-email" name="login_email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
 								<input id="login-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
 								<input id="login-button" class="auth-login auth-login_button" type="button" value="ログイン"/><br>
 								<input id="login-ishold" class="auth-login_hold" type="checkbox"/>
 								<label class="auth-login_hold_label" for="login-ishold">次回から自動的にログインする</label>
 								<p/>
 								<a class="auth-password_reset" href="#">パスワードを忘れた方はこちら</a>
-							</div>
+								<p/>
+								<div class="login-error-message"></div>
+							</form>
 							<div id="div-signup-confirm">
 								<span class="auth-conf-title">認証コードを入力してください</span><br>
 								<table class="auth-conf-table">
@@ -190,12 +194,14 @@
 							</div>
 						</div>
 						<div id="tabs-signup">
-							<div id="div-signup-input">
-								<input id="signup-email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
+							<form id="div-signup-input">
+								<input id="signup-email" name="singup_email" class="auth-login auth-login_email" type="email" placeholder="E-mail"/><br>
 								<input id="signup-pass" class="auth-login auth-login_pass" type="password" placeholder="Password"/><br>
 								<input id="signup-pass-repeat" class="auth-login auth-login_pass" type="password" placeholder="Repeat Password"/><br>
 								<input id="signup-button" class="auth-login auth-login_button" type="button" value="登録"/><br>
-							</div>
+								<p/>
+								<div class="signup-error-message"></div>
+							</form>
 						</div>
 					</div>
 				</div>

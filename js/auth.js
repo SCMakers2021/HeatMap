@@ -143,6 +143,10 @@ $( function() {
 
 	// ログイン
 	$( '#login-button' ).on( 'click', function() {
+		let isValid = $('#div-login-input').valid();
+		if (!isValid) {
+			return false;
+		}
 		// ログインをクリックした時にログインさせる処理
 		let email = $('#login-email').val();
 		let pass1 = $('#login-pass').val();
@@ -205,6 +209,10 @@ $( function() {
 
 	// ユーザの新規登録
 	$( '#signup-button' ).on( 'click', function() {
+		let isValid = $('#div-signup-input').valid();
+		if (!isValid) {
+			return false;
+		}
 		// 登録をクリックした時にユーザ登録させる処理
 		let email = $('#signup-email').val();
 		let pass1 = $('#signup-pass').val();
