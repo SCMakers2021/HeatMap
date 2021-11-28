@@ -39,7 +39,13 @@ $( function() {
 				const dataUrl = reader.result;
 				const file = reader.file;
 				// dataUrl をプレビュー表示
+				if(true == isSmartPhone()){
+					document.querySelector('#upldPreview').height = 50;
+				}else{
+					document.querySelector('#upldPreview').height = 200;
+				}
 				document.querySelector('#upldPreview').src = dataUrl;
+				
 				// TODO: dataUrl を Lambda に送信
                 //AmariPicJson = JSON.stringify(dataUrlSplit(dataUrl, file), null, ' ');
                 AmariPicJson = dataUrlSplit(dataUrl, file);

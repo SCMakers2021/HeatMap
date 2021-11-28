@@ -76,17 +76,17 @@ function DispStreetView2(e){
 }
 
 function CreateInfoWindow(address){
-    infoWindow = new google.maps.InfoWindow({
-        content:   "<div id='speechBubble' value='init'>" 
-                 + address
-                 + "  <div class='AmariForm' id='AmariFormMap'>"
-                 + "  <div class='currentPointArea' id='currentPointArea'></div>"
-                 + "    <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
-                 + "  </div>"
-                 + "</div>",
+  infoWindow = new google.maps.InfoWindow({
+      content:   "<div id='speechBubble' value='init'>" 
+                + address
+                + "  <div class='AmariForm' id='AmariFormMap'>"
+                + "     <div class='currentPointArea' id='currentPointArea'></div>"
+                + "     <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
+                + "  </div>"
+                + "</div>",
 //        position: new google.maps.LatLng(,),  //吹き出しの位置
 //        pixelOffset: new google.maps.Size( -225, 0 ),  // クリック箇所に対する吹き出しの先端の位置
-      });
+    });
 }
 
 function MakeInfoWindow(e){
@@ -282,7 +282,7 @@ function AddMoveCurrentPlaceButton(controlDiv) {
   const controlUI = document.createElement("img");
 
   controlUI.classList.add("CurrentPositionButton")
-  controlUI.setAttribute("src", "./image/三角矢印.png")
+  controlUI.setAttribute("src", "./image/現在位置.png")
 
    controlDiv.appendChild(controlUI);
 
@@ -291,13 +291,36 @@ function AddMoveCurrentPlaceButton(controlDiv) {
   });
 }
 
+// 住所を検索して移動
+function SearchAddressAndMove(inputAddress){
+  geocoder = new google.maps.Geocoder();   // ③
+
+  geocoder.geocode( { address: inputAddress}, (results, status) => {  // ④
+    if (status == 'OK') {  // ⑤
+      var location = results[0].geometry.location;
+      map.panTo(location); //クリックする場所をMapの中心にする(画面の移動速度がゆっくり)
+    } else {   // ⑫
+      alert("「" + inputAddress + "」" + 'は見つかりませんでした。');
+    }
+  });   
+}
+
 function AddSearchBar(controlDiv){
 
   const input = document.createElement("input");
 
   input.setAttribute("type","text")
-
+  input.setAttribute("id", "SearchBar");
   input.classList.add("SearchBar");
+
+  input.addEventListener('keydown', function(e){
+    if('Enter' == e.code){
+        // ENTERキー入力時に検索を実行
+        var SearchBar = document.getElementById("SearchBar");
+        // 検索+移動
+        SearchAddressAndMove(SearchBar.value);
+    }
+  });
 
   controlDiv.appendChild(input);
 

@@ -2,36 +2,69 @@
 var heatMarkers = [];
 const row = 10;
 const col = 24;
+var heatMapData = [];
+var heatmap = null;
 
-function initHeatMarkers(){
+$(function () {
+  $('.single-slider').jRange({
+    from: 0,
+    to: 7,
+    step: 1.0,
+    scale: ["今日","１日前", "２日前", "３日前", "４日前", "５日前", "６日前", "７日前"],
+    format: '%s',
+    width: '90%',
+    // theme: "theme-blue",
+    showLabels: false,
+    // snap: true,
+    ondragend: function(e){
+      ChangeHistory(e);
+    }
+  });
+});
+
+function ChangeHistory (value) {
+  initHeatMarkers(value);
+  dispDistribution();
+
+  console.log("分布表示スライダー:"+value);
+  // alert(value+"日前を表示");
+}
+
+
+function initHeatMarkers(value){
+  var latlngBounds = map.getBounds();
+  var swLatlng = latlngBounds.getSouthWest();
+  var swlat = swLatlng.lat();
+  var swlng = swLatlng.lng();
+
+  var neLatlng = latlngBounds.getNorthEast();
+  var nelat = neLatlng.lat();
+  var nelng = neLatlng.lng();
+
+  var latRangeOver = nelat;  // 緯度の上限(上の線)
+  var latRangeUnder = swlat;  // 緯度の下限(下の線)
+  var lngRangeOver = nelng;  // 経度の上限(右の線)
+  var lngRangeUnder = swlng;  // 経度の下限(左の線)
+  
+  var latBlock = (latRangeOver - latRangeUnder)/(row+10);  // 1ブロックの緯度の大きさ
+  var lngBlock = (lngRangeOver - lngRangeUnder)/col;  // 1ブロックの経度の大きさ(正方形にするためには必要ないと思う)
+
   var center = map.getCenter();
+  var latlng = new google.maps.LatLng(center.lat()-value*latBlock, center.lng()+value*lngBlock);
+  console.log(latlng.lat());
+  console.log(latlng.lng());
   heatMarkers = [
-  {
-    position: center
-  }
-//  {
-//    position: e.latLng,
-//    title: '投稿',
-//    summary: 'getMassage()',
-//    figure: 'images/figure01.jpg'
-//  }
+    {
+      position: latlng
+    }
   ];
 }
 
 function dispDistribution(){
-//  heatMapData = [
-    //{location: new google.maps.LatLng(marker.position.lat, marker.position.lng), weight: 0.5},
-//    {location: marker.position, weight: 4},
-//    {location: new google.maps.LatLng(35.43820870035895,139.27825203125), weight: 2},
-//  ];
-//  heatmap = new google.maps.visualization.HeatmapLayer({
-//   data: heatMapData,
-//   map: map,
-//   radius:50,	// 各データ ポイントの影響の半径 (ピクセル単位)。
-//  });
-  
-  initHeatMarkers();
-  
+  if(heatmap == null){
+    initHeatMarkers(0);
+  }
+    
   var latlngBounds = map.getBounds();
   var swLatlng = latlngBounds.getSouthWest();
   var swlat = swLatlng.lat();
@@ -62,7 +95,11 @@ function dispDistribution(){
   var lat;
   var lng;
   
-  var heatMapData = [];
+  if(heatmap != null){
+    heatmap.setMap(null);
+  }
+  
+  heatMapData = [];
   
   for(var i = 0; i < col; i++) {
     // ブロックの経度の上下限の代入

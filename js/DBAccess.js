@@ -10,7 +10,7 @@ function RegisterDB(){
     if((amariMarker != null) && (AmariPicJson != null)){
       // プルダウンからカテゴリを選択
       let category = document.getElementById('category');
-      var commnet = $('#commnet').val();
+      var comment = $('#comment').val();
       var deadTime = GetDeadTime();
       var userID = token.Sub;
 
@@ -19,7 +19,7 @@ function RegisterDB(){
           userID: userID,
           position: amariMarker.position,
           categoryID: category.selectedIndex,
-          comment: commnet,
+          comment: comment,
           deadTime: deadTime,
           pic:AmariPicJson
       };

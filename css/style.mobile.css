@@ -16,7 +16,7 @@
     top: 0px;
     left: 0px;
     width: 100%;
-    height: 120px;
+    height: 25vw;
     background: rgb(255, 255, 255);
   
     border-left: 0px;
@@ -24,12 +24,101 @@
     border-style: solid;
     border-color: rgb(71, 71, 71);
   }
+  .topBar .siteTitle{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 14vw;
+    font-weight: bolder;
+    border-width: 1px;
+    color: #FF8C00;
+    background: -webkit-linear-gradient(0deg,#40E0D0,#FF8C00,#FF0080);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .topBar .modeSwitch{
+    position: absolute;
+    top: 7vw;
+    right: 1vw;
+  }
+  .topBar .modeSwitch .topModeChange{
+    width: 50px;
+    height: 50px;
+  }
+  .topBar .userStatus{
+    position: absolute;
+    top: 3px;
+    right: 3vw;
+  }
+  .topBar .userStatus .userIcon{
+    width: 6vw;
+    height: 6vw;
+  }
+  .topBar .modeSwitch .topModeChange-Sagasu{
+    position: absolute;
+    top: 0vw;
+    right:18vw;
+    width: 60px;
+    height:60px;  
+    border-radius: 50%;
+    line-height: 60px;
+    text-align:center;
+    font-size: 13px;
+    font-weight: bolder;
+    padding:0px;
+    color: #fff;
+    background-color: #FFA500;
+    -webkit-box-shadow: 0 7px 0 #ff8c00;
+    box-shadow: 0 7px 0 #ff8c00;
+  }
+  .topBar .modeSwitch .topModeChange-Sagasu:hover{
+    -webkit-transform: translate(0, 3px);
+    transform: translate(0, 3px);
+    -webkit-box-shadow: 0 5px 0 #ff8c00;
+    box-shadow: 0 5px 0 #ff8c00;
+  }
+  
+  .topBar .modeSwitch .topModeChange-Sagasu-hover{
+    -webkit-transform: translate(0, 3px);
+    transform: translate(0, 3px);
+    -webkit-box-shadow: 0 5px 0 #ff8c00;
+    background-color: #ffa60080;
+  } 
+  .topBar .modeSwitch .topModeChange-Amari{
+    position: absolute;
+    top: 0vw;
+    right:0vw;
+    width: 60px;
+    height:60px;  
+    border-radius: 50%;
+    line-height: 60px;
+    text-align:center;
+    font-size: 13px;
+    font-weight: bolder;
+    padding:0px;
+    color: #fff;
+    background-color: #FFA500;
+    -webkit-box-shadow: 0 7px 0 #ff8c00;
+    box-shadow: 0 7px 0 #ff8c00;
+  }
+  .topBar .modeSwitch .topModeChange-Amari:hover{
+    -webkit-transform: translate(0, 3px);
+    transform: translate(0, 3px);
+    -webkit-box-shadow: 0 5px 0 #ff8c00;
+    box-shadow: 0 5px 0 #ff8c00;
+  } 
+  .topBar .modeSwitch .topModeChange-Amari-hover{
+    -webkit-transform: translate(0, 3px);
+    transform: translate(0, 3px);
+    -webkit-box-shadow: 0 5px 0 #ff8c00;
+    background-color: #ffa60080;
+  } 
   .contents {
     position: absolute;
-    top: 120px;
+    top: 25vw;
     left: 0px;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 25vw);
     background: #fff;
   
     border-left: 0px;
@@ -38,27 +127,17 @@
     border-color: rgb(71, 71, 71);
   }
 
-  .topBar .modeSwitch{
-    position: absolute;
-    top: 60px;
-    right: 30px;
-  }
-  
-  .topBar .modeSwitch .topModeChange{
-    width: 50px;
-    height: 50px;
-  }
-  .topBar .userStatus .userIcon{
-    width: 40px;
-    height: 40px;
+  .SearchBar{
+    width: 60vw;
+    height: 25px;
+    margin: 20px; 
   }
 
-  
   .contents div.sidebar {
     position: fixed;
-    top: 120px;
+    top: 25vw;
     width: 100%;
-    height: 150px;
+    height: 200px;
     background: rgb(255, 255, 255);
   
     border-left: 0px;
@@ -69,16 +148,41 @@
     animation: SlideDown 1.0s;  /* ★スライドUPアニメーション */
   }
 
+  /*****************************************************/
+  /* [アマリ]情報 */
+  /*****************************************************/
+  #speechBubble{
+    width: 90%;
+    height: 70vw;
+    background-color: rgb(247, 248, 248);
+  }
   #AmariFormEdit{
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    /* height: 500px; */
     padding: 10px;
     background-color: rgb(247, 248, 248);
   }
-    
+  .AmariForm .AmariFormMapAddress{
+    /* display: flex; */
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    min-height: 75px;
+    border-top: 4px solid #ffa600;
+    border-right: 4px solid #ffa600;
+    border-left: 4px solid #ffa600;
+  }
+  .AmariForm .currentPointArea{
+    width: 100%;
+    height: 50%;
+    border-style: outset;
+    border-color: rgb(134, 134, 134);
+    margin-bottom: 20px;
+  }
 }
 
 

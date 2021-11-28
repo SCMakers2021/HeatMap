@@ -1,7 +1,7 @@
 // 「カテゴリアイコン」ボタン押下
 function searchCategoryClicked( key ){
 	var id = "searchCategory" + key;
-	console.log("TODO:検索 = " + id);
+	console.log(`TODO:検索 = ${id}`);
 }
 
 function onEntryBtnClicked(){
@@ -106,6 +106,8 @@ $(function(){
 	$('#amariNext').click(function(){
 		if(token!=null){
 			switchAmariButtom(false);	// 確定ボタンを有効化
+			// tweetボタンを生成
+			CreateTweetButton();
 		}else{
 			alert("ログインしてください。");
 		}
