@@ -2,7 +2,56 @@
 function searchCategoryClicked( key ){
 	var id = "searchCategory" + key;
 	console.log(`TODO:検索 = ${id}`);
+    ReadDB(key);
 }
+
+function ReadDB(key){
+	if(markers != null){
+	  // プルダウンからカテゴリを選択
+	  let category = document.getElementById('category');
+  
+  //	var latUnder = markers[0].position.lat() - 1;
+  //	var latUpper = markers[0].position.lat() + 1;
+  //	var lngUnder = markers[0].position.lng() - 1;
+  //	var lngUpper = markers[0].position.lng() + 1;
+	  var posiData = {
+		  latUnder: markers[0].position.lat() - 1,
+		  latUpper: markers[0].position.lat() + 1,
+		  lngUnder: markers[0].position.lng() - 1,
+		  lngUpper: markers[0].position.lng() + 1
+	  };
+  
+	  var sql = "SELECT * FROM HeatMapStoreInfo where categoryID " + key;
+	  console.log(`SQL = ${sql}`);
+	  
+	  var data = {
+		  function: "ReadData",
+		  category: category.selectedIndex,
+		  position: posiData,
+		  sql: sql
+	  };
+	  
+	  // instantiate a headers object
+	  var myHeaders = new Headers();
+	  // add content type header to object
+	  myHeaders.append("Content-Type", "application/json");
+	  // using built in JSON utility package turn object to string and store in a variable
+	  var ele = JSON.stringify({Element: data}, null, ' ');
+	  // create a JSON object with parameters for API call and store in a variable
+	  var requestOptions = {
+		  method: 'POST',
+		  headers: myHeaders,
+		  body: ele,
+		  redirect: 'follow'
+	  };
+	  // make API call with parameters and use promises to get response
+	  fetch(HeatMapURL, requestOptions)
+	  .then(response => response.text())
+	  .then(result => alert(JSON.parse(result).body))
+	  .catch(error => console.log('error', error));
+	}
+  };
+
 
 function onEntryBtnClicked(){
 	var btnVal = $('#btnAmari').val();

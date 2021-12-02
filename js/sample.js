@@ -103,4 +103,4 @@ function ReadDB(){
 //     option.innerHTML = category; //ユーザー向けの表示としてメニュー名を指定する
 //     selectCategoryName.appendChild(option); //セレクトボックスにoption要素を追加する
 //   });
-};
+//};
