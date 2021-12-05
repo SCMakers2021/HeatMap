@@ -38,6 +38,8 @@
 		<link rel="stylesheet" href="css/auth.css">
 		<script src="js/auth.js"></script>
 		<script src="js/auth-validation.js"></script>
+		<link rel="stylesheet" href="css/user-info.css">
+		<script src="js/user-info.js"></script>
 		<script src="js/screenTransition.js"></script>
 		<script src="js/map.js"></script>
 		<script src="js/upld.js"></script>
@@ -216,5 +218,49 @@
 			</div>
 		</div>
 	<!-- login-modal -->
+		<!-- user-info -->
+		<div id="div-user-info-input" class="user-info-base js-modal">
+			<div class="user-info-bg js-modal-close"></div>
+			<div class="user-info-content">
+				<div class="user-info-content_inner">
+					<a class="js-modal-close user-info-close" href=""><span>閉じる</span></a>
+					<div class="user-info-items">
+						<div class="image-upload">
+							<label for="file-input">
+								<img src="./images/auth.png" class="user" id="user-image">
+							</label>
+							<input id="file-input" type="file" accept="image/*"/>
+						</div>
+						<table class="user-info-table">
+							<tbody>
+							<tr>
+								<th><label for="user_name">ユーザ名</label></th>
+								<td><input type="text" name="user_name" placeholder="ユーザ名"></td>
+							</tr>
+							<tr>
+								<th><label for="link">外部リンク</label></th>
+								<td><input type="text" name="link" placeholder="外部リンク"></td>
+							</tr>
+							<tr>
+								<td colspan="2"><input id="user-info-save" class="user-info" type="button" value="保存">
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><input id="user-info-cancel" class="user-info js-modal-close"
+													   type="button" value="閉じる">
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><input id="user-info-logout" class="user-info" type="button"
+													   value="ログアウト">
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- user-info -->
 	</body>
 </html>

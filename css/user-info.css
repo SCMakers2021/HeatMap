@@ -1,0 +1,78 @@
+/* 画面P-U4：ユーザ情報設定画面 */
+#div-user-info-input {
+    display: none;
+}
+
+.user-info-base {
+    display: none;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.user-info-bg {
+    background: rgba(0, 0, 0, 0.6);
+    height: 100vh;
+    width: 100%;
+}
+
+.user-info-content {
+    background: #fff;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    width: 275px;
+    height: 350px;
+}
+
+.user-info-content_inner {
+    position: relative;
+    padding: 15px;
+}
+.user-info {
+    margin: 5px;
+    width: 95%;
+}
+.user-info-content table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: grey;
+}
+
+.user-info-content th {
+    text-align: left;
+    font-size: 14px;
+    font-weight: normal;
+}
+.user {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    align-content: center;
+    object-fit: cover;
+}
+.image-upload>input {
+    display: none;
+}
+
+.user-info-close {
+    position: absolute;
+    top: 13px;
+    right: 10px;
+}
+
+.user-info-items {
+    margin-top: 2em;
+}

@@ -123,13 +123,20 @@ $( function() {
 	}
 
 	// ログインダイアログオープンの有効化
-	$( '.js-modal-open' ).each( function() {
-		$( this ).on( 'click', function() {
-			// ログインダイアログを表示させる処理
-			var target = $( this ).data( 'target' );
-			var modal = document.getElementById( target );
-			$( modal ).fadeIn( 300 );
-			return false;
+	$('.js-modal-open').each(function () {
+		$(this).on('click', function () {
+			let tokens = new Tokens();
+			let notLogin = (tokens.Sub == '');
+			if (notLogin) {
+				// ログインダイアログを表示させる処理
+				var target = $(this).data('target');
+				var modal = document.getElementById(target);
+				$(modal).fadeIn(300);
+				return false;
+			} else {
+				$('.user-info-base').fadeIn(300);
+				return false;
+			}
 		});
 	});
 	// ログインダイアログクローズの有効化
