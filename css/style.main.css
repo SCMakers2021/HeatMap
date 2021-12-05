@@ -286,7 +286,7 @@ a {
 }
 
 
-.contents div.sidebar td,tr {
+.contents div.sidebar td,.contents div.sidebar tr {
   border-style: solid;
   border-color: rgb(219, 219, 219);
   width: 65px;
