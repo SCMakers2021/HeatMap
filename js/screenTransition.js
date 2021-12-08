@@ -9,28 +9,34 @@ function ReadDB(key){
 	if(markers != null){
 	  // プルダウンからカテゴリを選択
 	  let category = document.getElementById('category');
-  
-  //	var latUnder = markers[0].position.lat() - 1;
-  //	var latUpper = markers[0].position.lat() + 1;
-  //	var lngUnder = markers[0].position.lng() - 1;
-  //	var lngUpper = markers[0].position.lng() + 1;
+	  var latlngBounds = map.getBounds();
+	  var swLatlng = latlngBounds.getSouthWest();
+	  var swlat = swLatlng.lat();
+	  var swlng = swLatlng.lng();
+	
+	  var neLatlng = latlngBounds.getNorthEast();
+	  var nelat = neLatlng.lat();
+	  var nelng = neLatlng.lng();
+	
 	  var posiData = {
-		  latUnder: markers[0].position.lat() - 1,
-		  latUpper: markers[0].position.lat() + 1,
-		  lngUnder: markers[0].position.lng() - 1,
-		  lngUpper: markers[0].position.lng() + 1
+
+        	latUnder: nelat ,
+			latUpper: swlat ,
+			lngUnder: nelng ,
+			lngUpper: swlng 
+
 	  };
   
 	  var sql = "SELECT * FROM HeatMapStoreInfo where categoryID " + key;
 	  console.log(`SQL = ${sql}`);
 	  
 	  var data = {
-		  function: "ReadData",
+		  function: "ReadStoreInfo",
 		  category: category.selectedIndex,
 		  position: posiData,
 		  sql: sql
 	  };
-	  
+
 	  // instantiate a headers object
 	  var myHeaders = new Headers();
 	  // add content type header to object
@@ -44,13 +50,72 @@ function ReadDB(key){
 		  body: ele,
 		  redirect: 'follow'
 	  };
-	  // make API call with parameters and use promises to get response
-	  fetch(HeatMapURL, requestOptions)
-	  .then(response => response.text())
-	  .then(result => alert(JSON.parse(result).body))
-	  .catch(error => console.log('error', error));
+	  //JSONデータを操作する
+	  getJSONdata(HeatMapURL,requestOptions)
+
 	}
-  };
+};
+
+ async function getJSONdata(HeatMapURL,requestOptions){
+
+	const res = await fetch(HeatMapURL, requestOptions);
+    const resjson = await res.json();
+
+    var comstr;
+    var latobj;
+    var lngobj;
+	var cominf;
+	var latinf; 
+	var lnginf; 
+    var obj;
+    obj = JSON.parse(JSON.stringify(resjson)).body;
+    const cnt = obj.indexOf('Count')
+	const suuji =  obj.substring(cnt + 7,cnt + 9)
+
+	const numb_tmp = Number(suuji)
+
+    var infarray = {};
+    var tmp_obj = obj;
+    var lngnumber = 0;
+
+	for (var i = 0; i < numb_tmp; i++){
+    
+		comstr = tmp_obj.indexOf('StoreComment',lngnumber)
+		latobj = tmp_obj.indexOf('lat',lngnumber)
+		lngobj = tmp_obj.indexOf('lng',lngnumber)
+		if (comstr = -1){
+			cominf = ""
+		}else{
+			cominf = tmp_obj.substring(comstr + 6,latobj - 4)
+		}
+		latinf  = tmp_obj.substring(latobj + 6,latobj + 23)
+        lnginf = tmp_obj.substring(lngobj + 6,lngobj + 23)
+
+		infarray[i] = {comment:cominf,lat:latinf,lng:lnginf}
+		lngnumber = lngobj + 25
+	};
+
+	set_latlng(infarray,i);
+	
+}
+
+function set_latlng(arrayData,n){
+
+	for (var i = 0; i < n; i++){
+
+		console.log('要素１',arrayData[i].lat)
+		var center = {
+			lat: Number(arrayData[i].lat), // 緯度
+			lng: Number(arrayData[i].lng) // 経度
+		  };
+		marker = new google.maps.Marker({ // マーカーの追加
+    	    position: center, // マーカーを立てる位置を指定
+    	  map: map // マーカーを立てる地図を指定
+   		});
+	}
+
+}
+
 
 
 function onEntryBtnClicked(){
