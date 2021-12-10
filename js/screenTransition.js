@@ -1,8 +1,18 @@
+var map = {};
+var sagasuMarker,infoWindow =[];
+
 // 「カテゴリアイコン」ボタン押下
 function searchCategoryClicked( key ){
 	var id = "searchCategory" + key;
 	console.log(`TODO:検索 = ${id}`);
+	ClearMarker() 
     ReadDB(key);
+}
+
+function  ClearMarker(){
+	if(sagasuMarker != null){
+        sagasuMarker.setMap(null);
+    }
 }
 
 function ReadDB(key){
@@ -10,6 +20,7 @@ function ReadDB(key){
 	  // プルダウンからカテゴリを選択
 	  let category = document.getElementById('category');
 	  var latlngBounds = map.getBounds();
+
 	  var swLatlng = latlngBounds.getSouthWest();
 	  var swlat = swLatlng.lat();
 	  var swlng = swLatlng.lng();
@@ -26,13 +37,14 @@ function ReadDB(key){
 			lngUpper: swlng 
 
 	  };
-  
-	  var sql = "SELECT * FROM HeatMapStoreInfo where categoryID " + key;
+	  //
+	  var sql = "SELECT categoryID,lat,lng,StoreComment FROM HeatMapStoreInfo where categoryID in (0,3)";
 	  console.log(`SQL = ${sql}`);
 	  
 	  var data = {
 		  function: "ReadStoreInfo",
-		  category: category.selectedIndex,
+		  //category: category.selectedIndex,
+		  category: key,
 		  position: posiData,
 		  sql: sql
 	  };
@@ -61,61 +73,46 @@ function ReadDB(key){
 	const res = await fetch(HeatMapURL, requestOptions);
     const resjson = await res.json();
 
-    var comstr;
-    var latobj;
-    var lngobj;
-	var cominf;
-	var latinf; 
-	var lnginf; 
-    var obj;
-    obj = JSON.parse(JSON.stringify(resjson)).body;
-    const cnt = obj.indexOf('Count')
-	const suuji =  obj.substring(cnt + 7,cnt + 9)
+	const data = JSON.parse(resjson.body);
+	const item = data['Items'];
+	Object.keys(item).forEach(function (key) {
+        console.log([key] + ": " + item[key].StoreComment);
+		console.log([key] + ": " + item[key].lat);
+    });
 
-	const numb_tmp = Number(suuji)
+    console.log('DynamoDBdata：',item)
 
-    var infarray = {};
-    var tmp_obj = obj;
-    var lngnumber = 0;
-
-	for (var i = 0; i < numb_tmp; i++){
-    
-		comstr = tmp_obj.indexOf('StoreComment',lngnumber)
-		latobj = tmp_obj.indexOf('lat',lngnumber)
-		lngobj = tmp_obj.indexOf('lng',lngnumber)
-		if (comstr = -1){
-			cominf = ""
-		}else{
-			cominf = tmp_obj.substring(comstr + 6,latobj - 4)
-		}
-		latinf  = tmp_obj.substring(latobj + 6,latobj + 23)
-        lnginf = tmp_obj.substring(lngobj + 6,lngobj + 23)
-
-		infarray[i] = {comment:cominf,lat:latinf,lng:lnginf}
-		lngnumber = lngobj + 25
-	};
-
-	set_latlng(infarray,i);
-	
+	set_latlng(item);
+	console.log(resjson.body)
 }
 
-function set_latlng(arrayData,n){
+//マーカーを立てる
+function set_latlng(ItemArray){
 
-	for (var i = 0; i < n; i++){
+	for (var i = 0; i < ItemArray.length; i++){
 
-		console.log('要素１',arrayData[i].lat)
+		console.log('要素: %d 緯度：%s',i,ItemArray[i].lat)
 		var center = {
-			lat: Number(arrayData[i].lat), // 緯度
-			lng: Number(arrayData[i].lng) // 経度
+			lat: Number(ItemArray[i].lat), // 緯度
+			lng: Number(ItemArray[i].lng) // 経度
 		  };
-		marker = new google.maps.Marker({ // マーカーの追加
-    	    position: center, // マーカーを立てる位置を指定
-    	  map: map // マーカーを立てる地図を指定
-   		});
+		sagasuMarker = new google.maps.Marker({
+			position: center,
+			map: map,
+			animation: google.maps.Animation.DROP // マーカーを立つときのアニメーション
+		  });
+
+		infoWindow = new google.maps.InfoWindow({ // 吹き出しの追加
+			content: '<div class="sample">サンプル</div>' // 吹き出しに表示する内容
+		});
+		sagasuMarker.addListener('click', function() { // マーカーをクリックしたとき
+		 infoWindow.open(map, marker); // 吹き出しの表示
+		});
+
 	}
 
+	console.log('マーカーの中身',sagasuMarker[0])
 }
-
 
 
 function onEntryBtnClicked(){
