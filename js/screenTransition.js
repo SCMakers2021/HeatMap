@@ -96,6 +96,9 @@ $(function(){
 			// アマリモード移行
 			switchAmariMode(true);
 			switchSagasuMode(false);
+
+			// サガスの結果を削除
+			// ClearSagasuMarker();
 		}else{
 			// すでに押している場合は何もしない
 			//switchAmariMode(false);

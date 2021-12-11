@@ -63,12 +63,10 @@ function RegisterDB(){
       var nelng = neLatlng.lng();
     
       var posiData = {
-  
-            latUnder: nelat ,
+        latUnder: nelat ,
         latUpper: swlat ,
         lngUnder: nelng ,
         lngUpper: swlng 
-  
       };
       //
       var sql = "SELECT categoryID,lat,lng,StoreComment FROM HeatMapStoreInfo where categoryID in (0,3)";
@@ -108,15 +106,15 @@ function RegisterDB(){
   
     const data = JSON.parse(resjson.body);
     const item = data['Items'];
-    Object.keys(item).forEach(function (key) {
-          console.log([key] + ": " + item[key].StoreComment);
-      console.log([key] + ": " + item[key].lat);
-      });
+    // Object.keys(item).forEach(function (key) {
+    //       console.log([key] + ": " + item[key].StoreComment);
+    //   console.log([key] + ": " + item[key].lat);
+    //   });
   
-      console.log('DynamoDBdata：',item)
+      // console.log('DynamoDBdata：',item)
   
     setSagasuMarker(item);
-    console.log(resjson.body)
+    // console.log(resjson.body)
   }
   
 
