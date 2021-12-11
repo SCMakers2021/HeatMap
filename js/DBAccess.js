@@ -48,7 +48,7 @@ function RegisterDB(){
     }
   };
 
-  function ReadDB(key){
+  function GetSagasuInfo(key){
     if(markers != null){
       // プルダウンからカテゴリを選択
       let category = document.getElementById('category');

@@ -1,5 +1,11 @@
+class classSagasuInf {
+    constructor(deadTime) {
+      this.deadTime = deadTime;
+    }
+  }
 var sagasuMarkers=[];
 var sagasuInfoWindows =[];
+var sagasuInf=[];
 
 function  ClearSagasuMarker(){
     if(sagasuMarkers[0] != null){
@@ -10,8 +16,20 @@ function  ClearSagasuMarker(){
 
     sagasuMarkers=[];
     sagasuInfoWindows =[];
+    sagasuInf=[];
 }
 
+// サガスマーカーを表示
+function visibleSagasuMarker(index){
+    sagasuMarkers[index].setVisible(true);
+    sagasuInfoWindows[index].open(map, sagasuMarkers[index]);
+}
+
+// サガスマーカーを非表示
+function hiddenSagasuMarker(index){
+    sagasuMarkers[index].setVisible(false);
+    sagasuInfoWindows[index].close();
+}
 
 function openSagasuMarker(e){
     var ClickIndex=0;
@@ -55,7 +73,7 @@ function setSagasuMarker(ItemArray){
     var neLatlng = latlngBounds.getNorthEast();
 
     for (var i = 0; i < ItemArray.length; i++){
-        console.log('要素: %d 緯度：%s',i,ItemArray[i].lat)
+        console.log('要素: %d 緯度：%s',i,ItemArray[i].lat);
         pos = {
             lat: Number(ItemArray[i].lat), // 緯度
             lng: Number(ItemArray[i].lng) // 経度
@@ -93,6 +111,9 @@ function setSagasuMarker(ItemArray){
             // 画面内の場合、デフォルトで吹き出しを表示
             sagasuInfoWindows[i].open(map, sagasuMarkers[i]);
         }
+
+        // 後で必要な情報を作成
+        sagasuInf[i] = new classSagasuInf(ItemArray[i].deadTime);
         console.log('マーカーの中身',sagasuMarkers[i]);
     }
 }

@@ -3,7 +3,7 @@ function searchCategoryClicked( key ){
 	var id = "searchCategory" + key;
 	console.log(`TODO:検索 = ${id}`);
 	ClearSagasuMarker() 
-    ReadDB(key);
+    GetSagasuInfo(key);
 }
 
 
