@@ -84,9 +84,9 @@ $(function(){
 			switchAmariMode(false);
 			switchSagasuMode(true);
 		}else{
-			// すでに押している場合は何もしない
-			//switchAmariMode(true);
-			//switchSagasuMode(false);
+			// すでに押している場合は解除だけする
+			// switchAmariMode(true);
+			switchSagasuMode(false);
 		}
 	})
 	// 「アマリ」ボタン押下
@@ -100,8 +100,8 @@ $(function(){
 			// サガスの結果を削除
 			// ClearSagasuMarker();
 		}else{
-			// すでに押している場合は何もしない
-			//switchAmariMode(false);
+			// すでに押している場合は解除だけする
+			switchAmariMode(false);
 			//switchSagasuMode(true);
 		}
 	})
