@@ -1,118 +1,12 @@
-var map = {};
-var sagasuMarker,infoWindow =[];
-
 // 「カテゴリアイコン」ボタン押下
 function searchCategoryClicked( key ){
 	var id = "searchCategory" + key;
 	console.log(`TODO:検索 = ${id}`);
-	ClearMarker() 
+	ClearSagasuMarker() 
     ReadDB(key);
 }
 
-function  ClearMarker(){
-	if(sagasuMarker != null){
-        sagasuMarker.setMap(null);
-    }
-}
 
-function ReadDB(key){
-	if(markers != null){
-	  // プルダウンからカテゴリを選択
-	  let category = document.getElementById('category');
-	  var latlngBounds = map.getBounds();
-
-	  var swLatlng = latlngBounds.getSouthWest();
-	  var swlat = swLatlng.lat();
-	  var swlng = swLatlng.lng();
-	
-	  var neLatlng = latlngBounds.getNorthEast();
-	  var nelat = neLatlng.lat();
-	  var nelng = neLatlng.lng();
-	
-	  var posiData = {
-
-        	latUnder: nelat ,
-			latUpper: swlat ,
-			lngUnder: nelng ,
-			lngUpper: swlng 
-
-	  };
-	  //
-	  var sql = "SELECT categoryID,lat,lng,StoreComment FROM HeatMapStoreInfo where categoryID in (0,3)";
-	  console.log(`SQL = ${sql}`);
-	  
-	  var data = {
-		  function: "ReadStoreInfo",
-		  //category: category.selectedIndex,
-		  category: key,
-		  position: posiData,
-		  sql: sql
-	  };
-
-	  // instantiate a headers object
-	  var myHeaders = new Headers();
-	  // add content type header to object
-	  myHeaders.append("Content-Type", "application/json");
-	  // using built in JSON utility package turn object to string and store in a variable
-	  var ele = JSON.stringify({Element: data}, null, ' ');
-	  // create a JSON object with parameters for API call and store in a variable
-	  var requestOptions = {
-		  method: 'POST',
-		  headers: myHeaders,
-		  body: ele,
-		  redirect: 'follow'
-	  };
-	  //JSONデータを操作する
-	  getJSONdata(HeatMapURL,requestOptions)
-
-	}
-};
-
- async function getJSONdata(HeatMapURL,requestOptions){
-
-	const res = await fetch(HeatMapURL, requestOptions);
-    const resjson = await res.json();
-
-	const data = JSON.parse(resjson.body);
-	const item = data['Items'];
-	Object.keys(item).forEach(function (key) {
-        console.log([key] + ": " + item[key].StoreComment);
-		console.log([key] + ": " + item[key].lat);
-    });
-
-    console.log('DynamoDBdata：',item)
-
-	set_latlng(item);
-	console.log(resjson.body)
-}
-
-//マーカーを立てる
-function set_latlng(ItemArray){
-
-	for (var i = 0; i < ItemArray.length; i++){
-
-		console.log('要素: %d 緯度：%s',i,ItemArray[i].lat)
-		var center = {
-			lat: Number(ItemArray[i].lat), // 緯度
-			lng: Number(ItemArray[i].lng) // 経度
-		  };
-		sagasuMarker = new google.maps.Marker({
-			position: center,
-			map: map,
-			animation: google.maps.Animation.DROP // マーカーを立つときのアニメーション
-		  });
-
-		infoWindow = new google.maps.InfoWindow({ // 吹き出しの追加
-			content: '<div class="sample">サンプル</div>' // 吹き出しに表示する内容
-		});
-		sagasuMarker.addListener('click', function() { // マーカーをクリックしたとき
-		 infoWindow.open(map, marker); // 吹き出しの表示
-		});
-
-	}
-
-	console.log('マーカーの中身',sagasuMarker[0])
-}
 
 
 function onEntryBtnClicked(){
