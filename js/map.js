@@ -152,6 +152,15 @@ function CancelAmariMode(){
   }
 }
 
+function addZoomEvent(){
+  map.addListener('zoom_changed', function() {
+    // Zoom変更時に実行したい処理
+    // ClearHeatMap(); クリアしてみたけどズーム時に色が変化するのは止めれなかった
+    // ヒートマップの描画を更新
+    ViewHeatMap();
+  });
+}
+
 // クリックイベントを作成
 // クリックしたらマーカーを設置
 function initialize() {
@@ -245,9 +254,10 @@ function initialize() {
         infoWindow.close();
       }
     });
-
-    
   });
+
+  // ズーム時のイベントを追加。
+  addZoomEvent();
    // 現在地ボタンのエレメントを作成
   const MoveCurrentPlaceButtonDiv = document.createElement("div");
   AddMoveCurrentPlaceButton(MoveCurrentPlaceButtonDiv);

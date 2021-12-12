@@ -2,11 +2,13 @@
      ["お弁当","image/category/日の丸弁当アイコン1.png"],
      ["ケーキ","image/category/ケーキのアイコン3.png"],
      ["寿司","image/category/寿司アイコン.png"],
-     ["たまねぎ","image/category/たまねぎイラスト1.png"],
-     ["トマト","image/category/トマトのアイコン2.png"],
-     ["ブロッコリー","image/category/ブロッコリーアイコン1.png"]
+     ["ハンバーガー","image/category/ハンバーガーのアイコンその2.png"]
  ];
          
+function getCategoryPath(categoryID){
+    return categoryList[categoryID][1];
+}
+
 function MakeCategoryList(){
     const selectCategoryName = document.getElementById('category');
     
@@ -47,9 +49,9 @@ function MakeCategoryPanel(){
     categoryList.forEach((category, index) => {
         
         if(true == isSmartPhone()){
-            colNum = 5;
+            colNum = 4;
         }else{
-            colNum = 3;
+            colNum = 4;
         }
         col = index%colNum;
         
