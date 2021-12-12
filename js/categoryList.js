@@ -5,6 +5,10 @@
      ["ハンバーガー","image/category/ハンバーガーのアイコンその2.png"]
  ];
          
+function getCategoryPath(categoryID){
+    return categoryList[categoryID][1];
+}
+
 function MakeCategoryList(){
     const selectCategoryName = document.getElementById('category');
     

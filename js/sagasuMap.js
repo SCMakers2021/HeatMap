@@ -6,6 +6,7 @@ class classSagasuInf {
 var sagasuMarkers=[];
 var sagasuInfoWindows =[];
 var sagasuInf=[];
+var IsSagasuMarkerInTheWindow = false;
 
 // サガスマーカーをすべてクリア
 function  ClearSagasuMarker(){
@@ -101,7 +102,8 @@ function setSagasuMarker(ItemArray){
             lng: Number(ItemArray[i].lng) // 経度
         };
         markerImage = {
-            url: ItemArray[i].imagePath, //画像のURL
+            // url: ItemArray[i].imagePath, //画像のURL
+            url: getCategoryPath(ItemArray[i].categoryID), //画像のURL
             size: new google.maps.Size(32, 32), //サイズ
             scaledSize: new google.maps.Size(32, 32) //アイコンのサイズ
         };
@@ -149,5 +151,7 @@ function setSagasuMarker(ItemArray){
     }
 
     ViewHeatMap();
-    
+    if(IsSagasuMarkerInTheWindow == false){
+        alert("現在の表示範囲に検索データはありません。");
+    }    
 }

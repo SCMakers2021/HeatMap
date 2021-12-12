@@ -98,7 +98,7 @@ function dispDistribution(dateNum){
   var deadTime;
   var now = new Date();
   var searchTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dateNum);
-  var IsUpdate = false;
+  IsSagasuMarkerInTheWindow = false;
   // console.log(searchTime);
   for(var k = 0; k < sagasuMarkers.length; k++){
     lat = sagasuMarkers[k].position.lat();
@@ -116,7 +116,7 @@ function dispDistribution(dateNum){
       if((0<=latindex)&&(latindex<row)
         &&(0<=lngindex)&&(lngindex<col)){
           cnt[lngindex][latindex] = cnt[lngindex][latindex] + 5;
-          IsUpdate = true;
+          IsSagasuMarkerInTheWindow = true;
           // マーカーを見えるようにする
           visibleSagasuMarker(k);
         }
@@ -130,7 +130,7 @@ function dispDistribution(dateNum){
   // cnt[5][5] = 10;
   
   // データを再生成してHeatMapを更新(件数のカウントが終わってから再生成する。)
-  if(true == IsUpdate){
+  if(true == IsSagasuMarkerInTheWindow){
     // クリア
     ClearHeatMap();
 
