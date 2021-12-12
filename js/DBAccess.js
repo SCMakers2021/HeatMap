@@ -42,65 +42,90 @@ function RegisterDB(){
       .then(response => response.text())
       .then(result => 
         //alert(JSON.parse(result).body)
-        alert("投稿しました")
+        // alert("投稿しました")
+        AddStoreInfoAfter(category.selectedIndex,amariMarker.position)
         )
       .catch(error => console.log('error', error));
     }
   };
 
+  // 検索+登録後のウィンドウを表示
+  function AddStoreInfoAfter(key,pos){
+    console.log(pos);
+    GetSagasuInfo(key)
+    .then(resolve => {
+      console.log(resolve);
+        // streetビューの表示(吹き出しが出た後じゃないとIDが取れないので)
+        openSagasuMarkerWindow(pos.lat(),pos.lng());;
+      });
+  }
+  // 検索
   function GetSagasuInfo(key){
-    if(markers != null){
-      // プルダウンからカテゴリを選択
-      let category = document.getElementById('category');
-      var latlngBounds = map.getBounds();
-  
-      var swLatlng = latlngBounds.getSouthWest();
-      var swlat = swLatlng.lat();
-      var swlng = swLatlng.lng();
+    return new Promise(function(resolve,reject) {
+      if(markers != null){
+        // プルダウンからカテゴリを選択
+        let category = document.getElementById('category');
+        var latlngBounds = map.getBounds();
     
-      var neLatlng = latlngBounds.getNorthEast();
-      var nelat = neLatlng.lat();
-      var nelng = neLatlng.lng();
-    
-      var posiData = {
-        latUnder: nelat ,
-        latUpper: swlat ,
-        lngUnder: nelng ,
-        lngUpper: swlng 
-      };
-      //
-      var sql = "SELECT categoryID,lat,lng,StoreComment FROM HeatMapStoreInfo where categoryID in (0,3)";
-      console.log(`SQL = ${sql}`);
+        var swLatlng = latlngBounds.getSouthWest();
+        var swlat = swLatlng.lat();
+        var swlng = swLatlng.lng();
       
-      var data = {
-        function: "ReadStoreInfo",
-        //category: category.selectedIndex,
-        category: key,
-        position: posiData,
-        sql: sql
-      };
-  
-      // instantiate a headers object
-      var myHeaders = new Headers();
-      // add content type header to object
-      myHeaders.append("Content-Type", "application/json");
-      // using built in JSON utility package turn object to string and store in a variable
-      var ele = JSON.stringify({Element: data}, null, ' ');
-      // create a JSON object with parameters for API call and store in a variable
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: ele,
-        redirect: 'follow'
-      };
-      //JSONデータを操作する
-      getJSONdata(HeatMapURL,requestOptions)
-  
-    }
+        var neLatlng = latlngBounds.getNorthEast();
+        var nelat = neLatlng.lat();
+        var nelng = neLatlng.lng();
+      
+        var posiData = {
+          latUnder: nelat ,
+          latUpper: swlat ,
+          lngUnder: nelng ,
+          lngUpper: swlng 
+        };
+        //
+        var sql = "SELECT categoryID,lat,lng,StoreComment FROM HeatMapStoreInfo where categoryID in (0,3)";
+        console.log(`SQL = ${sql}`);
+        
+        var data = {
+          function: "ReadStoreInfo",
+          //category: category.selectedIndex,
+          category: key,
+          position: posiData,
+          sql: sql
+        };
+    
+        // instantiate a headers object
+        var myHeaders = new Headers();
+        // add content type header to object
+        myHeaders.append("Content-Type", "application/json");
+        // using built in JSON utility package turn object to string and store in a variable
+        var ele = JSON.stringify({Element: data}, null, ' ');
+        // create a JSON object with parameters for API call and store in a variable
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: ele,
+          redirect: 'follow'
+        };
+        //JSONデータを操作する
+        // getJSONdata(HeatMapURL,requestOptions)
+        fetch(HeatMapURL, requestOptions)
+        .then(response => response.json())
+        .then(result => 
+          {
+            const data = JSON.parse(result.body);
+            const item = data['Items'];
+            setSagasuMarker(item);
+            resolve('Success!GetSagasuInfo()');
+          })
+        .catch(error => console.log('error', error));
+      }
+      
+    });
   };
   
    async function getJSONdata(HeatMapURL,requestOptions){
-  
+
+
     const res = await fetch(HeatMapURL, requestOptions);
       const resjson = await res.json();
   

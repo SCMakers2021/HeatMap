@@ -7,6 +7,7 @@ var sagasuMarkers=[];
 var sagasuInfoWindows =[];
 var sagasuInf=[];
 
+// サガスマーカーをすべてクリア
 function  ClearSagasuMarker(){
     if(sagasuMarkers[0] != null){
         sagasuMarkers.forEach(function(elem, index) {
@@ -31,22 +32,29 @@ function hiddenSagasuMarker(index){
     sagasuInfoWindows[index].close();
 }
 
-function openSagasuMarkerWindow(e){
+// 該当のウィンドウを表示
+function openSagasuMarkerWindowLap(e){
+    openSagasuMarkerWindow(e.latLng.lat(),e.latLng.lng());
+}
+
+// 該当の座標のウィンドウを表示
+function openSagasuMarkerWindow(lat,lng){
     var ClickIndex=0;
     // どれがクリックされたかを判断
     sagasuMarkers.forEach(function(elem, index) {
-        if(elem.position.lat() == e.latLng.lat() && elem.position.lng() == e.latLng.lng()) {  
+        if(elem.position.lat() == lat && elem.position.lng() == lng) {  
         ClickIndex = index;
         }else{
         // 違うのは閉じる
         sagasuInfoWindows[index].close();
         }
     });
-    
+    console.log(ClickIndex);
     //クリックしたマーカーの詳細を表示
     sagasuInfoWindows[ClickIndex].open(map, sagasuMarkers[ClickIndex]);
 }
 
+// ウィンドウをすべて閉じる
 function closeSagasuMarkerWindow(e){
     sagasuMarkers.forEach(function(elem, index) {
         // すべて閉じる
@@ -104,7 +112,7 @@ function setSagasuMarker(ItemArray){
                 animation: google.maps.Animation.DROP // マーカーを立つときのアニメーション
             });
         // マーカーにマウスを乗せたときにウィンドウを表示
-        google.maps.event.addListener(sagasuMarkers[i], 'mouseover', openSagasuMarkerWindow);
+        google.maps.event.addListener(sagasuMarkers[i], 'mouseover', openSagasuMarkerWindowLap);
         // google.maps.event.addListener(sagasuMarkers[i], 'mouseout', closeSagasuMarkerWindow);
 
         if(true == isSmartPhone()){
@@ -122,13 +130,13 @@ function setSagasuMarker(ItemArray){
                     + "</div>"
                     + "<div>"
                         // + "<input type='image' src=" + ItemArray[i].imagePath + " alt='押してケロ♪'>"
-                        + "<img id='upldPreview' src=" + ItemArray[i].imagePath + " height = " + height + ">"
+                        + "<img id='SagasuInfoWindow' src=" + ItemArray[i].imagePath + " height = " + height + ">"
                     + "</div>"
                 + "</div>" // 吹き出しに表示する内容
         });
 
         /* マーカーをクリックしたら場所の詳細を表示 */
-        google.maps.event.addListener(sagasuMarkers[i], 'click', openSagasuMarkerWindow);
+        google.maps.event.addListener(sagasuMarkers[i], 'click', openSagasuMarkerWindowLap);
         
         if(IsInTheWindow(swLatlng,neLatlng,sagasuMarkers[i].position) == true){
             // 画面内の場合、デフォルトで吹き出しを表示
