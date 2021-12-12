@@ -17,9 +17,9 @@ var heatmap = null;
 $(function () {
   $('.single-slider').jRange({
     from: 0,
-    to: 7,
+    to: 5,
     step: 1.0,
-    scale: ["今日","１日前", "２日前", "３日前", "４日前", "５日前", "６日前", "７日前"],
+    scale: ["今日","１日前", "２日前", "３日前", "４日前", "５日前"],
     format: '%s',
     width: '90%',
     // theme: "theme-blue",
@@ -32,18 +32,33 @@ $(function () {
 });
 
 function ChangeHistory (value) {
-  dispDistribution(value);
+  // dispDistribution(value);
+  ViewHeatMap();
 
   // console.log("分布表示スライダー:"+value);
   // alert(value+"日前を表示");
 }
 
+function ClearHeatMap(){
+  if(heatmap != null){
+    heatmap.setMap(null);
+  }
+}
+
 // 「分布表示ボタンを押した場合の処理」
 function ViewHeatMap(){
-  var elements = document.getElementsByClassName("pointer-label high");
-  // console.log("分布表示ボタン");
-  // console.log(elements[0].innerHTML);
-  dispDistribution(elements[0].innerHTML);
+  let element = document.getElementById('BunpuCheckBox');
+  var bIsBunpuView = element.checked;
+  // 分布のチェックボックスがＯＮの場合のみ描画
+  if(bIsBunpuView){
+    var elements = document.getElementsByClassName("pointer-label high");
+    // console.log("分布表示ボタン");
+    // console.log(elements[0].innerHTML);
+    dispDistribution(elements[0].innerHTML);
+  }else{
+    // クリア
+    ClearHeatMap();
+  }
 }
 
 function dispDistribution(dateNum){  
@@ -117,9 +132,8 @@ function dispDistribution(dateNum){
   // データを再生成してHeatMapを更新(件数のカウントが終わってから再生成する。)
   if(true == IsUpdate){
     // クリア
-    if(heatmap != null){
-      heatmap.setMap(null);
-    }
+    ClearHeatMap();
+
     heatMapData = [];
     for(var i = 0; i < col; i++) {
       // ブロックの経度の上下限の代入
@@ -147,7 +161,7 @@ function dispDistribution(dateNum){
       gradient: ['rgb(80, 98, 255)','rgb(80, 255, 240)','rgb(255, 229, 80)', 'rgb(255, 80, 226)'],
       });
 
-    console.log("heatMapData：");
-    console.log(heatMapData);
+    // console.log("heatMapData：");
+    // console.log(heatMapData);
   }
 };

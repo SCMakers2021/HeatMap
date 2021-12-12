@@ -72,6 +72,10 @@ function setSagasuMarker(ItemArray){
     var swLatlng = latlngBounds.getSouthWest();
     var neLatlng = latlngBounds.getNorthEast();
 
+    if(ItemArray.length == 0){
+        alert("検索結果は0件です");
+        return;
+    }
     for (var i = 0; i < ItemArray.length; i++){
         // console.log('要素: %d 緯度：%s',i,ItemArray[i].lat);
         pos = {
@@ -116,4 +120,7 @@ function setSagasuMarker(ItemArray){
         sagasuInf[i] = new classSagasuInf(ItemArray[i].deadTime);
         // console.log('マーカーの中身',sagasuMarkers[i]);
     }
+
+    ViewHeatMap();
+    
 }
