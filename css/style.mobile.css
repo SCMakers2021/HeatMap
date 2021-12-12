@@ -28,7 +28,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    font-size: 14vw;
+    font-size: 13vw;
     font-weight: bolder;
     border-width: 1px;
     color: #FF8C00;
@@ -137,7 +137,7 @@
     position: fixed;
     top: 25vw;
     width: 100%;
-    height: 200px;
+    height: 250px;
     background: rgb(255, 255, 255);
   
     border-left: 0px;

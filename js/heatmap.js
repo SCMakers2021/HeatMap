@@ -1,7 +1,16 @@
 /* ヒートマップ機能の定義 */
 var heatMarkers = [];
-const row = 10;
-const col = 24;
+var row,col,radius;
+if(true == isSmartPhone()){
+  row = 10;
+  col = 8;
+  radius = 80;
+}else{
+  // ブラウザ
+  row = 12;
+  col = 24;
+  radius = 120;
+}
 var heatMapData = [];
 var heatmap = null;
 
@@ -23,48 +32,21 @@ $(function () {
 });
 
 function ChangeHistory (value) {
-  // initHeatMarkers(value);
   dispDistribution(value);
 
   // console.log("分布表示スライダー:"+value);
   // alert(value+"日前を表示");
 }
 
+// 「分布表示ボタンを押した場合の処理」
+function ViewHeatMap(){
+  var elements = document.getElementsByClassName("pointer-label high");
+  // console.log("分布表示ボタン");
+  // console.log(elements[0].innerHTML);
+  dispDistribution(elements[0].innerHTML);
+}
 
-// function initHeatMarkers(value){
-//   var latlngBounds = map.getBounds();
-//   var swLatlng = latlngBounds.getSouthWest();
-//   var swlat = swLatlng.lat();
-//   var swlng = swLatlng.lng();
-
-//   var neLatlng = latlngBounds.getNorthEast();
-//   var nelat = neLatlng.lat();
-//   var nelng = neLatlng.lng();
-
-//   var latRangeOver = nelat;  // 緯度の上限(上の線)
-//   var latRangeUnder = swlat;  // 緯度の下限(下の線)
-//   var lngRangeOver = nelng;  // 経度の上限(右の線)
-//   var lngRangeUnder = swlng;  // 経度の下限(左の線)
-  
-//   var latBlock = (latRangeOver - latRangeUnder)/(row+10);  // 1ブロックの緯度の大きさ
-//   var lngBlock = (lngRangeOver - lngRangeUnder)/col;  // 1ブロックの経度の大きさ(正方形にするためには必要ないと思う)
-
-//   var center = map.getCenter();
-//   var latlng = new google.maps.LatLng(center.lat()-value*latBlock, center.lng()+value*lngBlock);
-//   console.log(latlng.lat());
-//   console.log(latlng.lng());
-//   heatMarkers = [
-//     {
-//       position: latlng
-//     }
-//   ];
-// }
-
-function dispDistribution(dateNum){
-  // if(heatmap == null){
-  //   initHeatMarkers(0);
-  // }
-    
+function dispDistribution(dateNum){  
   var latlngBounds = map.getBounds();
   var swLatlng = latlngBounds.getSouthWest();
   var swlat = swLatlng.lat();
@@ -95,19 +77,14 @@ function dispDistribution(dateNum){
   var lat;
   var lng;
   
-  if(heatmap != null){
-    heatmap.setMap(null);
-  }
-  
-  heatMapData = [];
-  
   var latDiff,lngDiff;
   var latindex,lngindex;
   
   var deadTime;
   var now = new Date();
   var searchTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dateNum);
-  console.log(searchTime);
+  var IsUpdate = false;
+  // console.log(searchTime);
   for(var k = 0; k < sagasuMarkers.length; k++){
     lat = sagasuMarkers[k].position.lat();
     lng = sagasuMarkers[k].position.lng();
@@ -115,15 +92,16 @@ function dispDistribution(dateNum){
     latdiff = lat - latRangeUnder;
     lngdiff = lng - lngRangeUnder;
 
-    latindex = Math.round(latdiff/latBlock);
-    lngindex = Math.round(lngdiff/lngBlock);
+    latindex = Math.floor(latdiff/latBlock);
+    lngindex = Math.floor(lngdiff/lngBlock);
     //console.log('要素: %d 緯度：%s 経度：%s latindex：%d lngindex：%d ',k,lat,lng,latindex,lngindex);
     deadTime = new Date(sagasuInf[k].deadTime);
     // 期限切れは除外
     if(searchTime <= deadTime){
       if((0<=latindex)&&(latindex<row)
         &&(0<=lngindex)&&(lngindex<col)){
-          cnt[lngindex][latindex] = cnt[lngindex][latindex] + 1;
+          cnt[lngindex][latindex] = cnt[lngindex][latindex] + 5;
+          IsUpdate = true;
           // マーカーを見えるようにする
           visibleSagasuMarker(k);
         }
@@ -134,56 +112,42 @@ function dispDistribution(dateNum){
     }
   }
 
-  for(var i = 0; i < col; i++) {
-    // ブロックの経度の上下限の代入
-    lngBlockOver = lngRangeUnder + ((i+1) * lngBlock);
-  	lngBlockUnder = lngRangeUnder + (i * lngBlock);
-  	
-  	for(var j = 0; j < row; j++) {
-  	  // ブロックの緯度の上下限の代入
-  	  latBlockOver = latRangeUnder + ((j+1) * latBlock);
-  	  latBlockUnder = latRangeUnder + (j * latBlock);
-  	  
-  	  temp = cnt[i][j];
-      if(temp>0){
-        tempHeatMapData = {location: new google.maps.LatLng((latBlockOver+latBlockUnder)/2, (lngBlockOver+lngBlockUnder)/2), weight: temp};
-        heatMapData.push(tempHeatMapData);
+  // cnt[5][5] = 10;
+  
+  // データを再生成してHeatMapを更新(件数のカウントが終わってから再生成する。)
+  if(true == IsUpdate){
+    // クリア
+    if(heatmap != null){
+      heatmap.setMap(null);
+    }
+    heatMapData = [];
+    for(var i = 0; i < col; i++) {
+      // ブロックの経度の上下限の代入
+      lngBlockOver = lngRangeUnder + ((i+1) * lngBlock);
+      lngBlockUnder = lngRangeUnder + (i * lngBlock);
+      
+      for(var j = 0; j < row; j++) {
+        // ブロックの緯度の上下限の代入
+        latBlockOver = latRangeUnder + ((j+1) * latBlock);
+        latBlockUnder = latRangeUnder + (j * latBlock);
+        
+        temp = cnt[i][j];
+        // if(temp>0){
+          tempHeatMapData = {location: new google.maps.LatLng((latBlockOver+latBlockUnder)/2, (lngBlockOver+lngBlockUnder)/2), weight: temp};
+          heatMapData.push(tempHeatMapData);
+        // }
       }
-  	}
+    }
+
+    // 個数によって色付け
+    heatmap = new google.maps.visualization.HeatmapLayer({
+      data: heatMapData,
+      map: map,
+      radius:radius,
+      gradient: ['rgb(80, 98, 255)','rgb(80, 255, 240)','rgb(255, 229, 80)', 'rgb(255, 80, 226)'],
+      });
+
+    console.log("heatMapData：");
+    console.log(heatMapData);
   }
-
-  // for(var i = 0; i < col; i++) {
-  //   // ブロックの経度の上下限の代入
-  //   lngBlockOver = lngRangeUnder + ((i+1) * lngBlock);
-  // 	lngBlockUnder = lngRangeUnder + (i * lngBlock);
-  	
-  // 	for(var j = 0; j < row; j++) {
-  // 	  // ブロックの緯度の上下限の代入
-  // 	  latBlockOver = latRangeUnder + ((j+1) * latBlock);
-  // 	  latBlockUnder = latRangeUnder + (j * latBlock);
-  	  
-  // 	  for(var k = 0; k < sagasuMarkers.length; k++){
-  // 	    lat = sagasuMarkers[k].position.lat();
-  // 	    lng = sagasuMarkers[k].position.lng();
-  // 	    if((lat > latBlockUnder) && (lat <= latBlockOver)
-  // 	    && (lng > lngBlockUnder) && (lng <= lngBlockOver)){
-  // 	      cnt[i][j] = cnt[i][j] + 1;
-  // 	    }
-  // 	  }
-  // 	  temp = cnt[i][j];
-  //     if(temp>0){
-  //       tempHeatMapData = {location: new google.maps.LatLng((latBlockOver+latBlockUnder)/2, (lngBlockOver+lngBlockUnder)/2), weight: temp};
-  //       heatMapData.push(tempHeatMapData);
-  //     }
-  // 	}
-  // }
-
-  console.log("heatMapData");
-  console.log(heatMapData);
-  // 個数によって色付け
-  heatmap = new google.maps.visualization.HeatmapLayer({
-   data: heatMapData,
-   map: map,
-   radius:100,
-  });
 };

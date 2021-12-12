@@ -73,7 +73,7 @@ function setSagasuMarker(ItemArray){
     var neLatlng = latlngBounds.getNorthEast();
 
     for (var i = 0; i < ItemArray.length; i++){
-        console.log('要素: %d 緯度：%s',i,ItemArray[i].lat);
+        // console.log('要素: %d 緯度：%s',i,ItemArray[i].lat);
         pos = {
             lat: Number(ItemArray[i].lat), // 緯度
             lng: Number(ItemArray[i].lng) // 経度
@@ -114,6 +114,6 @@ function setSagasuMarker(ItemArray){
 
         // 後で必要な情報を作成
         sagasuInf[i] = new classSagasuInf(ItemArray[i].deadTime);
-        console.log('マーカーの中身',sagasuMarkers[i]);
+        // console.log('マーカーの中身',sagasuMarkers[i]);
     }
 }
