@@ -1,6 +1,6 @@
 
 <!DOCTYPE HTML>
-<html lang="ja">
+<html lang="ja" xmlns="http://www.w3.org/1999/html">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -19,6 +19,7 @@
 		<script src="lib/jquery-3.6.0.min.js"></script>
 		<script src="lib/jquery-ui.min.js"></script>
 		<script src="lib/jquery.validate.min.js"></script>
+		<script src="lib/additional-methods.min.js"></script>
 
 		<script src="lib/jsbn.js"></script>
 		<script src="lib/jsbn2.js"></script>
@@ -226,21 +227,22 @@
 			<div class="user-info-content">
 				<div class="user-info-content_inner">
 					<a class="js-modal-close user-info-close" href=""><span>閉じる</span></a>
-					<div class="user-info-items">
-						<div class="image-upload">
+					<form id="user_info_items"　class="user-info-items">
 							<label for="file-input">
-								<img src="./images/auth.png" class="user" id="user-image">
+								<span title="ファイルを選択">
+         							<img src="./images/auth.png" class="user" id="user_image">
+  								</span>
 							</label>
-							<input id="file-input" type="file" accept="image/*"/>
-						</div>
+						<input id="file-input" name="my_file_input" type="file" accept="image/*"/>
+						</p>
 						<table class="user-info-table">
 							<tbody>
 							<tr>
-								<th><label for="user_name">ユーザ名</label></th>
+								<th><label >ユーザ名</label></th>
 								<td><input type="text" name="user_name" placeholder="ユーザ名"></td>
 							</tr>
 							<tr>
-								<th><label for="link">外部リンク</label></th>
+								<th><label >外部リンク</label></th>
 								<td><input type="text" name="link" placeholder="外部リンク"></td>
 							</tr>
 							<tr>
@@ -259,7 +261,9 @@
 							</tr>
 							</tbody>
 						</table>
-					</div>
+						<p/>
+						<div class="userinfo-error-message"></div>
+					</form>
 				</div>
 			</div>
 		</div>

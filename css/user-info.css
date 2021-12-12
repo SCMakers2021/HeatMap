@@ -28,7 +28,7 @@
     transform: translate(-50%, -50%);
     border-radius: 5px;
     width: 275px;
-    height: 350px;
+    height: 400px;
 }
 
 .user-info-content_inner {
@@ -63,9 +63,6 @@
     align-content: center;
     object-fit: cover;
 }
-.image-upload>input {
-    display: none;
-}
 
 .user-info-close {
     position: absolute;
@@ -75,4 +72,10 @@
 
 .user-info-items {
     margin-top: 2em;
+}
+
+.userinfo-error-message {
+    color: #f50000;
+    font-size: 12px;
+    /* padding-left: 12px; */
 }

@@ -6,5 +6,6 @@
 		, "AmazonCognitoIdentity": true
 		, "AWS": true
 		, "AWSCognito": true
+		, "esversion": 6
 	}
 }

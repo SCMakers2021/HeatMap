@@ -166,6 +166,7 @@ $( function() {
 		// ログイン処理
 		signIn(email, pass1).then((tokens) => {
 			token = tokens;
+			readUserInfo(tokens.Sub);
 			// ログインダイアログをクローズさせる処理
 			$( '.js-modal' ).fadeOut( 300 );
 		}).catch((err) => {
@@ -256,6 +257,7 @@ $( function() {
 			// TODO:応答で未認証だったら認証フェーズにする
 			// 未認証かどうかの検知方法は未定
 			token = tokens;
+			readUserInfo(tokens.Sub);
 		}).catch((err) => {
 			if (err.code=='UserNotConfirmedException') {
 				// 応答で未認証だったら認証フェーズにする
