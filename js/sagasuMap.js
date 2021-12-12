@@ -22,7 +22,7 @@ function  ClearSagasuMarker(){
 // サガスマーカーを表示
 function visibleSagasuMarker(index){
     sagasuMarkers[index].setVisible(true);
-    sagasuInfoWindows[index].open(map, sagasuMarkers[index]);
+    // sagasuInfoWindows[index].open(map, sagasuMarkers[index]);
 }
 
 // サガスマーカーを非表示
@@ -31,7 +31,7 @@ function hiddenSagasuMarker(index){
     sagasuInfoWindows[index].close();
 }
 
-function openSagasuMarker(e){
+function openSagasuMarkerWindow(e){
     var ClickIndex=0;
     // どれがクリックされたかを判断
     sagasuMarkers.forEach(function(elem, index) {
@@ -45,6 +45,13 @@ function openSagasuMarker(e){
     
     //クリックしたマーカーの詳細を表示
     sagasuInfoWindows[ClickIndex].open(map, sagasuMarkers[ClickIndex]);
+}
+
+function closeSagasuMarkerWindow(e){
+    sagasuMarkers.forEach(function(elem, index) {
+        // すべて閉じる
+        sagasuInfoWindows[index].close();
+    });
 }
     
 // ウィンドウ内か判定
@@ -72,6 +79,9 @@ function setSagasuMarker(ItemArray){
     var swLatlng = latlngBounds.getSouthWest();
     var neLatlng = latlngBounds.getNorthEast();
 
+    /* マーカーのアイコンの設定 */
+    var markerImage;
+
     if(ItemArray.length == 0){
         alert("検索結果は0件です");
         return;
@@ -82,11 +92,20 @@ function setSagasuMarker(ItemArray){
             lat: Number(ItemArray[i].lat), // 緯度
             lng: Number(ItemArray[i].lng) // 経度
         };
+        markerImage = {
+            url: ItemArray[i].imagePath, //画像のURL
+            size: new google.maps.Size(32, 32), //サイズ
+            scaledSize: new google.maps.Size(32, 32) //アイコンのサイズ
+        };
         sagasuMarkers[i] = new google.maps.Marker({
                 position: pos,
                 map: map,
+                icon: markerImage,
                 animation: google.maps.Animation.DROP // マーカーを立つときのアニメーション
             });
+        // マーカーにマウスを乗せたときにウィンドウを表示
+        google.maps.event.addListener(sagasuMarkers[i], 'mouseover', openSagasuMarkerWindow);
+        // google.maps.event.addListener(sagasuMarkers[i], 'mouseout', closeSagasuMarkerWindow);
 
         if(true == isSmartPhone()){
             height = 50;
@@ -109,11 +128,11 @@ function setSagasuMarker(ItemArray){
         });
 
         /* マーカーをクリックしたら場所の詳細を表示 */
-        google.maps.event.addListener(sagasuMarkers[i], 'click', openSagasuMarker);
+        google.maps.event.addListener(sagasuMarkers[i], 'click', openSagasuMarkerWindow);
         
         if(IsInTheWindow(swLatlng,neLatlng,sagasuMarkers[i].position) == true){
             // 画面内の場合、デフォルトで吹き出しを表示
-            sagasuInfoWindows[i].open(map, sagasuMarkers[i]);
+            // sagasuInfoWindows[i].open(map, sagasuMarkers[i]);
         }
 
         // 後で必要な情報を作成
