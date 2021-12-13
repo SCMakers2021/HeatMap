@@ -123,17 +123,39 @@ function setSagasuMarker(ItemArray){
             height = 200;
         }
         sagasuInfoWindows[i] = new google.maps.InfoWindow({ // 吹き出しの追加
-        content: "<div class='sample'>" 
-                    + "<div>"
-                        + "期限" + ItemArray[i].deadTime 
+        content:  "<div>"
+                    + "<img id='SagasuInfoWindow' src=" + ItemArray[i].imagePath + " height = " + height + ">"
+                + "</div>"
+                + "<div class='sagasuWindow'>" 
+                    + "<div class='sagasuWindowUserIcon'>"
+                        + "<img class='sagasuWindowUserIcon' src=" + ItemArray[i].imagePath + ">"
                     + "</div>"
-                    + "<div>"
-                        + "投稿コメント" + ItemArray[i].StoreComment 
+                    + "<div class='sagasuWindowUserName'>"
+                        + "SC太郎"
                     + "</div>"
-                    + "<div>"
-                        // + "<input type='image' src=" + ItemArray[i].imagePath + " alt='押してケロ♪'>"
-                        + "<img id='SagasuInfoWindow' src=" + ItemArray[i].imagePath + " height = " + height + ">"
+                    + "<div class='sagasuWindowGood'>"
+                        + "<img class='sagasuWindowGood' src='image/good.png' alt='いいね'>"
                     + "</div>"
+                    + "<div class='sagasuWindowGoodCnt'>"
+                        + "<div id='GoodCnt'></div>"
+                    + "</div>"
+                    + "<div class='sagasuWindowBad'>"
+                        + "<img class='sagasuWindowBad' src='image/Bad.png' alt='いいね'>"
+                    + "</div>"
+                    + "<div class='sagasuWindowBadCnt'>"
+                        + "<div id='BadCnt'></div>"
+                    + "</div>"
+                    + "<div class='sagasuWindowCategory'>"
+                        + "【カテゴリ】" + getCategoryName(ItemArray[i].categoryID)
+                    + "</div>"
+                    + "<div class='sagasuWindowDeadTime'>"
+                        + "【期限】" + ItemArray[i].deadTime 
+                    + "</div>"
+                    + "<div class='sagasuWindowComment'>"
+                        + ItemArray[i].StoreComment 
+                    + "</div>"
+
+
                 + "</div>" // 吹き出しに表示する内容
         });
 
