@@ -59,6 +59,32 @@ function RegisterDB(){
         openSagasuMarkerWindow(pos.lat(),pos.lng());;
       });
   }
+
+  // PartiQLの戻り値は「"lat": {"N": "35.689090029122006"},」の形式で帰ってくるため、"N"の箇所を取り除いて配列を生成する。
+  function ParsePartiQLtoArray(partiQL){
+    var RetArray = [];
+    partiQL.forEach((element, index) => {
+      let a = new Object();
+      for (const [key, value] of Object.entries(element)) {
+        for (const [key1, value1] of Object.entries(value)) {
+          // console.log(`${key1}: ${value1}`);
+          a[key] = value1;
+        }
+      }
+      RetArray.push(a);
+    });
+    return RetArray;
+  }
+
+  function MakeSQL1CategorySelect(categoryID,posiData){
+    var sql = `SELECT categoryID,lat,lng,StoreComment,deadTime,imagePath `
+            + `FROM HeatMapStoreInfo `
+            + `where categoryID = ${categoryID} `
+            + ` AND lat BETWEEN ${posiData.latUnder} AND ${posiData.latUpper}`
+            + ` AND lng BETWEEN ${posiData.lngUnder} AND ${posiData.lngUpper}`;
+    return sql;
+  }
+
   // 検索
   function GetSagasuInfo(key){
     return new Promise(function(resolve,reject) {
@@ -76,17 +102,18 @@ function RegisterDB(){
         var nelng = neLatlng.lng();
       
         var posiData = {
-          latUnder: nelat ,
-          latUpper: swlat ,
-          lngUnder: nelng ,
-          lngUpper: swlng 
+          latUnder: swlat ,
+          latUpper: nelat ,
+          lngUnder: swlng ,
+          lngUpper: nelng 
         };
         //
-        var sql = "SELECT categoryID,lat,lng,StoreComment FROM HeatMapStoreInfo where categoryID in (0,3)";
+        var sql = MakeSQL1CategorySelect(key,posiData);
         console.log(`SQL = ${sql}`);
         
         var data = {
-          function: "ReadStoreInfo",
+          // function: "ReadStoreInfo",
+          function: "ReadStoreInfoForSQL",
           //category: category.selectedIndex,
           category: key,
           position: posiData,
@@ -112,10 +139,19 @@ function RegisterDB(){
         .then(response => response.json())
         .then(result => 
           {
-            const data = JSON.parse(result.body);
-            const item = data['Items'];
-            setSagasuMarker(item);
-            resolve('Success!GetSagasuInfo()');
+            if(result.statusCode==200){
+              const data = JSON.parse(result.body);
+              const item = data['Items'];
+              // console.log("item：");
+              // console.log(item);
+              var itemArray = ParsePartiQLtoArray(item);
+              // console.log("itemArray：");
+              // console.log(itemArray);
+              setSagasuMarker(itemArray);
+              resolve('Success!GetSagasuInfo()');
+            }else{
+                console.log(result.body);
+            }
           })
         .catch(error => console.log('error', error));
       }
@@ -123,23 +159,23 @@ function RegisterDB(){
     });
   };
   
-   async function getJSONdata(HeatMapURL,requestOptions){
+  //  async function getJSONdata(HeatMapURL,requestOptions){
 
 
-    const res = await fetch(HeatMapURL, requestOptions);
-      const resjson = await res.json();
+  //   const res = await fetch(HeatMapURL, requestOptions);
+  //     const resjson = await res.json();
   
-    const data = JSON.parse(resjson.body);
-    const item = data['Items'];
-    // Object.keys(item).forEach(function (key) {
-    //       console.log([key] + ": " + item[key].StoreComment);
-    //   console.log([key] + ": " + item[key].lat);
-    //   });
+  //   const data = JSON.parse(resjson.body);
+  //   const item = data['Items'];
+  //   // Object.keys(item).forEach(function (key) {
+  //   //       console.log([key] + ": " + item[key].StoreComment);
+  //   //   console.log([key] + ": " + item[key].lat);
+  //   //   });
   
-      // console.log('DynamoDBdata：',item)
+  //     // console.log('DynamoDBdata：',item)
   
-    setSagasuMarker(item);
-    // console.log(resjson.body)
-  }
+  //   setSagasuMarker(item);
+  //   // console.log(resjson.body)
+  // }
   
 
