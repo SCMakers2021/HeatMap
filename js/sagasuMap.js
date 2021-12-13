@@ -140,7 +140,7 @@ function setSagasuMarker(ItemArray){
                         + "<div id='GoodCnt'></div>"
                     + "</div>"
                     + "<div class='sagasuWindowBad'>"
-                        + "<img class='sagasuWindowBad' src='image/Bad.png' alt='いいね'>"
+                        + "<img class='sagasuWindowBad' src='image/bad.png' alt='いいね'>"
                     + "</div>"
                     + "<div class='sagasuWindowBadCnt'>"
                         + "<div id='BadCnt'></div>"
