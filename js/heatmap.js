@@ -54,7 +54,11 @@ function ViewHeatMap(){
     var elements = document.getElementsByClassName("pointer-label high");
     // console.log("分布表示ボタン");
     // console.log(elements[0].innerHTML);
-    dispDistribution(elements[0].innerHTML);
+    if(isNaN(elements[0].innerHTML)){
+      dispDistribution(0);
+    }else{
+      dispDistribution(elements[0].innerHTML);
+    }
   }else{
     // クリア
     ClearHeatMap();

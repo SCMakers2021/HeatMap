@@ -4,10 +4,14 @@
      ["寿司","image/category/寿司アイコン.png"],
      ["ハンバーガー","image/category/ハンバーガーのアイコンその2.png"]
  ];
-         
+      
+ function getCategoryName(categoryID){
+    return categoryList[categoryID][0];
+}
 function getCategoryPath(categoryID){
     return categoryList[categoryID][1];
 }
+
 
 function MakeCategoryList(){
     const selectCategoryName = document.getElementById('category');

@@ -51,26 +51,30 @@ function DispStreetView(e){
 }
 
 function DispStreetView2(e){
+  
 	return new Promise(function(resolve,reject) {
-		const panoramaAmariFormMap = new google.maps.StreetViewPanorama(
-      document.getElementById("currentPointArea2"),
-      {
-        position: e.latLng,
-        pov: {
-          heading: 34,
-          pitch: 10,
-        },
-        visible: true,
-        addressControl: false,      // 住所表示
-        clickToGo: false ,          // クリックによる移動
-        fullscreenControl: false ,  // 全画面表示
-        panControl: false ,         // コンパスの表示
-        linksControl: false ,       // 座標移動の矢印の表示
-        zoomControl: false ,        // ズームコントローラの表示
-      }
-      );
-    map.setStreetView(panoramaAmariFormMap);
-		
+		// const panoramaAmariFormMap = new google.maps.StreetViewPanorama(
+    //   document.getElementById("currentPointArea2"),
+    //   {
+    //     position: e.latLng,
+    //     pov: {
+    //       heading: 34,
+    //       pitch: 10,
+    //     },
+    //     visible: true,
+    //     addressControl: false,      // 住所表示
+    //     clickToGo: false ,          // クリックによる移動
+    //     fullscreenControl: false ,  // 全画面表示
+    //     panControl: false ,         // コンパスの表示
+    //     linksControl: false ,       // 座標移動の矢印の表示
+    //     zoomControl: false ,        // ズームコントローラの表示
+    //   }
+    //   );
+    // map.setStreetView(panoramaAmariFormMap);
+		document.getElementById("currentPointArea2").innerHTML = "<img src ='https://maps.googleapis.com/maps/api/streetview?size=200x100"
+    +"&location="+e.latLng.lat()+","+e.latLng.lng()
+    +"&fov=80&heading=34&pitch=10&key=AIzaSyD1f5Z-Rqkh3z8HMuhd_sszHw2N1-RYBfk'>";
+    
 		resolve('Success!DispStreetView2()');
 	});
 }
