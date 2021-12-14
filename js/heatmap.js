@@ -27,6 +27,9 @@ $(function () {
     // snap: true,
     ondragend: function(e){
       ChangeHistory(e);
+    },
+    onbarclicked: function(e){
+      ChangeHistory(e);
     }
   });
 });
