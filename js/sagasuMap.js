@@ -92,6 +92,21 @@ function MakeSagasuInfList(ItemArray){
     });
 }
 
+// 期限間近かを判定
+function IsDeadLineApproaching(deadTime){
+    var now = new Date();
+    var deadTimeDate = new Date(deadTime);  // 期限
+    //差日を求める（86,400,000ミリ秒＝１日）
+    var termDay = (deadTimeDate - now) / 86400000;
+    // console.log(`deadTimeDate：${deadTimeDate}　termDay：${termDay}`);
+    // 前後1.5日くらいにしておく(GMTの関係でちょっと誤差が出る)
+    if((-1.5 <= termDay)&&(termDay<=1.5)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 //マーカーを立てる
 function setSagasuMarker(ItemArray){
     var height;
@@ -102,6 +117,8 @@ function setSagasuMarker(ItemArray){
 
     /* マーカーのアイコンの設定 */
     var markerImage;
+    var animation;
+    var markerLabel;
 
     if(ItemArray.length == 0){
         alert("検索結果は0件です");
@@ -119,11 +136,24 @@ function setSagasuMarker(ItemArray){
             size: new google.maps.Size(32, 32), //サイズ
             scaledSize: new google.maps.Size(32, 32) //アイコンのサイズ
         };
+        if(IsDeadLineApproaching(ItemArray[i].deadTime) == true){
+            animation = google.maps.Animation.BOUNCE;   // 期限切れ間近は目立たせる
+            markerLabel = {
+                text: `【期限】${ItemArray[i].deadTime}` ,
+                color: "red" ,
+                fontSize: "20px" ,
+            };
+        }else{
+            animation = google.maps.Animation.DROP;
+            markerLabel = "";
+        }
         sagasuMarkers[i] = new google.maps.Marker({
                 position: pos,
                 map: map,
                 icon: markerImage,
-                animation: google.maps.Animation.DROP // マーカーを立つときのアニメーション
+                // label: markerLabel,
+                title: `【期限】${ItemArray[i].deadTime}`,
+                animation: animation // マーカーを立つときのアニメーション
             });
         // マーカーにマウスを乗せたときにウィンドウを表示
         google.maps.event.addListener(sagasuMarkers[i], 'mouseover', openSagasuMarkerWindowLap);
@@ -163,7 +193,7 @@ function setSagasuMarker(ItemArray){
                         + "【カテゴリ】" + getCategoryName(ItemArray[i].categoryID)
                     + "</div>"
                     + "<div class='sagasuWindowDeadTime'>"
-                        + "【期限】" + ItemArray[i].deadTime 
+                        + `【期限】${ItemArray[i].deadTime}`
                     + "</div>"
                     + "<div class='sagasuWindowComment'>"
                         + ItemArray[i].StoreComment 
