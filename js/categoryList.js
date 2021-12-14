@@ -32,6 +32,7 @@ function MakeCategoryPanelTd(row,category,index){
     var div = document.createElement("div");
     //<td onclick="searchCategoryClicked('Cake')"     id='searchCategoryCake'    ></td>
     td.setAttribute("onclick",`searchCategoryClicked(${index})`);
+    td.setAttribute("id", `searchCategory${index}`);
     input.setAttribute("type", "image");
     input.setAttribute("class", "searchCategory");
     input.setAttribute("src", category[1]);
@@ -39,6 +40,20 @@ function MakeCategoryPanelTd(row,category,index){
     td.appendChild(input);
     td.appendChild(div);
     row.appendChild(td);
+}
+
+// サガスサイドバーのパネルを選択状態にする
+function SelectCategoryPanel(selectIndex){
+    categoryList.forEach((category, index) => {
+        let categoryPanel = document.getElementById(`searchCategory${index}`);
+        if(index == selectIndex){
+            categoryPanel.classList.add('searchCategoryActive');
+            // $(`searchCategory${index}`).toggleClass("searchCategoryActive",true);	// パネルの選択を追加
+        }else{
+            categoryPanel.classList.remove('searchCategoryActive');
+            // $(`searchCategory${index}`).toggleClass("searchCategoryActive",false);	// パネルの選択を削除
+        }
+      });
 }
 
 function MakeCategoryPanel(){

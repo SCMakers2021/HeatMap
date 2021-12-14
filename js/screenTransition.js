@@ -1,13 +1,11 @@
 // 「カテゴリアイコン」ボタン押下
 function searchCategoryClicked( key ){
+	SelectCategoryPanel(key);
 	var id = "searchCategory" + key;
 	console.log(`TODO:検索 = ${id}`);
 	ClearSagasuMarker() 
     GetSagasuInfo(key);
 }
-
-
-
 
 function onEntryBtnClicked(){
 	var btnVal = $('#btnAmari').val();

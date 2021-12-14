@@ -299,12 +299,18 @@ a {
   height: 40px;
 }
 
-.contents div.sidebar td:active {
-  background-color: rgb(255, 166, 0);
+.contents div.sidebar .searchCategoryActive {
+  background-color: #f1ba77;
 }
-.contents div.sidebar td:not(:active) {
+/* .contents div.sidebar .searchCategoryNegative {
   background-color: rgb(255, 255, 255);
+} */
+.contents div.sidebar td:hover {
+  background-color: #ff8c00;
 }
+/* .contents div.sidebar td:not(:active) {
+  background-color: rgb(255, 255, 255);
+} */
 
 
 /*****************************************************/
