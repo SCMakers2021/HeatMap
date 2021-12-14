@@ -89,6 +89,11 @@ $(function(){
 	})
 	// 「アマリ」ボタン押下
 	$('#btnAmari').click(function(){
+		if(token.IsLogin() == false){
+			alert("ログインしてください");
+			FadeInLoginDialog();
+			return;
+		}
 		var btnVal = $('#btnAmari').val();
 		if( "valid" == btnVal ){
 			// アマリモード移行

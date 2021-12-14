@@ -156,6 +156,14 @@ class Tokens {
 		}
 		return varSub;
 	}
+	
+	IsLogin(){
+		if(this.Sub != ""){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
 
 /**

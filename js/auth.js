@@ -3,6 +3,13 @@
 /* jshint esversion: 6, laxbreak: true, laxcomma: true, node: true, browser: true, devel: true */
 /* globals $:false */
 
+function FadeInLoginDialog(ele){
+	// ログインダイアログを表示させる処理
+	var target = $('.js-modal-open').data('target');
+	var modal = document.getElementById(target);
+	$(modal).fadeIn(300);
+}
+
 $( function() {
 	// ユーザープールの設定
 	const poolData = {
@@ -128,10 +135,11 @@ $( function() {
 			let tokens = new Tokens();
 			let notLogin = (tokens.Sub == '');
 			if (notLogin) {
-				// ログインダイアログを表示させる処理
-				var target = $(this).data('target');
-				var modal = document.getElementById(target);
-				$(modal).fadeIn(300);
+				// // ログインダイアログを表示させる処理
+				// var target = $(this).data('target');
+				// var modal = document.getElementById(target);
+				// $(modal).fadeIn(300);
+				FadeInLoginDialog();
 				return false;
 			} else {
 				$('.user-info-base').fadeIn(300);
