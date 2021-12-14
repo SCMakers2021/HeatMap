@@ -51,10 +51,10 @@ function RegisterDB(){
 
   // 検索+登録後のウィンドウを表示
   function AddStoreInfoAfter(key,pos){
-    console.log(pos);
+    // console.log(pos);
     GetSagasuInfo(key)
     .then(resolve => {
-      console.log(resolve);
+      // console.log(resolve);
         // streetビューの表示(吹き出しが出た後じゃないとIDが取れないので)
         openSagasuMarkerWindow(pos.lat(),pos.lng());;
       });
@@ -77,7 +77,7 @@ function RegisterDB(){
   }
 
   function MakeSQL1CategorySelect(categoryID,posiData){
-    var sql = `SELECT categoryID,lat,lng,StoreComment,deadTime,imagePath `
+    var sql = `SELECT UserID,categoryID,lat,lng,StoreComment,deadTime,imagePath `
             + `FROM HeatMapStoreInfo `
             + `where categoryID = ${categoryID} `
             + ` AND lat BETWEEN ${posiData.latUnder} AND ${posiData.latUpper}`
@@ -147,8 +147,16 @@ function RegisterDB(){
               var itemArray = ParsePartiQLtoArray(item);
               // console.log("itemArray：");
               // console.log(itemArray);
-              setSagasuMarker(itemArray);
-              resolve('Success!GetSagasuInfo()');
+              MakeSagasuInfList(itemArray);
+
+              // 検索結果をもとにユーザ情報も取得する
+              GetSagasuUserInfo()
+              .then(result =>
+                {
+                  // 出店情報とユーザ情報がそろったのでマーカーを設置する
+                  setSagasuMarker(itemArray);
+                  resolve('Success!GetSagasuInfo()');
+                })
             }else{
                 console.log(result.body);
             }
@@ -159,23 +167,54 @@ function RegisterDB(){
     });
   };
   
-  //  async function getJSONdata(HeatMapURL,requestOptions){
+// 検索結果をもとにユーザ情報を取得する
+function GetSagasuUserInfo(){
+  return new Promise(function(resolve,reject) {
+    var sql = MakeSQLSagasuUserList();
+    console.log(`SQL = ${sql}`);
+    
+    // SQLを投げる場合はReadStoreInfoForSQLでOK
+    var data = {
+      function: "ReadStoreInfoForSQL",
+      category: 0,
+      position: 0,
+      sql: sql
+    };
 
-
-  //   const res = await fetch(HeatMapURL, requestOptions);
-  //     const resjson = await res.json();
-  
-  //   const data = JSON.parse(resjson.body);
-  //   const item = data['Items'];
-  //   // Object.keys(item).forEach(function (key) {
-  //   //       console.log([key] + ": " + item[key].StoreComment);
-  //   //   console.log([key] + ": " + item[key].lat);
-  //   //   });
-  
-  //     // console.log('DynamoDBdata：',item)
-  
-  //   setSagasuMarker(item);
-  //   // console.log(resjson.body)
-  // }
+    // instantiate a headers object
+    var myHeaders = new Headers();
+    // add content type header to object
+    myHeaders.append("Content-Type", "application/json");
+    // using built in JSON utility package turn object to string and store in a variable
+    var ele = JSON.stringify({Element: data}, null, ' ');
+    // create a JSON object with parameters for API call and store in a variable
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: ele,
+      redirect: 'follow'
+    };
+    //JSONデータを操作する
+    fetch(HeatMapURL, requestOptions)
+    .then(response => response.json())
+    .then(result => 
+      {
+        if(result.statusCode==200){
+          const data = JSON.parse(result.body);
+          const item = data['Items'];
+          var itemArray = ParsePartiQLtoArray(item);
+          // console.log("itemArrayUser：");
+          // console.log(itemArray);
+          resolve('Success!GetSagasuUserInfo()');
+          //ユーザ情報を取り出して配列に入れる
+          AddUserInfToSagasuInfList(itemArray);
+        }else{
+            console.log(result.body);
+        }
+      })
+    .catch(error => console.log('error', error));
+    
+  });
+};
   
 

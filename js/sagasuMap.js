@@ -1,11 +1,13 @@
 class classSagasuInf {
-    constructor(deadTime) {
+    constructor(deadTime,UserID) {
       this.deadTime = deadTime;
+      this.UserID = UserID;
     }
   }
 var sagasuMarkers=[];
 var sagasuInfoWindows =[];
 var sagasuInf=[];
+var sagasuUserInf=[];
 var IsSagasuMarkerInTheWindow = false;
 
 // サガスマーカーをすべてクリア
@@ -50,7 +52,7 @@ function openSagasuMarkerWindow(lat,lng){
         sagasuInfoWindows[index].close();
         }
     });
-    console.log(ClickIndex);
+    // console.log(ClickIndex);
     //クリックしたマーカーの詳細を表示
     sagasuInfoWindows[ClickIndex].open(map, sagasuMarkers[ClickIndex]);
 }
@@ -78,6 +80,16 @@ function IsInTheWindow(sw,ne,pos){
     }else{
         return false;
     }
+}
+
+// 後で使う必要な情報を先にまとめる
+function MakeSagasuInfList(ItemArray){
+    // サガスのリストからUserIDのみ抜き出す
+    ItemArray.forEach(function(elem, index) {
+        // 後で必要な情報を作成
+        sagasuInf[index] = new classSagasuInf(elem.deadTime,elem.UserID);
+        // console.log('マーカーの中身',sagasuMarkers[i]);
+    });
 }
 
 //マーカーを立てる
@@ -124,26 +136,28 @@ function setSagasuMarker(ItemArray){
         }
         sagasuInfoWindows[i] = new google.maps.InfoWindow({ // 吹き出しの追加
         content:  "<div>"
-                    + "<img id='SagasuInfoWindow' src=" + ItemArray[i].imagePath + " height = " + height + ">"
+                    + `<a href=${sagasuUserInf[sagasuInf[i].UserID].userLink} target="_blank">`
+                    + `<img id='SagasuInfoWindow' src=${ItemArray[i].imagePath} height = ${height} alt='投稿者のページを開く' title='投稿者のページを開く'>`
+                    + "</a>"
                 + "</div>"
                 + "<div class='sagasuWindow'>" 
                     + "<div class='sagasuWindowUserIcon'>"
-                        + "<img class='sagasuWindowUserIcon' src=" + ItemArray[i].imagePath + ">"
+                        + `<img class='sagasuWindowUserIcon' src=${sagasuUserInf[sagasuInf[i].UserID].iconPath}>`
                     + "</div>"
                     + "<div class='sagasuWindowUserName'>"
-                        + "SC太郎"
+                        + sagasuUserInf[sagasuInf[i].UserID].userName
                     + "</div>"
                     + "<div class='sagasuWindowGood'>"
                         + "<img class='sagasuWindowGood' src='image/good.png' alt='いいね'>"
                     + "</div>"
                     + "<div class='sagasuWindowGoodCnt'>"
-                        + "<div id='GoodCnt'></div>"
+                        + `<div id='GoodCnt'>${sagasuUserInf[sagasuInf[i].UserID].repPlus}</div>`
                     + "</div>"
                     + "<div class='sagasuWindowBad'>"
                         + "<img class='sagasuWindowBad' src='image/bad.png' alt='いいね'>"
                     + "</div>"
                     + "<div class='sagasuWindowBadCnt'>"
-                        + "<div id='BadCnt'></div>"
+                        + `<div id='BadCnt'>${sagasuUserInf[sagasuInf[i].UserID].repMinus}</div>`
                     + "</div>"
                     + "<div class='sagasuWindowCategory'>"
                         + "【カテゴリ】" + getCategoryName(ItemArray[i].categoryID)
@@ -166,14 +180,44 @@ function setSagasuMarker(ItemArray){
             // 画面内の場合、デフォルトで吹き出しを表示
             // sagasuInfoWindows[i].open(map, sagasuMarkers[i]);
         }
-
-        // 後で必要な情報を作成
-        sagasuInf[i] = new classSagasuInf(ItemArray[i].deadTime);
-        // console.log('マーカーの中身',sagasuMarkers[i]);
     }
 
     ViewHeatMap();
     if(IsSagasuMarkerInTheWindow == false){
         alert("現在の表示範囲に検索データはありません。");
     }    
+}
+
+// サガス情報をもとにユーザ情報を検索
+function MakeSQLSagasuUserList(){
+    var UserListDuplicate=[];   // 重複ありのリスト
+    // サガスのリストからUserIDのみ抜き出す
+    sagasuInf.forEach(function(elem, index) {
+        UserListDuplicate.push(elem.UserID);
+    });
+
+    // 重複なしのリストにする
+    const UserListNonDuplicate = Array.from(new Set(UserListDuplicate));
+    var sql = `SELECT userID,iconPath,repMinus,repPlus,userLink,userName `
+            + `FROM HeatMapUserInfo `;
+            UserListNonDuplicate.forEach(function(elem, index) {
+                if(index==0){
+                    sql = sql + `WHERE userID = '${elem}' `;
+                }else{
+                    sql = sql + `OR userID = '${elem}' `;
+                }
+            });
+    return sql;
+}
+
+function AddUserInfToSagasuInfList(itemArray){
+    // 連想配列でユーザIDのリストを作成
+    sagasuUserInf=[];
+    // サガスのリストからUserIDのみ抜き出す
+    itemArray.forEach(function(elem){
+        // 後で必要な情報を作成
+        sagasuUserInf[elem.userID] = elem;
+    });
+    // console.log("sagasuUserInf：");
+    // console.log(sagasuUserInf);
 }
