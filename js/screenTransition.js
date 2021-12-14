@@ -90,7 +90,7 @@ $(function(){
 	// 「アマリ」ボタン押下
 	$('#btnAmari').click(function(){
 		if(token.IsLogin() == false){
-			alert("ログインしてください");
+			alert("「アマリ」情報を登録する場合はログインしてください");
 			FadeInLoginDialog();
 			return;
 		}
