@@ -61,6 +61,7 @@
 		<link rel="stylesheet" href="css/style.sagasuWindow.css">    <!-- CSS@PC/タブレット用 サガスの吹き出し用 -->
 		<link rel="stylesheet" href="css/style.mobile.css">  <!-- CSS@スマホ用        -->
 		<link rel="stylesheet" href="css/style.sagasuWindowMobile.css">    <!-- CSS@スマホ用 サガスの吹き出し用 -->
+		<link rel="stylesheet" href="css/loadanimation.css">    <!-- CSS@ローディング中のアニメーション -->
 
 		<!-- スクリプト実装部 -->
 		<script>
@@ -91,12 +92,29 @@
 
 			$('#btnAmari').val("valid");	// アマリボタンを有効化
 			$('#btnSagasu').val("valid");	// サガスボタンを有効化
+
+			// ローディング完了
+			const spinner = document.getElementById('loading');
+  			spinner.classList.add('loaded');
 		});
 		
 		</script>
 
 	</head>
 	<body>
+		<!-- ローディング画面 -->
+		<div id="loading">
+			<div class="spinner">
+				<div class="rect1">H</div>
+				<div class="rect2">e</div>
+				<div class="rect3">a</div>
+				<div class="rect4">t</div>
+				<div class="rect5">M</div>
+				<div class="rect6">a</div>
+				<div class="rect7">p</div>
+				Loading...
+			</div>
+		</div>
 		<!-- ================================================ -->
 		<!--　コンテンツエリア（配置順に注意）                -->
 		<!-- ================================================ -->
