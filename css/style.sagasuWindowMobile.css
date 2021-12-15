@@ -97,7 +97,7 @@
     /* コメント */
     .sagasuWindowGrid .sagasuWindowComment{
         grid-column: 1 / 11;
-        grid-row: 6 / 10;
+        grid-row: 6 / 9;
         border: 1px solid #ccc;
     }
 }
