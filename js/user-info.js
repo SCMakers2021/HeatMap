@@ -39,7 +39,6 @@ $( function() {
         const link = $('input[name="link"]').val();
 
         registerUserInfo(file,userImageBASE64,userName,link);
-        readUserInfo(token.Sub);
     });
 
     function registerUserInfo(file,userImageBASE64,userName,link) {
@@ -74,9 +73,11 @@ $( function() {
         // make API call with parameters and use promises to get response
         fetch(HeatMapURL, requestOptions)
             .then(response => response.text())
-            .then(result =>
-                //alert(JSON.parse(result).body)
-                alert("登録しました。")
+            .then(result => {
+                    //alert(JSON.parse(result).body)
+                    alert("登録しました。");
+                    readUserInfo(token.Sub);
+                }
             )
             .catch(error => console.log('error', error));
 
