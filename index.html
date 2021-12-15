@@ -145,7 +145,7 @@
 			</div>
 
 			<!-- ## レイヤ3 ##-->
-			<div class='sidebar' id="SagasuSidebar">                <!-- サガス用サイドバー -->
+			<div class='sidebar' id="SagasuSidebar" hidden="hidden">                <!-- サガス用サイドバー -->
 				<table id='searchCategoryArea'>
 				</table>
 				<!-- <input type="button" name="Bunpu" value="分布表示" style="color:white;background-color:lightpink;font-size:15;width:180px;height:30px"  onclick="ViewHeatMap()"> -->
@@ -154,6 +154,11 @@
 						<input type="checkbox" id="BunpuCheckBox" checked onclick="ViewHeatMap()">　分布表示ON/OFF
 						<input class="single-slider" value="0" />
 					</div>
+				</div>
+				<div class="SagasuSidebarClose">
+					<button id="SagasuSidebarCloseButton" class="SagasuSidebarCloseButton">
+						<img alt="" src="image/arrow_left.png" class="SagasuSidebarCloseButton-icon">
+					</button>
 				</div>
 			</div>
 		</div>

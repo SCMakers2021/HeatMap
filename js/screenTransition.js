@@ -1,3 +1,5 @@
+var SagasuSidebarIsHidden = false;
+
 // 「カテゴリアイコン」ボタン押下
 function searchCategoryClicked( key ){
 	SelectCategoryPanel(key);
@@ -38,6 +40,20 @@ function switchAmariButtom(flag){
 }
 
 $(function(){
+	
+	// サイドバー表示
+	function ShowSidebar(){
+		SagasuSidebarIsHidden = false;
+		$("#SagasuSidebar").toggleClass("sidebarhide",false);	// サイドバー非表示を無効
+		$("#SagasuSidebar").toggleClass("sidebarshow",true);	// サイドバー表示を有効
+		$('#SagasuSidebar').attr('hidden',false);
+	}
+	// サイドバー非表示
+	function HiddenSidebar(){
+		$("#SagasuSidebar").toggleClass("sidebarhide",true);	// サイドバー非表示を有効
+		$("#SagasuSidebar").toggleClass("sidebarshow",false);	// サイドバー表示を無効
+		$('#SagasuSidebar').attr('hidden',true);
+	}
 	function switchAmariMode(flag){
 		if( true == flag ){
 			$("#btnSagasu").toggleClass("topModeChange-Sagasu-hover",false);	// ボタンを押した動作を削除
@@ -55,7 +71,7 @@ $(function(){
 			$("#btnSagasu").toggleClass("topModeChange-Sagasu-hover",true);	// ボタンを押す動作を追加
 			$("#btnAmari").toggleClass("topModeChange-Amari-hover",false);	// ボタンを押した動作を削除
 			$('#btnSagasu').val("invalid");
-			$('#SagasuSidebar').attr('hidden',false);
+			ShowSidebar();	// サイドバー表示
 			ScreenMode = MODE_Define.SAGASU.value;
 			console.log("TODO：サガスモードへ");
 			CancelAmariMode();	// アマリモードをキャンセルした場合の処理
@@ -64,11 +80,21 @@ $(function(){
 			$('#map_hidden').attr('hidden',true);
 		}else{
 			//$('#btnSagasu').attr('src',"image/SagasuActive.png");
-			$('#btnSagasu').val("valid");
-			$('#SagasuSidebar').attr('hidden',true);
+			StartAnimationHiddenSidebar();	// サイドバー非表示
 		}
 	}
 
+	// サイドバー非表示のアニメーション開始
+	function StartAnimationHiddenSidebar(){
+		$('#btnSagasu').val("valid");
+		SagasuSidebarIsHidden = true;
+		$("#SagasuSidebar").toggleClass("sidebarhide",true);	// サイドバーを隠す
+	}
+
+	function EventAnimationEnd(){
+		// サイドバー表示しているなら非表示にする
+		HiddenSidebar();
+	}
 
 
 	//--------------------------------------------
@@ -143,4 +169,20 @@ $(function(){
 	$('#amariCancel').click(function(){
 		MoveAmariTopPage();
 	})
+
+	
+	
+	// サイドバーのクローズボタン
+	$('#SagasuSidebarCloseButton').click(function(){
+		StartAnimationHiddenSidebar();
+	})
+	// アニメーション終わりのイベントを捕まえる
+	const animated = document.getElementById('SagasuSidebar');
+	animated.addEventListener('animationend', () => {
+		if(SagasuSidebarIsHidden == true){
+			// サイドバー表示しているなら非表示にする
+			EventAnimationEnd();
+		}
+	});
+	
 });
