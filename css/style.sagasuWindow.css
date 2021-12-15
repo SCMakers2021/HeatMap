@@ -1,65 +1,87 @@
 .sagasuWindow {
+    width: 400px;
+    height: 400px;
+}
+/* 投稿画像 */
+img.sagasuWindowPic{
+    display: block;
+    margin: auto;
+    width: auto;    /* 横幅を割合で指定　grid 5行 × 20px = 100px. 300px/400pxに余裕を持たせて70% */
+    height: 200px;  /* 高さは自動指定 */
+    margin-bottom: 2px;
+    border: 1px solid #ccc;
+}
+.sagasuWindowGrid {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    grid-auto-rows: minmax(30px, auto);
-    grid-auto-columns: minmax(20px, auto);
-    /* row-gap: 5px; */
+    /* grid-auto-rows: minmax(20px, auto); 高さ */
+    grid-auto-rows: 20px; /* 高さ */
+    grid-auto-columns: 40px;
+    row-gap: 2px;
 }
-/* .sagasuWindow > * {
-    border: 1px solid #ccc;
-  } */
 /* ユーザアイコン */
-.sagasuWindow .sagasuWindowUserIcon{
-    grid-column: 1 / 2;
+.sagasuWindowGrid .sagasuWindowUserIcon{
+    grid-column: 1 / 3;
     grid-row: 1 / 3;
 }
 img.sagasuWindowUserIcon{
+    display: block;
+    margin: auto;
+    width: 60px;
+    height: 60px;
+}
+/* ユーザ名 */
+.sagasuWindowGrid .sagasuWindowUserName{
+    grid-column: 3 / 8;
+    grid-row: 1 / 1;
+}
+/* カテゴリ */
+.sagasuWindowGrid .sagasuWindowCategory{
+    grid-column: 3 / 8;
+    grid-row: 2 / 2;
+}
+/* 期限 */
+.sagasuWindowGrid .sagasuWindowDeadTime{
+    grid-column: 3 / 8;
+    grid-row: 3 / 3;
+}
+/* ユーザリンク */
+.sagasuWindowGrid .sagasuWindowUserLink{
+    grid-column: 10 / 11;
+    grid-row: 1 / 2;
+}
+img.sagasuWindowUserLink{
     width: 40px;
     height: 40px;
 }
-/* ユーザ名 */
-.sagasuWindow .sagasuWindowUserName{
-    grid-column: 3 / 10;
-    grid-row: 1 / 1;
-}
 /* ボタン */
-.sagasuWindow .sagasuWindowGood{
-    grid-column: 3 / 4;
+.sagasuWindowGrid .sagasuWindowGood{
+    grid-column: 8 / 8;
     grid-row: 2 / 2;
 }
 img.sagasuWindowGood{
     width: 20px;
     height: 20px;
 }
-.sagasuWindow .sagasuWindowGoodCnt{
-    grid-column: 5 / 6;
+.sagasuWindowGrid .sagasuWindowGoodCnt{
+    grid-column: 9 / 10;
     grid-row: 2 / 2;
 }
-.sagasuWindow .sagasuWindowBad{
-    grid-column: 7 / 8;
-    grid-row: 2 / 2;
+.sagasuWindowGrid .sagasuWindowBad{
+    grid-column: 8 / 8;
+    grid-row: 3 / 3;
 }
 img.sagasuWindowBad{
     width: 20px;
     height: 20px;
 }
-.sagasuWindow .sagasuWindowBadCnt{
+.sagasuWindowGrid .sagasuWindowBadCnt{
     grid-column: 9 / 10;
-    grid-row: 2 / 2;
-}
-/* カテゴリ */
-.sagasuWindow .sagasuWindowCategory{
-    grid-column: 1 / 5;
-    grid-row: 3 / 3;
-}
-/* 期限 */
-.sagasuWindow .sagasuWindowDeadTime{
-    grid-column: 6 / 10;
     grid-row: 3 / 3;
 }
 /* コメント */
-.sagasuWindow .sagasuWindowComment{
-    grid-column: 1 / 10;
-    grid-row: 4 / 6;
+.sagasuWindowGrid .sagasuWindowComment{
+    grid-column: 1 / 11;
+    grid-row: 4 / 10;
     border: 1px solid #ccc;
 }

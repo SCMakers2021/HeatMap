@@ -110,6 +110,7 @@ function IsDeadLineApproaching(deadTime){
 //マーカーを立てる
 function setSagasuMarker(ItemArray){
     var height;
+    var width;
     var pos;
     var latlngBounds = map.getBounds();
     var swLatlng = latlngBounds.getSouthWest();
@@ -161,46 +162,55 @@ function setSagasuMarker(ItemArray){
 
         if(true == isSmartPhone()){
             height = 50;
+            width = 250;
         }else{
             height = 200;
+            width = 400;
         }
         sagasuInfoWindows[i] = new google.maps.InfoWindow({ // 吹き出しの追加
-        content:  "<div>"
-                    + `<a href=${sagasuUserInf[sagasuInf[i].UserID].userLink} target="_blank">`
-                    + `<img id='SagasuInfoWindow' src=${ItemArray[i].imagePath} height = ${height} alt='投稿者のページを開く' title='投稿者のページを開く'>`
-                    + "</a>"
-                + "</div>"
-                + "<div class='sagasuWindow'>" 
-                    + "<div class='sagasuWindowUserIcon'>"
-                        + `<img class='sagasuWindowUserIcon' src=${sagasuUserInf[sagasuInf[i].UserID].iconPath}>`
+        content:  "<div class='sagasuWindow'>"
+                    + `<div>`
+                        + `<a href=${sagasuUserInf[sagasuInf[i].UserID].userLink} target="_blank">`
+                        + `<img id='SagasuInfoWindow' src=${ItemArray[i].imagePath} class='sagasuWindowPic' alt='投稿者のページを開く' title='投稿者のページを開く'>`
+                        + "</a>"
                     + "</div>"
-                    + "<div class='sagasuWindowUserName'>"
-                        + sagasuUserInf[sagasuInf[i].UserID].userName
+                    + "<div class='sagasuWindowGrid'>" 
+                        + "<div class='sagasuWindowUserIcon'>"
+                            + `<img class='sagasuWindowUserIcon' src=${sagasuUserInf[sagasuInf[i].UserID].iconPath}>`
+                        + "</div>"
+                        + "<div class='sagasuWindowUserName'>"
+                            + `【投稿者　】${sagasuUserInf[sagasuInf[i].UserID].userName}`
+                        + "</div>"
+                        + "<div class='sagasuWindowCategory'>"
+                            + "【カテゴリ】" + getCategoryName(ItemArray[i].categoryID)
+                        + "</div>"
+                        + "<div class='sagasuWindowDeadTime'>"
+                            + `【期限　　】${ItemArray[i].deadTime}`
+                        + "</div>"
+                        + "<div class='sagasuWindowGood'>"
+                            + "<img class='sagasuWindowGood' src='image/good.png' alt='いいね'>"
+                        + "</div>"
+                        + "<div class='sagasuWindowGoodCnt'>"
+                            + `<div id='GoodCnt'>${sagasuUserInf[sagasuInf[i].UserID].repPlus}</div>`
+                        + "</div>"
+                        + "<div class='sagasuWindowBad'>"
+                            + "<img class='sagasuWindowBad' src='image/bad.png' alt='いいね'>"
+                        + "</div>"
+                        + "<div class='sagasuWindowBadCnt'>"
+                            + `<div id='BadCnt'>${sagasuUserInf[sagasuInf[i].UserID].repMinus}</div>`
+                        + "</div>"
+                        + "<div class='sagasuWindowUserLink'>"
+                            // + `【投稿者リンク】${sagasuUserInf[sagasuInf[i].UserID].userLink}`
+                            + `<a href=${sagasuUserInf[sagasuInf[i].UserID].userLink} target="_blank">`
+                            + `<img src='image/pageJump.png' class='sagasuWindowUserLink' alt='投稿者のページを開く' title='投稿者のページを開く'>`
+                            + "</a>"
+                        + "</div>"
+                        + "<div class='sagasuWindowComment'>"
+                            + ItemArray[i].StoreComment 
+                        + "</div>"
                     + "</div>"
-                    + "<div class='sagasuWindowGood'>"
-                        + "<img class='sagasuWindowGood' src='image/good.png' alt='いいね'>"
-                    + "</div>"
-                    + "<div class='sagasuWindowGoodCnt'>"
-                        + `<div id='GoodCnt'>${sagasuUserInf[sagasuInf[i].UserID].repPlus}</div>`
-                    + "</div>"
-                    + "<div class='sagasuWindowBad'>"
-                        + "<img class='sagasuWindowBad' src='image/bad.png' alt='いいね'>"
-                    + "</div>"
-                    + "<div class='sagasuWindowBadCnt'>"
-                        + `<div id='BadCnt'>${sagasuUserInf[sagasuInf[i].UserID].repMinus}</div>`
-                    + "</div>"
-                    + "<div class='sagasuWindowCategory'>"
-                        + "【カテゴリ】" + getCategoryName(ItemArray[i].categoryID)
-                    + "</div>"
-                    + "<div class='sagasuWindowDeadTime'>"
-                        + `【期限】${ItemArray[i].deadTime}`
-                    + "</div>"
-                    + "<div class='sagasuWindowComment'>"
-                        + ItemArray[i].StoreComment 
-                    + "</div>"
-
-
-                + "</div>" // 吹き出しに表示する内容
+                + "</div>", // 吹き出しに表示する内容
+            // maxWidth: width
         });
 
         /* マーカーをクリックしたら場所の詳細を表示 */
