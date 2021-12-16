@@ -56,6 +56,30 @@ function SelectCategoryPanel(selectIndex){
       });
 }
 
+// サガスサイドバーのパネルを選択状態のリストを取得する
+function GetSelectedCategoryPanelKeyList(){
+    var keyList = [];
+    categoryList.forEach((category, index) => {
+        let categoryPanel = document.getElementById(`searchCategory${index}`);
+        if(categoryPanel.classList.contains('searchCategoryActive')){
+            keyList.push(index);
+        }
+    });
+    
+    return keyList;
+}
+
+// カテゴリパネルの選択状態を切り替え
+function SwitchCategoryPanel(selectIndex){
+    let categoryPanel = document.getElementById(`searchCategory${selectIndex}`);
+    if(categoryPanel.classList.contains('searchCategoryActive')){
+        // あったら削除
+        categoryPanel.classList.remove('searchCategoryActive');
+    }else{
+        categoryPanel.classList.add('searchCategoryActive');
+    }
+}
+
 function MakeCategoryPanel(){
     var tblBody = document.getElementById("searchCategoryArea");
     var loopNum = categoryList.length / 5 + 1;

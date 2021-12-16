@@ -2,11 +2,17 @@ var SagasuSidebarIsHidden = false;
 
 // 「カテゴリアイコン」ボタン押下
 function searchCategoryClicked( key ){
-	SelectCategoryPanel(key);
-	var id = "searchCategory" + key;
-	console.log(`TODO:検索 = ${id}`);
-	ClearSagasuMarker() 
-    GetSagasuInfo(key);
+	// SelectCategoryPanel(key);
+	// パネルの選択状態を切り替え
+	SwitchCategoryPanel(key);
+	// 選択中パネルのキー一覧を取得
+	var keyList = GetSelectedCategoryPanelKeyList();
+	// var id = "searchCategory" + key;
+	// console.log(`TODO:検索 = ${id}`);
+	if(keyList.length != 0){
+		ClearSagasuMarker();
+		GetSagasuInfo(keyList);
+	}
 }
 
 function onEntryBtnClicked(){

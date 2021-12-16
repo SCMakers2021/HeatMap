@@ -310,9 +310,10 @@ a {
 /* .contents div.sidebar .searchCategoryNegative {
   background-color: rgb(255, 255, 255);
 } */
-.contents div.sidebar td:hover {
+/* スマホ表示でうまくいかないためhoverを削除 */
+/* .contents div.sidebar td:hover {
   background-color: #ff8c00;
-}
+} */
 /* .contents div.sidebar td:not(:active) {
   background-color: rgb(255, 255, 255);
 } */

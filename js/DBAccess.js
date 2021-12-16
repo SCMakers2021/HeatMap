@@ -52,7 +52,9 @@ function RegisterDB(){
   // 検索+登録後のウィンドウを表示
   function AddStoreInfoAfter(key,pos){
     // console.log(pos);
-    GetSagasuInfo(key)
+    var keyList = [];
+    keyList.push(key);
+    GetSagasuInfo(keyList)
     .then(resolve => {
       // console.log(resolve);
         // streetビューの表示(吹き出しが出た後じゃないとIDが取れないので)
@@ -78,17 +80,25 @@ function RegisterDB(){
     return RetArray;
   }
 
-  function MakeSQL1CategorySelect(categoryID,posiData){
+  function MakeSQL1CategorySelect(categoryIDList,posiData){
+    var sqlCategory = "";
+    categoryIDList.forEach(function(elem, index) {
+      if(index==0){
+        sqlCategory = sqlCategory + ` WHERE categoryID = ${elem} `;
+      }else{
+        sqlCategory = sqlCategory + `OR categoryID = ${elem} `;
+      }
+    });
     var sql = `SELECT UserID,categoryID,lat,lng,StoreComment,deadTime,imagePath `
             + `FROM HeatMapStoreInfo `
-            + `where categoryID = ${categoryID} `
+            + sqlCategory
             + ` AND lat BETWEEN ${posiData.latUnder} AND ${posiData.latUpper}`
             + ` AND lng BETWEEN ${posiData.lngUnder} AND ${posiData.lngUpper}`;
     return sql;
   }
 
   // 検索
-  function GetSagasuInfo(key){
+  function GetSagasuInfo(keyList){
     return new Promise(function(resolve,reject) {
       if(markers != null){
         // プルダウンからカテゴリを選択
@@ -110,14 +120,14 @@ function RegisterDB(){
           lngUpper: nelng 
         };
         //
-        var sql = MakeSQL1CategorySelect(key,posiData);
+        var sql = MakeSQL1CategorySelect(keyList,posiData);
         console.log(`SQL = ${sql}`);
         
         var data = {
           // function: "ReadStoreInfo",
           function: "ReadStoreInfoForSQL",
           //category: category.selectedIndex,
-          category: key,
+          category: 0,
           position: posiData,
           sql: sql
         };
@@ -147,8 +157,8 @@ function RegisterDB(){
               // console.log("item：");
               // console.log(item);
               var itemArray = ParsePartiQLtoArray(item);
-              // console.log("itemArray：");
-              // console.log(itemArray);
+              console.log("itemArray：");
+              console.log(itemArray);
               MakeSagasuInfList(itemArray);
 
               // 検索結果をもとにユーザ情報も取得する
