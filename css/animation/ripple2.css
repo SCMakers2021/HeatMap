@@ -1,0 +1,83 @@
+@charset "utf-8";
+
+/*== 無限に波紋が広がる */
+
+.btnripple2{
+    /*波紋の基点とするためrelativeを指定*/
+  position: relative;
+    /*波紋の形状*/
+  display:inline-block;
+  margin:auto;
+  /* background:#333; */
+  width: 20px;
+  height:20px;
+  border-radius: 50%;
+  color:#ccc;
+    outline: none;
+    /*アニメーションの設定*/
+    transition: all .3s;
+}
+
+/*hoverした際の背景色の設定*/
+.btnripple2:hover{
+  background:#666;  
+}
+
+/*波形を2つ設定*/
+.btnripple2::after,
+.btnripple2::before {
+    content: '';
+    /*絶対配置で波形の位置を決める*/
+    position: absolute;
+    left: 25%;
+    top: 25%;
+    /*波形の形状*/
+    border: 1px solid #333;
+    width: 150%;
+    height: 150%;
+    border-radius: 50%;
+    /*はじめは不透明*/
+    opacity: 1;
+    /*ループするアニメーションの設定*/
+    animation:1s circleanime linear infinite;
+}
+
+/*波形の2つ目は0.5秒遅らせてアニメーション*/
+.btnripple2::before {
+    animation-delay:.5s; 
+}
+
+/*波形のアニメーション*/
+@keyframes circleanime{
+  0%{
+    transform: scale(0.68);
+  }
+  100%{
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+/*中央矢印*/
+/* .btnripple2 span::after {
+    content: '';
+    position: absolute;
+    top: 38%;
+    left: 45%;
+    border: 14px solid transparent;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    border-left-color: #fff;
+} */
+
+/*========= レイアウトのためのCSS ===============*/
+
+/* body{
+    vertical-align:middle; 
+    padding: 100px 0;
+    text-align: center;
+} */
+
+p{
+    margin: 0 0 10px 0;
+}

@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+/*== ボタン共通設定 */
+.btn02 {
+    /*背景の基点とするためrelativeを指定*/
+    position: relative;
+    /*ボタンの形状*/
+    display: inline-block;
+    width:100%;
+    max-width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    outline: none;
+}
+
+/*ボタン内側の設定*/
+.btn02 span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid #333; */
+    /* 重なりを3Dで表示 */
+    transform-style: preserve-3d;
+    /* アニメーションの設定 数字が少なくなるほど早く回転 */
+    transition: 0.5s;
+}
+
+/*== くるっと回転（奥に） */
+
+/* 回転前 */
+.rotateback span:nth-child(1) {
+    background: #fff;
+    color: #000;
+    transform: rotateX(0deg);/*はじめは回転なし*/
+    transform-origin: 0 50%  -25px;/* 回転する起点 */
+}
+
+/*hoverをした後の形状*/
+.rotateback:hover span:nth-child(1) {
+    transform: rotateX(90deg);/* X軸に90度回転 */
+}
+
+/* 回転後 */
+.rotateback span:nth-child(2) {
+    /* background: #000; */
+    color: rgb(250, 195, 75);
+    transform: rotateX(-90deg);/*はじめはX軸に-90度回転*/
+    transform-origin: 0 50%  -25px;/* 回転する起点 */
+}
+
+/*hoverをした後の形状*/
+.rotateback:hover span:nth-child(2) {
+    transform: rotateX(0deg);/* X軸に0度回転 */
+}

@@ -201,8 +201,9 @@ function setSagasuMarker(ItemArray){
                         + "</div>"
                         + "<div class='sagasuWindowUserLink'>"
                             // + `【投稿者リンク】${sagasuUserInf[sagasuInf[i].UserID].userLink}`
-                            + `<a href=${sagasuUserInf[sagasuInf[i].UserID].userLink} target="_blank">`
-                            + `<img src='image/pageJump.png' class='sagasuWindowUserLink' alt='投稿者のページを開く' title='投稿者のページを開く'>`
+                            + `<a href=${sagasuUserInf[sagasuInf[i].UserID].userLink} target="_blank" class="btn02 rotateback">`
+                            + "<span><img src='image/Orion_external-link.png' class='sagasuWindowUserLink' '></span>"
+                            + `<span><img src='image/Orion_external-link_solid.png' class='sagasuWindowUserLink' alt='投稿者のページを開く' title='投稿者のページを開く'></span></a>`
                             + "</a>"
                         + "</div>"
                         + "<div class='sagasuWindowComment'>"
