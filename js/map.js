@@ -264,6 +264,7 @@ function initialize() {
   addZoomEvent();
    // 現在地ボタンのエレメントを作成
   const MoveCurrentPlaceButtonDiv = document.createElement("div");
+  MoveCurrentPlaceButtonDiv.classList.add("btnripple3");
   AddMoveCurrentPlaceButton(MoveCurrentPlaceButtonDiv);
 
   //Google MAPS APIに作成したボタンを渡す
@@ -295,10 +296,14 @@ function AddMoveCurrentPlaceButton(controlDiv) {
 
   const controlUI = document.createElement("img");
 
-  controlUI.classList.add("CurrentPositionButton")
-  controlUI.setAttribute("src", "./image/現在位置.png")
+  controlUI.classList.add("CurrentPositionButton");
+  controlUI.setAttribute("src", "./image/現在位置.png");
+  
+  controlDiv.appendChild(controlUI);
 
-   controlDiv.appendChild(controlUI);
+  // const atag = document.createElement("a");
+  // atag.classList.add("btnripple2");
+  // controlDiv.appendChild(atag);
 
   controlUI.addEventListener("click", () => {
     MoveNowPosition();
