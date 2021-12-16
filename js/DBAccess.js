@@ -56,7 +56,9 @@ function RegisterDB(){
     .then(resolve => {
       // console.log(resolve);
         // streetビューの表示(吹き出しが出た後じゃないとIDが取れないので)
-        openSagasuMarkerWindow(pos.lat(),pos.lng());;
+        openSagasuMarkerWindow(pos.lat(),pos.lng());
+        // アマリのマーカーと吹き出しの非表示
+        CancelAmariMode();
       });
   }
 
