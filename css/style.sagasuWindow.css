@@ -32,8 +32,9 @@ img.sagasuWindowUserIcon{
 }
 /* ユーザ名 */
 .sagasuWindowGrid .sagasuWindowUserName{
-    grid-column: 3 / 8;
+    grid-column: 3 / 9;
     grid-row: 1 / 1;
+    overflow: clip clip;
 }
 /* カテゴリ */
 .sagasuWindowGrid .sagasuWindowCategory{
@@ -84,5 +85,5 @@ img.sagasuWindowBad{
     grid-column: 1 / 11;
     grid-row: 4 / 10;
     border: 1px solid #ccc;
-    overflow-y: scroll;
+    overflow-y: auto;
 }

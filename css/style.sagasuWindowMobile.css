@@ -83,6 +83,7 @@
     .sagasuWindowGrid .sagasuWindowUserName{
         grid-column: 1 / 11;
         grid-row: 3 / 3;
+        overflow: clip clip;
     }
     /* カテゴリ */
     .sagasuWindowGrid .sagasuWindowCategory{
@@ -99,5 +100,6 @@
         grid-column: 1 / 11;
         grid-row: 6 / 9;
         border: 1px solid #ccc;
+        overflow-y: auto;
     }
 }
