@@ -54,6 +54,8 @@ function RegisterDB(){
     // console.log(pos);
     var keyList = [];
     keyList.push(key);
+    ClearSagasuMarker();  // クリアしておく
+
     GetSagasuInfo(keyList)
     .then(resolve => {
       // console.log(resolve);
