@@ -19,7 +19,7 @@ $(function () {
     from: 0,
     to: 5,
     step: 1.0,
-    scale: ["今日","１日前", "２日前", "３日前", "４日前", "５日前"],
+    scale: ["今日","１日後", "２日後", "３日後", "４日後", "５日後"],
     format: '%s',
     width: '90%',
     // theme: "theme-blue",
@@ -60,7 +60,7 @@ function ViewHeatMap(){
     if(isNaN(elements[0].innerHTML)){
       dispDistribution(0);
     }else{
-      dispDistribution(elements[0].innerHTML);
+      dispDistribution(Number(elements[0].innerHTML));
     }
   }else{
     // クリア
@@ -104,8 +104,10 @@ function dispDistribution(dateNum){
     var latindex,lngindex;
     
     var deadTime;
-    var now = new Date();
-    var searchTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dateNum);
+    // var now = new Date();
+    var searchTime = new Date();
+    console.log(searchTime.getDate());
+    searchTime.setDate(searchTime.getDate() + dateNum);
     IsSagasuMarkerInTheWindow = false;
     // console.log(searchTime);
     for(var k = 0; k < sagasuMarkers.length; k++){
@@ -119,6 +121,7 @@ function dispDistribution(dateNum){
       lngindex = Math.floor(lngdiff/lngBlock);
       //console.log('要素: %d 緯度：%s 経度：%s latindex：%d lngindex：%d ',k,lat,lng,latindex,lngindex);
       deadTime = new Date(sagasuInf[k].deadTime);
+      
       // 期限切れは除外
       if(searchTime <= deadTime){
         if((0<=latindex)&&(latindex<row)
