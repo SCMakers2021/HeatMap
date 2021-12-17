@@ -46,6 +46,8 @@ function RegisterDB(){
         AddStoreInfoAfter(category.selectedIndex,amariMarker.position)
         )
       .catch(error => console.log('error', error));
+    }else{
+      alert("写真を選択してください");
     }
   };
 

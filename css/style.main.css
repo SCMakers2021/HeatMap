@@ -253,15 +253,15 @@ a {
   width: 80px;
   height: 30px;
   float: left;
-  background-color: blue;
-  color: #fff;
+  /* background-color: blue;
+  color: #fff; */
 }
 .AmariForm .cancelButton{
   width: 80px;
   height: 30px;
-  background-color: lightblue;
+  /* background-color: lightblue;
   border-color: rgb(214, 214, 214);
-  color: rgba(109, 108, 108, 0.979);
+  color: rgba(109, 108, 108, 0.979); */
 }
 
 

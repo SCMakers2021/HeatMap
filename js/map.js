@@ -85,7 +85,9 @@ function CreateInfoWindow(address){
                 + address
                 + "  <div class='AmariForm' id='AmariFormMap'>"
                 + "     <div class='currentPointArea' id='currentPointArea'></div>"
-                + "     <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
+                // + "     <input class='okButton' type='button' value='投稿' onclick='onEntryBtnClicked()'>"
+                + "       <button class='hoverbutton okButton' onclick='onEntryBtnClicked()'>投稿</button>"
+                + "     "
                 + "  </div>"
                 + "</div>",
 //        position: new google.maps.LatLng(,),  //吹き出しの位置

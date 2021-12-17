@@ -1,0 +1,36 @@
+  button.hoverbutton{
+    /* background:#1AAB8A; */
+    background:#0066FF;
+    color:#fff;
+    border:none;
+    position:relative;
+    /* font-size:1.6em; */
+    /* padding:0 2em; */
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  button.hoverbutton:hover{
+    background:#fff;
+    color:#0066FF;
+  }
+  button.hoverbutton:before,button.hoverbutton:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #0066FF;
+    transition:400ms ease all;
+  }
+  button.hoverbutton:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button.hoverbutton:hover:before,button.hoverbutton:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
