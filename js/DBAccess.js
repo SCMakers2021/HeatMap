@@ -126,70 +126,26 @@ function RegisterDB(){
         };
         //
         var sql = MakeSQL1CategorySelect(keyList,posiData);
-        console.log(`SQL = ${sql}`);
-        
-        var data = {
-          // function: "ReadStoreInfo",
-          function: "ReadStoreInfoForSQL",
-          //category: category.selectedIndex,
-          category: 0,
-          position: posiData,
-          sql: sql
-        };
-    
-        // instantiate a headers object
-        var myHeaders = new Headers();
-        // add content type header to object
-        myHeaders.append("Content-Type", "application/json");
-        // using built in JSON utility package turn object to string and store in a variable
-        var ele = JSON.stringify({Element: data}, null, ' ');
-        // create a JSON object with parameters for API call and store in a variable
-        var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: ele,
-          redirect: 'follow'
-        };
-        //JSONデータを操作する
-        // getJSONdata(HeatMapURL,requestOptions)
-        fetch(HeatMapURL, requestOptions)
-        .then(response => response.json())
-        .then(result => 
-          {
-            if(result.statusCode==200){
-              const data = JSON.parse(result.body);
-              const item = data['Items'];
-              // console.log("item：");
-              // console.log(item);
-              var itemArray = ParsePartiQLtoArray(item);
-              console.log("itemArray：");
-              console.log(itemArray);
-              MakeSagasuInfList(itemArray);
+        SendSQL(sql)
+        .then((itemArray)=>{
+          MakeSagasuInfList(itemArray);
 
-              // 検索結果をもとにユーザ情報も取得する
-              GetSagasuUserInfo()
-              .then(result =>
-                {
-                  // 出店情報とユーザ情報がそろったのでマーカーを設置する
-                  setSagasuMarker(itemArray);
-                  resolve('Success!GetSagasuInfo()');
-                })
-            }else{
-                console.log(result.body);
-            }
-          })
-        .catch(error => console.log('error', error));
+          // 検索結果をもとにユーザ情報も取得する
+          GetSagasuUserInfo()
+          .then(result =>
+            {
+              // 出店情報とユーザ情報がそろったのでマーカーを設置する
+              setSagasuMarker(itemArray);
+              resolve('Success!GetSagasuInfo()');
+            });
+        });
       }
-      
     });
-  };
+  }
   
-// 検索結果をもとにユーザ情報を取得する
-function GetSagasuUserInfo(){
+function SendSQL(sql){
   return new Promise(function(resolve,reject) {
-    var sql = MakeSQLSagasuUserList();
     console.log(`SQL = ${sql}`);
-    
     // SQLを投げる場合はReadStoreInfoForSQLでOK
     var data = {
       function: "ReadStoreInfoForSQL",
@@ -197,7 +153,6 @@ function GetSagasuUserInfo(){
       position: 0,
       sql: sql
     };
-
     // instantiate a headers object
     var myHeaders = new Headers();
     // add content type header to object
@@ -222,15 +177,27 @@ function GetSagasuUserInfo(){
           var itemArray = ParsePartiQLtoArray(item);
           // console.log("itemArrayUser：");
           // console.log(itemArray);
-          resolve('Success!GetSagasuUserInfo()');
-          //ユーザ情報を取り出して配列に入れる
-          AddUserInfToSagasuInfList(itemArray);
+          resolve(itemArray);
         }else{
             console.log(result.body);
         }
       })
     .catch(error => console.log('error', error));
-    
+  });
+}
+
+// 検索結果をもとにユーザ情報を取得する
+function GetSagasuUserInfo(){
+  return new Promise(function(resolve,reject) {
+    var sql = MakeSQLSagasuUserList();
+    SendSQL(sql)
+    .then((itemArray)=>{
+      // console.log("GetSagasuUserInfo：");
+      // console.log(itemArray);
+      //ユーザ情報を取り出して配列に入れる
+      AddUserInfToSagasuInfList(itemArray);
+      resolve('Success!GetSagasuUserInfo()');
+    });
   });
 };
   
