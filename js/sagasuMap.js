@@ -167,6 +167,7 @@ function setSagasuMarker(ItemArray){
             height = 200;
             width = 400;
         }
+
         sagasuInfoWindows[i] = new google.maps.InfoWindow({ // 吹き出しの追加
         content:  "<div class='sagasuWindow'>"
                     + `<div>`
@@ -187,14 +188,18 @@ function setSagasuMarker(ItemArray){
                         + "<div class='sagasuWindowDeadTime'>"
                             + `【期限　　】${ItemArray[i].deadTime}`
                         + "</div>"
+//                        + "<div class='sagasuWindowGood'>"
+//                           + "<img class='sagasuWindowGood' src='image/good.png' alt='いいね'>"
                         + "<div class='sagasuWindowGood'>"
-                            + "<img class='sagasuWindowGood' src='image/good.png' alt='いいね'>"
+                           + "<button id='sagasuGoodclick'><img class='sagasuWindowGood' src='image/good.png' alt='いいね'></button>"
                         + "</div>"
                         + "<div class='sagasuWindowGoodCnt'>"
                             + `<div id='GoodCnt'>${sagasuUserInf[sagasuInf[i].UserID].repPlus}</div>`
                         + "</div>"
+//                        + "<div class='sagasuWindowBad'>"
+//                            + "<img class='sagasuWindowBad' src='image/bad.png' alt='いいね'>"
                         + "<div class='sagasuWindowBad'>"
-                            + "<img class='sagasuWindowBad' src='image/bad.png' alt='いいね'>"
+                            + "<button id='sagasuBadclick'><img class='sagasuWindowBad' src='image/bad.png' alt='いいね'></button>"                      
                         + "</div>"
                         + "<div class='sagasuWindowBadCnt'>"
                             + `<div id='BadCnt'>${sagasuUserInf[sagasuInf[i].UserID].repMinus}</div>`
@@ -212,6 +217,18 @@ function setSagasuMarker(ItemArray){
                 + "</div>", // 吹き出しに表示する内容
             // maxWidth: width
         });
+        //Good評価した時の処理
+        sagasuInfoWindows[i].addListener('domready', () => {
+            document.getElementById('sagasuGoodclick').addEventListener('click', () => {
+                GoodClick();
+            });
+        });
+        //Bad評価した時の処理
+        sagasuInfoWindows[i].addListener('domready', () => {
+            document.getElementById('sagasuBadclick').addEventListener('click', () => {
+                BadClick();
+            });
+        });
 
         /* マーカーをクリックしたら場所の詳細を表示 */
         google.maps.event.addListener(sagasuMarkers[i], 'click', openSagasuMarkerWindowLap);
@@ -226,6 +243,14 @@ function setSagasuMarker(ItemArray){
     if(IsSagasuMarkerInTheWindow == false){
         alert("現在の表示範囲に検索データはありません。");
     }    
+}
+
+function GoodClick(){
+    window.alert('Good');
+}
+
+function BadClick(){
+    window.alert('Bad');
 }
 
 // サガス情報をもとにユーザ情報を検索
