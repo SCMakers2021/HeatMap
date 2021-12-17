@@ -119,24 +119,24 @@ function IsDeadLineApproaching(deadTime){
 }
 
 // 評価をインクリメント
-function AddGoodBadButton(GoodBad,num){
-    let targArea = document.getElementById(`${GoodBad}Cnt`);
+function AddGoodBadButton(GoodBad,index,num){
+    let targArea = document.getElementById(`${GoodBad}Cnt${index}`);
     var Cnt = Number(targArea.innerHTML);
     targArea.innerHTML = Cnt + num;
 }
 
 // ボタンの選択状態を切り替え
-function SwitchGoodBadButton(GoodBad){
-    let targButton = document.getElementById(`sagasu${GoodBad}click`);
+function SwitchGoodBadButton(GoodBad,index){
+    let targButton = document.getElementById(`sagasu${GoodBad}click${index}`);
     var targClass = `sagasuWindow${GoodBad}-active`;
     if(targButton.classList.contains(targClass)){
         // あったら削除
         targButton.classList.remove(targClass);
-        AddGoodBadButton(GoodBad,-1);
+        AddGoodBadButton(GoodBad,index,-1);
     }else{
         // ボタンを押す
         targButton.classList.add(targClass);
-        AddGoodBadButton(GoodBad,1);
+        AddGoodBadButton(GoodBad,index,1);
     }
 }
 
@@ -223,18 +223,15 @@ function setSagasuMarker(ItemArray){
                         + "</div>"
 //                        + "<div class='sagasuWindowGood'>"
 //                           + "<img class='sagasuWindowGood' src='image/good.png' alt='いいね'>"
-                        + "<div id='sagasuGoodclick' class='sagasuWindowGood'>"
-                        //    + "<button id='sagasuGoodclick'><img class='sagasuWindowGood' src='image/good.png' alt='いいね'></button>"
-                        //    + "<button id='sagasuGoodclick' class='sagasuWindowGood' alt='いいね'></button>"
-                            // + "<img id='sagasuGoodclick' class='sagasuWindowGood' alt='いいね'>"
+                        + `<div id='sagasuGoodclick${i}' class='sagasuWindowGood' onclick='SwitchGoodBadButton("Good",${i})' title='好評価'>`
                         + "</div>"
-                        + "<div class='sagasuWindowGoodCnt'>"
-                            + `<div id='GoodCnt'>${sagasuUserInf[sagasuInf[i].UserID].repPlus}</div>`
+                        + `<div class='sagasuWindowGoodCnt'>`
+                            + `<div id='GoodCnt${i}'>${sagasuUserInf[sagasuInf[i].UserID].repPlus}</div>`
                         + "</div>"
-                        + "<div id='sagasuBadclick' class='sagasuWindowBad'>"
+                        + `<div id='sagasuBadclick${i}' class='sagasuWindowBad' onclick='SwitchGoodBadButton("Bad",${i})' title='低評価'>`
                         + "</div>"
-                        + "<div class='sagasuWindowBadCnt'>"
-                            + `<div id='BadCnt'>${sagasuUserInf[sagasuInf[i].UserID].repMinus}</div>`
+                        + `<div class='sagasuWindowBadCnt'>`
+                            + `<div id='BadCnt${i}'>${sagasuUserInf[sagasuInf[i].UserID].repMinus}</div>`
                         + "</div>"
                         + "<div class='sagasuWindowUserLink'>"
                             // + `【投稿者リンク】${sagasuUserInf[sagasuInf[i].UserID].userLink}`
@@ -249,18 +246,6 @@ function setSagasuMarker(ItemArray){
                     + "</div>"
                 + "</div>", // 吹き出しに表示する内容
             // maxWidth: width
-        });
-        //Good評価した時の処理
-        sagasuInfoWindows[i].addListener('domready', () => {
-            document.getElementById('sagasuGoodclick').addEventListener('click', () => {
-                SwitchGoodBadButton("Good");
-            });
-        });
-        //Bad評価した時の処理
-        sagasuInfoWindows[i].addListener('domready', () => {
-            document.getElementById('sagasuBadclick').addEventListener('click', () => {
-                SwitchGoodBadButton("Bad");
-            });
         });
 
         /* マーカーをクリックしたら場所の詳細を表示 */
