@@ -264,6 +264,7 @@ function initialize() {
   addZoomEvent();
    // 現在地ボタンのエレメントを作成
   const MoveCurrentPlaceButtonDiv = document.createElement("div");
+  MoveCurrentPlaceButtonDiv.classList.add("btnripple3");
   AddMoveCurrentPlaceButton(MoveCurrentPlaceButtonDiv);
 
   //Google MAPS APIに作成したボタンを渡す
@@ -295,10 +296,14 @@ function AddMoveCurrentPlaceButton(controlDiv) {
 
   const controlUI = document.createElement("img");
 
-  controlUI.classList.add("CurrentPositionButton")
-  controlUI.setAttribute("src", "./image/現在位置.png")
+  controlUI.classList.add("CurrentPositionButton");
+  controlUI.setAttribute("src", "./image/現在位置.png");
+  
+  controlDiv.appendChild(controlUI);
 
-   controlDiv.appendChild(controlUI);
+  // const atag = document.createElement("a");
+  // atag.classList.add("btnripple2");
+  // controlDiv.appendChild(atag);
 
   controlUI.addEventListener("click", () => {
     MoveNowPosition();
@@ -323,19 +328,21 @@ function AddSearchBar(controlDiv){
 
   const input = document.createElement("input");
 
-  input.setAttribute("type","text")
-  input.setAttribute("id", "SearchBar");
-  input.classList.add("SearchBar");
+  input.setAttribute("type","text");
+  // input.setAttribute("id", "SearchBar");
+  input.setAttribute("id", "search-text");
+  // input.classList.add("SearchBar");
 
   input.addEventListener('keydown', function(e){
     if('Enter' == e.code){
         // ENTERキー入力時に検索を実行
-        var SearchBar = document.getElementById("SearchBar");
+        var SearchBar = document.getElementById("search-text");
         // 検索+移動
         SearchAddressAndMove(SearchBar.value);
     }
   });
 
+  controlDiv.setAttribute("id", "search-wrap");
   controlDiv.appendChild(input);
 
 }
