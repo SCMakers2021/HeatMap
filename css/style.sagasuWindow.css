@@ -60,6 +60,12 @@ img.sagasuWindowUserLink{
 .sagasuWindowGrid .sagasuWindowGood{
     grid-column: 8 / 8;
     grid-row: 2 / 2;
+    background-size: 20px;
+    background-image: url(../image/Orion_like_solid.png);
+    background-repeat: no-repeat;
+}
+.sagasuWindowGrid .sagasuWindowGood-active{
+    background-image: url(../image/Orion_like.png);
 }
 img.sagasuWindowGood{
     width: 20px;
@@ -72,11 +78,17 @@ img.sagasuWindowGood{
 .sagasuWindowGrid .sagasuWindowBad{
     grid-column: 8 / 8;
     grid-row: 3 / 3;
+    background-size: 20px;
+    background-image: url(../image/Orion_unlike_solid.png);
+    background-repeat: no-repeat;
 }
-img.sagasuWindowBad{
+.sagasuWindowGrid .sagasuWindowBad-active{
+    background-image: url(../image/Orion_unlike.png);
+}
+/* img.sagasuWindowBad{
     width: 20px;
     height: 20px;
-}
+} */
 .sagasuWindowGrid .sagasuWindowBadCnt{
     grid-column: 9 / 10;
     grid-row: 3 / 3;
