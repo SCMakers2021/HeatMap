@@ -172,10 +172,6 @@ function RegisterDB(){
                 {
                   // 出店情報とユーザ情報がそろったのでマーカーを設置する
                   setSagasuMarker(itemArray);
-                  // サイドバーにサガスの検索結果を表示する
-                  if(false == isSmartPhone()){
-                    MakeSagasuSidebarSearchList(itemArray);
-                  }
                   resolve('Success!GetSagasuInfo()');
                 })
             }else{

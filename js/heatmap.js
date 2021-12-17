@@ -48,20 +48,43 @@ function ClearHeatMap(){
   }
 }
 
+// ○日後の日付を取得
+function GetNdayAfterDate(dateNum){
+  var ndayDate = new Date();
+  ndayDate.setDate(ndayDate.getDate() + dateNum);
+  return ndayDate;
+}
+
+// 期限切れ判定
+function IsTimeOutDeadTime(chkDate,deadTimeStr){
+  var deadTime = new Date(deadTimeStr);
+  if(chkDate <= deadTime){
+    return false;
+  }else{
+    return true;
+  }
+}
+
+function GetSlidbarValue(){
+  var elements = document.getElementsByClassName("pointer-label high");
+  var ret;
+  if(isNaN(elements[0].innerHTML)){
+    ret = 0;
+  }else{
+    ret = Number(elements[0].innerHTML);
+  }
+  return ret;
+}
+
 // 「分布表示ボタンを押した場合の処理」
 function ViewHeatMap(){
   let element = document.getElementById('BunpuCheckBox');
   var bIsBunpuView = element.checked;
   // 分布のチェックボックスがＯＮの場合のみ描画
   if(bIsBunpuView){
-    var elements = document.getElementsByClassName("pointer-label high");
+    var value = GetSlidbarValue();
     // console.log("分布表示ボタン");
-    // console.log(elements[0].innerHTML);
-    if(isNaN(elements[0].innerHTML)){
-      dispDistribution(0);
-    }else{
-      dispDistribution(Number(elements[0].innerHTML));
-    }
+    dispDistribution(value);
   }else{
     // クリア
     ClearHeatMap();
@@ -103,13 +126,9 @@ function dispDistribution(dateNum){
     var latDiff,lngDiff;
     var latindex,lngindex;
     
-    var deadTime;
-    // var now = new Date();
-    var searchTime = new Date();
-    console.log(searchTime.getDate());
-    searchTime.setDate(searchTime.getDate() + dateNum);
+    var searchTime = GetNdayAfterDate(dateNum);
     IsSagasuMarkerInTheWindow = false;
-    // console.log(searchTime);
+
     for(var k = 0; k < sagasuMarkers.length; k++){
       lat = sagasuMarkers[k].position.lat();
       lng = sagasuMarkers[k].position.lng();
@@ -120,10 +139,9 @@ function dispDistribution(dateNum){
       latindex = Math.floor(latdiff/latBlock);
       lngindex = Math.floor(lngdiff/lngBlock);
       //console.log('要素: %d 緯度：%s 経度：%s latindex：%d lngindex：%d ',k,lat,lng,latindex,lngindex);
-      deadTime = new Date(sagasuInf[k].deadTime);
       
       // 期限切れは除外
-      if(searchTime <= deadTime){
+      if(false == IsTimeOutDeadTime(searchTime,sagasuInf[k].deadTime)){
         if((0<=latindex)&&(latindex<row)
           &&(0<=lngindex)&&(lngindex<col)){
             cnt[lngindex][latindex] = cnt[lngindex][latindex] + 5;

@@ -251,7 +251,12 @@ function setSagasuMarker(ItemArray){
         }
     }
 
+    // ヒートマップを表示
     ViewHeatMap();
+    // サイドバーにサガスの検索結果を表示する
+    if(false == isSmartPhone()){
+        MakeSagasuSidebarSearchList(ItemArray);
+    }
     if(IsSagasuMarkerInTheWindow == false){
         alert("現在の表示範囲に検索データはありません。");
     }    
@@ -304,10 +309,16 @@ function MakeSagasuSidebarSearchList(ItemArray){
     var SearchListArea = document.getElementById("sidebarSearchList");
     // まず空にする
     SearchListArea.innerHTML = "";
+    // スライドバーの表示日数分後の日付を取得する
+    var value = GetSlidbarValue();
+    var searchTime = GetNdayAfterDate(value);
     //　ループでリストを生成し、まとめて追加する
     var li = [];
     for (var i = 0; i < ItemArray.length; i++){
-        li.push(getSearchList1DivStr(ItemArray[i],i));
+        // 期限切れじゃないものだけをリストに追加
+        if(false == IsTimeOutDeadTime(searchTime,sagasuInf[i].deadTime)){
+            li.push(getSearchList1DivStr(ItemArray[i],i));
+        }
     }
 
     SearchListArea.innerHTML = li.join("");
