@@ -102,4 +102,31 @@
         border: 1px solid #ccc;
         overflow-y: auto;
     }
+    /*****************************************************/
+    /* サイドバーの閉じるボタン */
+    /*****************************************************/
+    .SagasuSidebarClose {
+        position: absolute;
+        z-index: 0;
+        top: 150px;
+        left: calc(50% - 24px);
+        width: 48px;
+        /* display: none; */
+    }
+    .SagasuSidebarCloseButton {
+        width: 100%;
+        height: 24px;
+        border-radius: 0 0 8px 8px;
+    }
+    .SagasuSidebarCloseButton-icon {
+        transform: rotate( 90deg );
+    }
+
+    /*****************************************************/
+    /* サイドバーの検索結果 */
+    /*****************************************************/
+    /* スマホでは使えなくする */
+    .contents div.sidebar .SearchList {
+        visibility: hidden;
+      }
 }

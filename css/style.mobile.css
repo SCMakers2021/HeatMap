@@ -133,6 +133,9 @@
     margin: 20px; 
   }
 
+  /*****************************************************/
+  /* サイドバー */
+  /*****************************************************/
   .contents div.sidebar {
     position: fixed;
     top: 25vw;
@@ -153,6 +156,7 @@
   .contents .sidebarhide{
     animation: SlideUp 1.0s;  /* ★スライドインアニメーション */
   }
+
   /*****************************************************/
   /* [アマリ]情報 */
   /*****************************************************/
@@ -187,22 +191,5 @@
     border-style: outset;
     border-color: rgb(134, 134, 134);
     margin-bottom: 20px;
-  }
-
-  .SagasuSidebarClose {
-    position: absolute;
-    z-index: 0;
-    top: 150px;
-    left: calc(50% - 24px);
-    width: 48px;
-    /* display: none; */
-  }
-  .SagasuSidebarCloseButton {
-    width: 100%;
-    height: 24px;
-    border-radius: 0 0 8px 8px;
-  }
-  .SagasuSidebarCloseButton-icon {
-    transform: rotate( 90deg );
   }
 }

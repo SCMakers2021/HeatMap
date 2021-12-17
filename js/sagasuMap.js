@@ -57,6 +57,17 @@ function openSagasuMarkerWindow(lat,lng){
     sagasuInfoWindows[ClickIndex].open(map, sagasuMarkers[ClickIndex]);
 }
 
+// 指定したindexのマーカーに移動し、吹き出しを表示
+function MoveMarkerAndOpenInfoWindow(index){
+    // マーカーに移動
+    map.panTo(sagasuMarkers[index].position);
+
+    var lat = sagasuMarkers[index].position.lat();
+    var lng = sagasuMarkers[index].position.lng();
+    // 吹き出しを表示
+    openSagasuMarkerWindow(lat,lng);
+}
+
 // ウィンドウをすべて閉じる
 function closeSagasuMarkerWindow(e){
     sagasuMarkers.forEach(function(elem, index) {
@@ -183,7 +194,7 @@ function setSagasuMarker(ItemArray){
                             + `【投稿者　】${sagasuUserInf[sagasuInf[i].UserID].userName}`
                         + "</div>"
                         + "<div class='sagasuWindowCategory'>"
-                            + "【カテゴリ】" + getCategoryName(ItemArray[i].categoryID)
+                            + `【カテゴリ】${getCategoryName(ItemArray[i].categoryID)}`
                         + "</div>"
                         + "<div class='sagasuWindowDeadTime'>"
                             + `【期限　　】${ItemArray[i].deadTime}`
@@ -287,3 +298,47 @@ function AddUserInfToSagasuInfList(itemArray){
     // console.log("sagasuUserInf：");
     // console.log(sagasuUserInf);
 }
+
+// サイドバーに検索結果の一覧を追加する。
+function MakeSagasuSidebarSearchList(ItemArray){
+    var SearchListArea = document.getElementById("sidebarSearchList");
+    // まず空にする
+    SearchListArea.innerHTML = "";
+    //　ループでリストを生成し、まとめて追加する
+    var li = [];
+    for (var i = 0; i < ItemArray.length; i++){
+        li.push(getSearchList1DivStr(ItemArray[i],i));
+    }
+
+    SearchListArea.innerHTML = li.join("");
+}
+
+// 検索結果の一覧を1要素追加する。
+function getSearchList1DivStr(item,i){
+    var ret = `<div class='SearchListGrid' onclick='MoveMarkerAndOpenInfoWindow(${i})'>`
+                + "<div class='SearchListUserName'>"
+                    + `${sagasuUserInf[sagasuInf[i].UserID].userName}`
+                + "</div>"
+                + "<div class='SearchListCategoryPic'>"
+                    + `<img class='SearchListCategoryPic' src='${getCategoryPath(item.categoryID)}'>`
+                + "</div>"
+                // + "<div class='SearchListCategoryName'>"
+                //     + `${getCategoryName(item.categoryID)}`
+                // + "</div>"
+                + "<div class='SearchListGood'>"
+                    + "<img class='sagasuWindowGood' src='image/good.png' alt='いいね'>"
+                + "</div>"
+                + "<div class='SearchListGoodCnt'>"
+                + `<div id='GoodCnt'>${sagasuUserInf[sagasuInf[i].UserID].repPlus}</div>`
+                + "</div>"
+                + "<div class='SearchListDeadTime'>"
+                    + `${item.deadTime}まで`
+                + "</div>"
+                + `<div class='SearchListPic'>`
+                    + `<img src=${item.imagePath} class='SearchListPic'>`
+                + "</div>"
+            + `</div>`;
+    return ret;
+}
+
+

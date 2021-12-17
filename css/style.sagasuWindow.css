@@ -88,3 +88,104 @@ img.sagasuWindowBad{
     border: 1px solid #ccc;
     overflow-y: auto;
 }
+
+/*****************************************************/
+/* サイドバーの制御用 */
+/*****************************************************/
+.SagasuSidebarClose {
+    position: absolute;
+    z-index: 0;
+    top: calc(50% - 24px);
+    left: 260px;
+    /* display: none; */
+}
+.SagasuSidebarCloseButton {
+    background: #fff;
+    border: 0;
+    box-shadow: 0 1px 2px rgba(60,64,67,0.3),0 2px 6px 2px rgba(60,64,67,0.15);
+    /* width: 23px; */
+    width: 100%;
+    height: 48px;
+    cursor: pointer;
+    border-left: 1px solid #d4d4d4;
+    border-radius: 0 8px 8px 0;
+    background: #fff 7px/7px 10px no-repeat;
+    text-align:center;
+}
+.SagasuSidebarCloseButton-icon {
+    width: 22px;
+    height:22px;
+    vertical-align: middle;
+}
+/*****************************************************/
+/* サイドバーの検索結果 */
+/*****************************************************/
+.contents div.sidebar .SearchList {
+    top:50px;
+    height:calc(100vh - 300px);
+    /* height:100%; */
+    position: relative;
+    /* border: #FF8C00; */
+    overflow-y: auto;
+}
+.SearchList .SearchListGrid{
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    /* grid-auto-rows: minmax(20px, auto); 高さ */
+    grid-auto-rows: 20px; /* 高さ */
+    grid-auto-columns: 10%;
+    border-top:1px solid;
+    border-color: black;
+    margin:5px;
+}
+/* .SearchList .SearchListGrid:active{
+    background-color: #f1ba77;
+} */
+.SearchList .SearchListGrid:hover{
+    background-color: #f1ba77;
+}
+.SearchListGrid .SearchListUserName{
+    grid-column: 1 / 5;
+    grid-row: 1 / 1;
+    font-weight: bold;
+}
+.SearchListGrid .SearchListCategoryPic{
+    grid-column: 1 / 2;
+    grid-row: 2 / 2;
+}
+img.SearchListCategoryPic{
+    width: 40px;
+    height: 40px;
+    /* margin:auto; */
+}
+/* .SearchListGrid .SearchListCategoryName{
+    grid-column: 3 / 5;
+    grid-row: 2 / 2;
+} */
+.SearchListGrid .SearchListGood{
+    grid-column: 3 / 3;
+    grid-row: 2 / 2;
+}
+.SearchListGrid .SearchListGoodCnt{
+    grid-column: 4 / 5;
+    grid-row: 2 / 2;
+    text-align: center;
+}
+.SearchListGrid .SearchListDeadTime{
+    grid-column: 1 / 5;
+    grid-row: 4 / 4;
+    font-size:14px;
+}
+.SearchListGrid .SearchListPic{
+    grid-column: 5 / 11;
+    grid-row: 1 / 4;
+}
+img.SearchListPic{
+    display: block;
+    margin: auto;
+    width: 100px;    /* 横幅を割合で指定　grid 5行 × 20px = 100px. 300px/400pxに余裕を持たせて70% */
+    height: 80px;  /* 高さは自動指定 */
+    object-fit: contain;
+    margin-bottom: 2px;
+    /* border: 1px solid #ccc; */
+}
