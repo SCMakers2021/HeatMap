@@ -51,6 +51,50 @@ function RegisterDB(){
     }
   };
 
+// SQL送信の共通処理
+function SendSQL(sql){
+  return new Promise(function(resolve,reject) {
+    console.log(`SQL = ${sql}`);
+    // SQLを投げる場合はReadStoreInfoForSQLでOK
+    var data = {
+      function: "ReadStoreInfoForSQL",
+      category: 0,
+      position: 0,
+      sql: sql
+    };
+    // instantiate a headers object
+    var myHeaders = new Headers();
+    // add content type header to object
+    myHeaders.append("Content-Type", "application/json");
+    // using built in JSON utility package turn object to string and store in a variable
+    var ele = JSON.stringify({Element: data}, null, ' ');
+    // create a JSON object with parameters for API call and store in a variable
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: ele,
+      redirect: 'follow'
+    };
+    //JSONデータを操作する
+    fetch(HeatMapURL, requestOptions)
+    .then(response => response.json())
+    .then(result => 
+      {
+        if(result.statusCode==200){
+          const data = JSON.parse(result.body);
+          const item = data['Items'];
+          var itemArray = ParsePartiQLtoArray(item);
+          // console.log("itemArrayUser：");
+          // console.log(itemArray);
+          resolve(itemArray);
+        }else{
+            console.log(result.body);
+        }
+      })
+    .catch(error => console.log('error', error));
+  });
+}
+
   // 検索+登録後のウィンドウを表示
   function AddStoreInfoAfter(key,pos){
     // console.log(pos);
@@ -142,49 +186,6 @@ function RegisterDB(){
       }
     });
   }
-  
-function SendSQL(sql){
-  return new Promise(function(resolve,reject) {
-    console.log(`SQL = ${sql}`);
-    // SQLを投げる場合はReadStoreInfoForSQLでOK
-    var data = {
-      function: "ReadStoreInfoForSQL",
-      category: 0,
-      position: 0,
-      sql: sql
-    };
-    // instantiate a headers object
-    var myHeaders = new Headers();
-    // add content type header to object
-    myHeaders.append("Content-Type", "application/json");
-    // using built in JSON utility package turn object to string and store in a variable
-    var ele = JSON.stringify({Element: data}, null, ' ');
-    // create a JSON object with parameters for API call and store in a variable
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: ele,
-      redirect: 'follow'
-    };
-    //JSONデータを操作する
-    fetch(HeatMapURL, requestOptions)
-    .then(response => response.json())
-    .then(result => 
-      {
-        if(result.statusCode==200){
-          const data = JSON.parse(result.body);
-          const item = data['Items'];
-          var itemArray = ParsePartiQLtoArray(item);
-          // console.log("itemArrayUser：");
-          // console.log(itemArray);
-          resolve(itemArray);
-        }else{
-            console.log(result.body);
-        }
-      })
-    .catch(error => console.log('error', error));
-  });
-}
 
 // 検索結果をもとにユーザ情報を取得する
 function GetSagasuUserInfo(){
@@ -200,5 +201,33 @@ function GetSagasuUserInfo(){
     });
   });
 };
+
+// サガス情報をもとにユーザ情報を検索
+function MakeSQLUpdateUserReputation(userID,num){
+  var setSql;
+  if(num>0){
+    setSql = `SET repPlus = repPlus + ${num} `
+  }else{
+    setSql = `SET repMinus = repMinus - ${num} `
+  }
+
+  var sql = `UPDATE HeatMapUserInfo `
+          + setSql
+          + `WHERE userID = '${userID}' `;
+  return sql;
+}
+
+// ユーザを評価する
+function UpdateUserReputation(userID,num){
+  return new Promise(function(resolve,reject) {
+    var sql = MakeSQLUpdateUserReputation(userID,num);
+    SendSQL(sql)
+    .then((value)=>{
+      console.log("UpdateUserReputation:()");
+      console.log(value);
+      resolve('Success!UpdateUserReputation()');
+    });
+  });
+}
   
 

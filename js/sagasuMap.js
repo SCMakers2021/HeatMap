@@ -2,6 +2,8 @@ class classSagasuInf {
     constructor(deadTime,UserID) {
       this.deadTime = deadTime;
       this.UserID = UserID;
+      this.IsGoodBtnOn = false;
+      this.IsBadBtnOn = false;
     }
   }
 var sagasuMarkers=[];
@@ -137,6 +139,17 @@ function SwitchGoodBadButton(GoodBad,index){
         // ボタンを押す
         targButton.classList.add(targClass);
         AddGoodBadButton(GoodBad,index,1);
+        if(GoodBad=="Good"){
+            if(sagasuInf[index].IsGoodBtnOn == false){
+                UpdateUserReputation(sagasuInf[index].UserID,1);
+                sagasuInf[index].IsGoodBtnOn = true;
+            }
+        }else{
+            if(sagasuInf[index].IsBadBtnOn == false){
+                UpdateUserReputation(sagasuInf[index].UserID,-1);
+                sagasuInf[index].IsBadBtnOn = true;
+            }
+        }
     }
 }
 
