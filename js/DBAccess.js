@@ -88,11 +88,12 @@ function RegisterDB(){
     var sqlCategory = "";
     categoryIDList.forEach(function(elem, index) {
       if(index==0){
-        sqlCategory = sqlCategory + ` WHERE categoryID = ${elem} `;
+        sqlCategory = sqlCategory + ` WHERE ( categoryID = ${elem} `;
       }else{
         sqlCategory = sqlCategory + `OR categoryID = ${elem} `;
       }
     });
+    sqlCategory = sqlCategory + ' ) '
     var sql = `SELECT UserID,categoryID,lat,lng,StoreComment,deadTime,imagePath `
             + `FROM HeatMapStoreInfo `
             + sqlCategory
