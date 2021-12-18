@@ -108,7 +108,7 @@
     .SagasuSidebarClose {
         position: absolute;
         z-index: 0;
-        top: 150px;
+        top: 155px;
         left: calc(50% - 24px);
         width: 48px;
         /* display: none; */
