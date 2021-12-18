@@ -248,7 +248,6 @@ a {
   text-align: center;
 }
 
-
 .AmariForm .okButton{
   width: 80px;
   height: 30px;
@@ -264,6 +263,10 @@ a {
   color: rgba(109, 108, 108, 0.979); */
 }
 
+img.upldPreview{
+  width:100%;
+  height:auto;
+}
 
 /*****************************************************/
 /* サイドバー */
