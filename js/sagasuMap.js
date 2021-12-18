@@ -348,7 +348,7 @@ function SagasuSidebarAlert(message){
         alert(message);
     }else{
         var SearchListArea = document.getElementById("sidebarSearchList");
-        SearchListArea.innerHTML = message;
+        SearchListArea.innerHTML = `<div  class='SearchResult'>${message}</div>`;
     }
 }
 
@@ -362,15 +362,19 @@ function MakeSagasuSidebarSearchList(ItemArray){
     var searchTime = GetNdayAfterDate(value);
     //　ループでリストを生成し、まとめて追加する
     var li = [];
+    var cnt=0;
     for (var i = 0; i < ItemArray.length; i++){
         // 期限切れじゃないものだけをリストに追加
         if(false == IsTimeOutDeadTime(searchTime,sagasuInf[i].deadTime)){
             li.push(getSearchList1DivStr(ItemArray[i],i));
+            cnt++;
         }
     }
 
     if(li.length != 0){
-        SearchListArea.innerHTML = li.join("");
+        var formattedDate = searchTime.toISOString().split("T")[0];
+        var result = `<div class='SearchResult'>${formattedDate}までの検索結果は${cnt}件です。</div>`
+        SearchListArea.innerHTML = result + li.join("");
     }else{
         SagasuSidebarAlert("現在の表示範囲に検索データはありません。");
     }

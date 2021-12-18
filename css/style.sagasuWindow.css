@@ -148,6 +148,14 @@ img.sagasuWindowGood{
     /* border: #FF8C00; */
     overflow-y: auto;
 }
+/* 検索結果 */
+.SearchList .SearchResult{
+    border-top:1px solid;
+    border-bottom:1px solid;
+    border-color: black;
+    background-color: lightyellow;
+    margin:5px;
+}
 .SearchList .SearchListGrid{
     display: grid;
     grid-template-columns: repeat(10, 1fr);
