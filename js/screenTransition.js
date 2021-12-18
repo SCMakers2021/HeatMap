@@ -16,10 +16,10 @@ function searchCategoryClicked( key ){
 }
 
 function onEntryBtnClicked(){
-	var btnVal = $('#btnAmari').val();
-	if( "valid" == btnVal ){
-		return;
-	}
+	// var btnVal = $('#btnAmari').val();
+	// if( "valid" == btnVal ){
+	// 	return;
+	// }
 	var isHidden = $('#map_modal').attr('hidden');
 	if( 'hidden' == isHidden  ){
 		$('#map_modal').attr('hidden',false);
