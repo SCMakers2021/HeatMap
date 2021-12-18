@@ -9,16 +9,23 @@ class classSagasuInf {
 var sagasuMarkers=[];
 var sagasuInfoWindows =[];
 var sagasuInf=[];
+var sagasuInfArray;
 var sagasuUserInf=[];
 var IsSagasuMarkerInTheWindow = false;
 
-// サガスマーカーをすべてクリア
-function  ClearSagasuMarker(){
+// サガスマーカーを非表示にする
+function SetMapSagasuMarker(){
     if(sagasuMarkers[0] != null){
         sagasuMarkers.forEach(function(elem, index) {
             elem.setMap(null);
         });
     }
+}
+
+// サガスマーカーをすべてクリア
+function  ClearSagasuMarker(){
+    // サガスマーカーを非表示にする
+    SetMapSagasuMarker();
 
     sagasuMarkers=[];
     sagasuInfoWindows =[];
@@ -97,6 +104,8 @@ function IsInTheWindow(sw,ne,pos){
 
 // 後で使う必要な情報を先にまとめる
 function MakeSagasuInfList(ItemArray){
+    sagasuInfArray = [];    // 初期化
+    sagasuInfArray = ItemArray;
     // サガスのリストからUserIDのみ抜き出す
     ItemArray.forEach(function(elem, index) {
         // 後で必要な情報を作成
@@ -157,6 +166,18 @@ function SwitchGoodBadButton(GoodBad,index){
                 sagasuInf[index].IsBadBtnOn = true;
             }
         }
+    }
+}
+
+// 検索結果を使用して、再描画（スライダーで表示する/しないを切り替えるため）
+function setSagasuMarkerForSliderChange(ItemArray){
+    if(sagasuInfArray.length != 0){
+        // マーカーを非表示にする
+        SetMapSagasuMarker();
+        // マーカーを再設定
+        setSagasuMarker(sagasuInfArray);
+    }else{
+
     }
 }
 
@@ -337,7 +358,12 @@ function MakeSagasuSidebarSearchList(ItemArray){
         }
     }
 
-    SearchListArea.innerHTML = li.join("");
+    if(li.length != 0){
+        SearchListArea.innerHTML = li.join("");
+    }else{
+        SearchListArea.innerHTML = "現在の表示範囲に検索データはありません。";
+    }
+    console.log(`li.length：${li.length}`);
 }
 
 // 検索結果の一覧を1要素追加する。

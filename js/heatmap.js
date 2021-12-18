@@ -35,8 +35,10 @@ $(function () {
 });
 
 function ChangeHistory (value) {
+
+  setSagasuMarkerForSliderChange();
   // dispDistribution(value);
-  ViewHeatMap();
+  // ViewHeatMap();
 
   // console.log("分布表示スライダー:"+value);
   // alert(value+"日前を表示");
