@@ -61,11 +61,15 @@ img.sagasuWindowUserLink{
     grid-column: 8 / 8;
     grid-row: 2 / 2;
     background-size: 20px;
-    background-image: url(../image/Orion_like_solid.png);
     background-repeat: no-repeat;
+}
+.sagasuWindowGrid .sagasuWindowGood-negative{
+    background-image: url(../image/Orion_like_solid.png);
+    -webkit-animation: 0.4s linear 0s 1 alternate button-circle-reverse;
 }
 .sagasuWindowGrid .sagasuWindowGood-active{
     background-image: url(../image/Orion_like.png);
+    -webkit-animation: 0.4s linear 0s 1 alternate button-circle;
 }
 img.sagasuWindowGood{
     width: 20px;
@@ -79,11 +83,15 @@ img.sagasuWindowGood{
     grid-column: 8 / 8;
     grid-row: 3 / 3;
     background-size: 20px;
-    background-image: url(../image/Orion_unlike_solid.png);
     background-repeat: no-repeat;
+}
+.sagasuWindowGrid .sagasuWindowBad-negative{
+    background-image: url(../image/Orion_unlike_solid.png);
+    -webkit-animation: 0.4s linear 0s 1 alternate button-circle-reverse;
 }
 .sagasuWindowGrid .sagasuWindowBad-active{
     background-image: url(../image/Orion_unlike.png);
+    -webkit-animation: 0.4s linear 0s 1 alternate button-circle;
 }
 /* img.sagasuWindowBad{
     width: 20px;

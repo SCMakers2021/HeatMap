@@ -130,14 +130,21 @@ function AddGoodBadButton(GoodBad,index,num){
 // ボタンの選択状態を切り替え
 function SwitchGoodBadButton(GoodBad,index){
     let targButton = document.getElementById(`sagasu${GoodBad}click${index}`);
-    var targClass = `sagasuWindow${GoodBad}-active`;
-    if(targButton.classList.contains(targClass)){
+    var activeClass = `sagasuWindow${GoodBad}-active`;
+    var negativeClass = `sagasuWindow${GoodBad}-negative`;
+    // activeかを判定
+    if(targButton.classList.contains(activeClass)){
         // あったら削除
-        targButton.classList.remove(targClass);
+        targButton.classList.remove(activeClass);
+        // negativeを追加
+        targButton.classList.add(negativeClass);
         AddGoodBadButton(GoodBad,index,-1);
     }else{
+        // activeを追加
+        targButton.classList.add(activeClass);
+        // negativeを削除
+        targButton.classList.remove(negativeClass);
         // ボタンを押す
-        targButton.classList.add(targClass);
         AddGoodBadButton(GoodBad,index,1);
         if(GoodBad=="Good"){
             if(sagasuInf[index].IsGoodBtnOn == false){
@@ -234,14 +241,12 @@ function setSagasuMarker(ItemArray){
                         + "<div class='sagasuWindowDeadTime'>"
                             + `【期限　　】${ItemArray[i].deadTime}`
                         + "</div>"
-//                        + "<div class='sagasuWindowGood'>"
-//                           + "<img class='sagasuWindowGood' src='image/good.png' alt='いいね'>"
-                        + `<div id='sagasuGoodclick${i}' class='sagasuWindowGood' onclick='SwitchGoodBadButton("Good",${i})' title='好評価'>`
+                        + `<div id='sagasuGoodclick${i}' class='sagasuWindowGood sagasuWindowGood-negative' onclick='SwitchGoodBadButton("Good",${i})' title='好評価'>`
                         + "</div>"
                         + `<div class='sagasuWindowGoodCnt'>`
                             + `<div id='GoodCnt${i}'>${sagasuUserInf[sagasuInf[i].UserID].repPlus}</div>`
                         + "</div>"
-                        + `<div id='sagasuBadclick${i}' class='sagasuWindowBad' onclick='SwitchGoodBadButton("Bad",${i})' title='低評価'>`
+                        + `<div id='sagasuBadclick${i}' class='sagasuWindowBad sagasuWindowBad-negative' onclick='SwitchGoodBadButton("Bad",${i})' title='低評価'>`
                         + "</div>"
                         + `<div class='sagasuWindowBadCnt'>`
                             + `<div id='BadCnt${i}'>${sagasuUserInf[sagasuInf[i].UserID].repMinus}</div>`

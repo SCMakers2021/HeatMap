@@ -1,0 +1,88 @@
+div.circle {
+    position: absolute;
+    z-index: 10;
+    background-color: red;
+    height: 20px;
+    width: 20px;
+    -webkit-animation: 0.5s linear 0s 100 alternate button-circle;
+  }
+
+@keyframes button-circle {
+    from {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgb(219, 237, 245);/*背景色*/
+      animation-timing-function: ease-out;
+    }
+    25% {
+      margin: 7px;
+      animation-timing-function: ease-in;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgb(183, 229, 247);/*背景色*/
+    }
+    50% {
+      margin: 10px;
+      animation-timing-function: ease-out;
+      width: 0px;
+      height: 0px;
+      border-radius: 50%;
+      background: skyblue;/*背景色*/
+    }
+    75% {
+      margin: 7px;
+      animation-timing-function: ease-in;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgb(77, 119, 136);/*背景色*/
+    }
+    to {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgb(45, 68, 77);/*背景色*/
+    }
+  }
+
+  @keyframes button-circle-reverse {
+    from {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgb(45, 68, 77);/*背景色*/
+    }
+    25% {
+      margin: 7px;
+      animation-timing-function: ease-in;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgb(77, 119, 136);/*背景色*/
+    }
+    50% {
+      margin: 10px;
+      animation-timing-function: ease-out;
+      width: 0px;
+      height: 0px;
+      border-radius: 50%;
+      background: skyblue;/*背景色*/
+    }
+    75% {
+        margin: 7px;
+        animation-timing-function: ease-in;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgb(183, 229, 247);/*背景色*/
+    }
+    to {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgb(219, 237, 245);/*背景色*/
+      animation-timing-function: ease-out;
+    }
+  }
