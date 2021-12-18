@@ -177,7 +177,7 @@ function setSagasuMarkerForSliderChange(ItemArray){
         // マーカーを再設定
         setSagasuMarker(sagasuInfArray);
     }else{
-
+        SagasuSidebarAlert("検索結果は0件です");
     }
 }
 
@@ -196,7 +196,7 @@ function setSagasuMarker(ItemArray){
     var markerLabel;
 
     if(ItemArray.length == 0){
-        alert("検索結果は0件です");
+        SagasuSidebarAlert("検索結果は0件です");
         return;
     }
     for (var i = 0; i < ItemArray.length; i++){
@@ -303,7 +303,7 @@ function setSagasuMarker(ItemArray){
         MakeSagasuSidebarSearchList(ItemArray);
     }
     if(IsSagasuMarkerInTheWindow == false){
-        alert("現在の表示範囲に検索データはありません。");
+        SagasuSidebarAlert("現在の表示範囲に検索データはありません。");
     }    
 }
 
@@ -341,6 +341,17 @@ function AddUserInfToSagasuInfList(itemArray){
     // console.log(sagasuUserInf);
 }
 
+// サイドバー用メッセージ
+// スマホならアラートで通知するが、ブラウザなら検索結果の一覧に記載する
+function SagasuSidebarAlert(message){
+    if(isSmartPhone()==true){
+        alert(message);
+    }else{
+        var SearchListArea = document.getElementById("sidebarSearchList");
+        SearchListArea.innerHTML = message;
+    }
+}
+
 // サイドバーに検索結果の一覧を追加する。
 function MakeSagasuSidebarSearchList(ItemArray){
     var SearchListArea = document.getElementById("sidebarSearchList");
@@ -361,7 +372,7 @@ function MakeSagasuSidebarSearchList(ItemArray){
     if(li.length != 0){
         SearchListArea.innerHTML = li.join("");
     }else{
-        SearchListArea.innerHTML = "現在の表示範囲に検索データはありません。";
+        SagasuSidebarAlert("現在の表示範囲に検索データはありません。");
     }
     console.log(`li.length：${li.length}`);
 }
