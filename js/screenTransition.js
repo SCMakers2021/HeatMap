@@ -148,9 +148,12 @@ $(function(){
 	// アマリ「次へ」ボタン押下
 	$('#amariNext').click(function(){
 		if(token!=null){
-			switchAmariButtom(false);	// 確定ボタンを有効化
-			// tweetボタンを生成
-			CreateTweetButton();
+			// 登録情報をチェックする
+			if(CheckAmariInfo() == true){
+				switchAmariButtom(false);	// 確定ボタンを有効化
+				// tweetボタンを生成
+				CreateTweetButton();
+			}
 		}else{
 			alert("ログインしてください。");
 		}

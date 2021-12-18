@@ -12,15 +12,21 @@ function getCategoryPath(categoryID){
     return categoryList[categoryID][1];
 }
 
-
+// アマリ登録のリストを生成する
 function MakeCategoryList(){
     const selectCategoryName = document.getElementById('category');
-    
+    const option = document.createElement('option'); //option要素を新しく作る
+    option.value = ""; 
+    option.innerHTML = "選択してください";
+    option.hidden = true;
+    selectCategoryName.appendChild(option); //セレクトボックスにoption要素を追加する
+
     //選択されたジャンルのメニュー一覧に対して処理をする
     categoryList.forEach((category, index) => {
       const option = document.createElement('option'); //option要素を新しく作る
       option.value = index; //option要素の値に、メニューを識別できる番号を指定する
       option.innerHTML = category[0]; //ユーザー向けの表示としてメニュー名を指定する
+      
       selectCategoryName.appendChild(option); //セレクトボックスにoption要素を追加する
     });
 }

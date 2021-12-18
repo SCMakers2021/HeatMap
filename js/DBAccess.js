@@ -18,7 +18,7 @@ function RegisterDB(){
           function: "AddStoreInfo",
           userID: userID,
           position: amariMarker.position,
-          categoryID: category.selectedIndex,
+          categoryID: category.selectedIndex-1,
           comment: comment,
           deadTime: deadTime,
           pic:AmariPicJson
@@ -43,7 +43,7 @@ function RegisterDB(){
       .then(result => 
         //alert(JSON.parse(result).body)
         // alert("投稿しました")
-        AddStoreInfoAfter(category.selectedIndex,amariMarker.position)
+        AddStoreInfoAfter(category.selectedIndex-1,amariMarker.position)
         )
       .catch(error => console.log('error', error));
     }else{

@@ -326,6 +326,7 @@ function SearchAddressAndMove(inputAddress){
   });   
 }
 
+// 検索バーを追加
 function AddSearchBar(controlDiv){
 
   const input = document.createElement("input");
@@ -346,5 +347,19 @@ function AddSearchBar(controlDiv){
 
   controlDiv.setAttribute("id", "search-wrap");
   controlDiv.appendChild(input);
+}
 
+function CheckAmariInfo(){
+  let category = document.getElementById('category');
+  if(category.selectedIndex == ""){
+    alert("カテゴリを選択してください");
+    return false;
+  }
+
+  if(AmariPicJson == null){
+    alert("写真を選択してください");
+    return false;
+  }
+
+  return true;
 }

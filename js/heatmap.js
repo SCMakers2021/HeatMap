@@ -53,6 +53,11 @@ function ClearHeatMap(){
 // ○日後の日付を取得
 function GetNdayAfterDate(dateNum){
   var ndayDate = new Date();
+  //0時0分0秒にする
+  ndayDate.setHours(0);
+  ndayDate.setMinutes(0);
+  ndayDate.setSeconds(0);
+  // 指定日数進める
   ndayDate.setDate(ndayDate.getDate() + dateNum);
   return ndayDate;
 }
