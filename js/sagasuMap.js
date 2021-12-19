@@ -372,13 +372,18 @@ function MakeSagasuSidebarSearchList(ItemArray){
     }
 
     if(li.length != 0){
-        var formattedDate = searchTime.toISOString().split("T")[0];
+        // UTCとローカルタイムゾーンとの差を取得し、分からミリ秒に変換
+        const diff = searchTime.getTimezoneOffset() * 60 * 1000    // -540 * 60 * 1000 = -32400000
+
+        // toISOString()で、UTC時間になってしまう（-9時間）ので、日本時間に9時間足しておく
+        const plusLocal = new Date(searchTime - diff)
+        var formattedDate = plusLocal.toISOString().split("T")[0];
         var result = `<div class='SearchResult'>${formattedDate}までの検索結果は${cnt}件です。</div>`
         SearchListArea.innerHTML = result + li.join("");
     }else{
         SagasuSidebarAlert("現在の表示範囲に検索データはありません。");
     }
-    console.log(`li.length：${li.length}`);
+    console.log(`li.length：${li.length} searchTime:${searchTime} formattedDate:${formattedDate}`);
 }
 
 // 検索結果の一覧を1要素追加する。
