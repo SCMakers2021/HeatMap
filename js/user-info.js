@@ -83,6 +83,13 @@ $( function() {
 
     }
 
+    // ログアウトボタン押下処理
+    $( '#user-info-logout' ).on( 'click', function() {
+        removeStorage("login");
+        removeSession("tokens");
+        window.location.reload();
+    });
+
     // ユーザー情報登録画面のバリデーション(入力値の妥当性チェック)
     $("#user_info_items").validate({
         // バリデーションルール
