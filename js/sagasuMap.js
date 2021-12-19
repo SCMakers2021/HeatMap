@@ -279,9 +279,9 @@ function setSagasuMarker(ItemArray){
                             + `<span><img src='image/Orion_external-link_solid.png' class='sagasuWindowUserLink' alt='投稿者のページを開く' title='投稿者のページを開く'></span></a>`
                             + "</a>"
                         + "</div>"
-                        + "<div class='sagasuWindowComment'>"
+                        + "<textarea class='sagasuWindowComment'>"
                             + ItemArray[i].StoreComment 
-                        + "</div>"
+                        + "</textarea>"
                     + "</div>"
                 + "</div>", // 吹き出しに表示する内容
             // maxWidth: width
