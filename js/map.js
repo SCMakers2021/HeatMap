@@ -265,7 +265,7 @@ function initialize() {
   addZoomEvent();
    // 現在地ボタンのエレメントを作成
   const MoveCurrentPlaceButtonDiv = document.createElement("div");
-  // MoveCurrentPlaceButtonDiv.classList.add("btnripple3");
+  MoveCurrentPlaceButtonDiv.classList.add("btnripple3");
   AddMoveCurrentPlaceButton(MoveCurrentPlaceButtonDiv);
 
   //Google MAPS APIに作成したボタンを渡す

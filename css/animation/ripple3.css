@@ -25,6 +25,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    pointer-events: none;
     /*はじめは不透明*/
   opacity:1;
     /*アニメーションの設定*/
