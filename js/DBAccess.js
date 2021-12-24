@@ -1,5 +1,5 @@
 const HeatMapURL = "https://z06c2y3yq8.execute-api.ap-northeast-1.amazonaws.com/dev";
-
+const SagasuLimitNum = 50;
 // 期限を取得
 function GetDeadTime(){
   var date = $('#deadTime').val();
@@ -128,7 +128,8 @@ function SendSQL(sql){
     return RetArray;
   }
 
-  function MakeSQL1CategorySelect(categoryIDList,posiData){
+  // 選択中のカテゴリをすべて検索
+  function MakeSQLCategorySelect(categoryIDList,posiData){
     var sqlCategory = "";
     categoryIDList.forEach(function(elem, index) {
       if(index==0){
@@ -143,6 +144,13 @@ function SendSQL(sql){
             + sqlCategory
             + ` AND lat BETWEEN ${posiData.latUnder} AND ${posiData.latUpper}`
             + ` AND lng BETWEEN ${posiData.lngUnder} AND ${posiData.lngUpper}`;
+
+    // 期限順にする(プライマリーキーじゃないとダメらしい)
+    // sql = sql + ' ORDER BY deadTime DESC ';
+
+    // LIMITは使えなかったのでカテゴリIDで並べ替えだけ。
+    sql = sql + ' ORDER BY categoryID ASC ';
+
     return sql;
   }
 
@@ -169,9 +177,13 @@ function SendSQL(sql){
           lngUpper: nelng 
         };
         //
-        var sql = MakeSQL1CategorySelect(keyList,posiData);
+        var sql = MakeSQLCategorySelect(keyList,posiData);
         SendSQL(sql)
         .then((itemArray)=>{
+          // 検索結果が多い場合は減らす
+          if(itemArray.length>SagasuLimitNum){
+            itemArray.splice( 0, SagasuLimitNum );
+          }
           MakeSagasuInfList(itemArray);
 
           // 検索結果をもとにユーザ情報も取得する
