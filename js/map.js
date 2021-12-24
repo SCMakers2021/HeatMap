@@ -85,7 +85,7 @@ function CreateInfoWindow(address){
                 + address
                 + "  <div class='AmariForm' id='AmariFormMap'>"
                 + "     <div class='currentPointArea' id='currentPointArea'></div>"
-                + "       <button class='hoverbutton okButton' onclick='onEntryBtnClicked()'>投稿</button>"
+                + "       <button id='PostButton' class='hoverbutton okButton' onclick='onEntryBtnClicked()'>投稿</button>"
                 + "     "
                 + "  </div>"
                 + "</div>",
