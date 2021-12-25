@@ -52,10 +52,12 @@ function openSagasuMarkerWindowLap(e){
 // 該当の座標のウィンドウを表示
 function openSagasuMarkerWindow(lat,lng){
     var ClickIndex=0;
+    var ClickFlg = false;
     // どれがクリックされたかを判断
     sagasuMarkers.forEach(function(elem, index) {
         if(elem.position.lat() == lat && elem.position.lng() == lng) {  
-        ClickIndex = index;
+            ClickIndex = index;
+            ClickFlg = true;
         }else{
         // 違うのは閉じる
         sagasuInfoWindows[index].close();
@@ -63,7 +65,9 @@ function openSagasuMarkerWindow(lat,lng){
     });
     // console.log(ClickIndex);
     //クリックしたマーカーの詳細を表示
-    sagasuInfoWindows[ClickIndex].open(map, sagasuMarkers[ClickIndex]);
+    if(ClickFlg == true){
+        sagasuInfoWindows[ClickIndex].open(map, sagasuMarkers[ClickIndex]);
+    }
 }
 
 // 指定したindexのマーカーに移動し、吹き出しを表示

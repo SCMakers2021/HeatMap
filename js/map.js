@@ -205,6 +205,9 @@ function initialize() {
 
   // Mapをクリックする時の動作
   map.addListener("click",function(e){
+    // サガスの結果を閉じる
+    openSagasuMarkerWindow(e.latLng.lat(),e.latLng.lng());
+    
     if(ScreenMode != MODE_Define.AMARI.value){
       // 「アマリ」を選択していない場合は無処理。
       return;
@@ -221,6 +224,8 @@ function initialize() {
     if(amariMarker != null){
       amariMarker.setMap(null);
     }
+
+    
     
     // クリックする場所をマーカーを立てる
     amariMarker = new google.maps.Marker({
