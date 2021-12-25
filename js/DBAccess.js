@@ -182,7 +182,7 @@ function SendSQL(sql){
         .then((itemArray)=>{
           // 検索結果が多い場合は減らす
           if(itemArray.length>SagasuLimitNum){
-            itemArray.splice( 0, SagasuLimitNum );
+            itemArray.splice( SagasuLimitNum, itemArray.length-1 );
           }
           MakeSagasuInfList(itemArray);
 
