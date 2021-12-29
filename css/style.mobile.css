@@ -163,8 +163,10 @@
   /* [アマリ]情報 */
   /*****************************************************/
   #speechBubble{
-    width: 90%;
-    height: 70vw;
+    width: 95%;
+    height: 30%;
+    margin: 10px;
+    /*  height: 70vw;*/
     background-color: rgb(247, 248, 248);
   }
   #AmariFormEdit{

@@ -82,11 +82,10 @@ function DispStreetView2(e){
 function CreateInfoWindow(address){
   infoWindow = new google.maps.InfoWindow({
       content:   "<div id='speechBubble' value='init'>" 
-                + address
-                + "  <div class='AmariForm' id='AmariFormMap'>"
+                + "  <div width='100%' align='right'><button id='PostButton' class='hoverbutton okButton' onclick='onEntryBtnClicked()'>ここに投稿</button></div>"
+                + address.replace(" ", "<br>")
+                + "  <div class='AmariFormMap' id='AmariFormMap'>"
                 + "     <div class='currentPointArea' id='currentPointArea'></div>"
-                + "       <button id='PostButton' class='hoverbutton okButton' onclick='onEntryBtnClicked()'>投稿</button>"
-                + "     "
                 + "  </div>"
                 + "</div>",
 //        position: new google.maps.LatLng(,),  //吹き出しの位置
