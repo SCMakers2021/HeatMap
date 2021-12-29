@@ -235,8 +235,9 @@ function setSagasuMarker(ItemArray){
                 animation: animation // マーカーを立つときのアニメーション
             });
         // マーカーにマウスを乗せたときにウィンドウを表示
-        google.maps.event.addListener(sagasuMarkers[i], 'mouseover', openSagasuMarkerWindowLap);
-        // google.maps.event.addListener(sagasuMarkers[i], 'mouseout', closeSagasuMarkerWindow);
+        google.maps.event.addListener(sagasuMarkers[i], 'click', openSagasuMarkerWindowLap);
+        //google.maps.event.addListener(sagasuMarkers[i], 'mouseover', openSagasuMarkerWindowLap);
+        //google.maps.event.addListener(sagasuMarkers[i], 'mouseout', closeSagasuMarkerWindow);
 
         if(true == isSmartPhone()){
             height = 50;

@@ -263,6 +263,11 @@ a {
   height: 60px;
 }
 
+textarea.sagasuWindowComment{
+  resize: none;
+  overflow: auto;
+}
+
 .box__title {
   font-size: 14px;
   color: #fff;
