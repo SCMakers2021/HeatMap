@@ -178,10 +178,16 @@ a {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-  width: 400px;
+  width: 460px;
   /* height: 500px; */
   padding: 20px;
   background-color: rgb(247, 248, 248);
+
+  height: 400px;
+  overflow-y:auto;
+  border-style: solid;
+  border-color: #ff5100;
+  border-width: 0px 1px 1px 0px;
 }
 
 .AmariForm{
@@ -205,47 +211,134 @@ a {
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
   min-height: 100px;
-  border-top: 4px solid #ffa600;
+  border-style: none;
+/*  border-top: 4px solid #ffa600;
   border-right: 4px solid #ffa600;
   border-left: 4px solid #ffa600;
+*/
 }
 .AmariForm .currentPointArea{
   width: 100%;
-  height: 200px;
-  border-style: outset;
-  border-color: rgb(134, 134, 134);
+  height: 300px;
+  border-style: none;
+/*  border-color: rgb(134, 134, 134);*/
   margin-bottom: 20px;
 }
 
 .entryArea {
   display: grid;
   width: 100%;
+/*
   border-top: 4px solid #ffa600;
   border-left: 4px solid #ffa600;
+*/
   grid-auto-rows: auto;
   grid-template-columns: 30% 70%;
+
+  border-style: solid;
+  border-color: #ff5100;
+  border-width: 1px 1px 1px 1px;
 }
 
 .box__itmes {
-  font-size: 16px;
+  font-size: 14px;
   padding: .25rem .25rem .25rem .5rem;
   color: #444;
+  border-style: none;
+/*
   border-right: 4px solid #ffa600;
   border-bottom: 4px solid #ffa600;
   background-color: #fff;
+  background-color: #ff8c00;
+*/
+  border-style: solid;
+  border-color: #ff5100;
+  border-width: 0px 0px 1px 0px;
+}
+
+.box__itmes textarea {
+  resize: none;
+  overflow: auto;
+  width:95%;
+  height: 60px;
 }
 
 .box__title {
-  font-size: 18px;
+  font-size: 14px;
+  color: #fff;
   font-weight: bold;
-  background-color: #ffa60080;
+/*  background-color: #ffa60080;*/
+  background-color: #ff5100;
+
+  border-style: solid;
+  border-color: #f1ba77;
+  border-width: 0px 0px 1px 0px;
 }
 
 .AmariForm .actionArea{
   width: 100%;
   height: 50px;
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: center;
+}
+
+.AmariForm .actionArea table{
+  border-style: none;
+  width: 100%;
+}
+.AmariForm .actionArea td{
+  width: 80px;
+  text-align: center;
+}
+
+/*******************************************
+  セレクトボックス
+*******************************************/
+.cp_ipselect {
+	overflow: hidden;
+	width: 100%;
+/*	margin: 1em auto;*/
+	text-align: center;
+}
+.cp_ipselect select {
+	width: 100%;
+	padding-right: 1em;
+	cursor: pointer;
+	text-indent: 0.01px;
+	text-overflow: ellipsis;
+	border: none;
+	outline: none;
+	background: transparent;
+	background-image: none;
+	box-shadow: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.cp_ipselect select::-ms-expand {
+    display: none;
+}
+.cp_ipselect.cp_sl03 {
+	position: relative;
+	border-radius: 2px;
+	border: 1px solid #ff5100;
+	background: #ffffff;
+}
+.cp_ipselect.cp_sl03::before {
+	position: absolute;
+	top: 0.8em;
+	right: 0.8em;
+	width: 0;
+	height: 0;
+	padding: 0;
+	content: '';
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid #ff5100;
+	pointer-events: none;
+}
+.cp_ipselect.cp_sl03 select {
+	padding: 8px 38px 8px 8px;
+	color: #ff5100;
 }
 
 .AmariForm .okButton{
@@ -266,6 +359,16 @@ a {
 img.upldPreview{
   width:100%;
   height:auto;
+}
+
+label.fileSelectLabel{
+  background: #ff5100;
+  border-style: outset;
+  border-width: 1px 1px 1px 1px;
+  padding: 5px;
+  margin: 10px;
+  font-size: 10px;
+  color: #fff;
 }
 
 /*****************************************************/
