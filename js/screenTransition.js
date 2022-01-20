@@ -12,6 +12,9 @@ function searchCategoryClicked( key ){
 	if(keyList.length != 0){
 		ClearSagasuMarker();
 		GetSagasuInfo(keyList);
+	}else{
+		ClearSagasuMarker();
+		ClearHeatMap();
 	}
 }
 
