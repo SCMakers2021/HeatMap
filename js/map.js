@@ -161,7 +161,13 @@ function addZoomEvent(){
     // Zoom変更時に実行したい処理
     // ClearHeatMap(); クリアしてみたけどズーム時に色が変化するのは止めれなかった
     // ヒートマップの描画を更新
-    ViewHeatMap();
+    if(true == IsTresureHuntMode){
+      // 宝探しの時だけ専用の更新処理
+      // ViewTreasureHeatMap();
+    }else{
+      ViewHeatMap();
+    }
+    
   });
 }
 

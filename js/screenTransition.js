@@ -111,6 +111,12 @@ $(function(){
 	//--------------------------------------------
 	// 「サガス」ボタン押下
 	$('#btnSagasu').click(function(){
+		// 宝探し用処理
+		if(true == IsTresureHuntMode){
+			// 宝探し用のサガスを実行して終了
+			SearchTresure();
+			return;
+		}
 		var btnVal = $('#btnSagasu').val();
 		if( "valid" == btnVal ){
 			// サガスモード移行
