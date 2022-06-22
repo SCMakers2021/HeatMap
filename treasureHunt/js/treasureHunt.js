@@ -120,6 +120,8 @@ function setTreasureMarker(treasure){
               animation: animation // マーカーを立つときのアニメーション
           });
 
+      // 地図を縮小しすぎている場合、マーカーを表示しないようにする
+      UpdateTreasureDisplay(sagasuMarkers[i]);
       if(true == isSmartPhone()){
           height = 50;
           width = 250;
@@ -206,7 +208,7 @@ function ViewTreasureHeatMap(){
             cnt[lngindex][latindex] = cnt[lngindex][latindex] + 5;
             IsSagasuMarkerInTheWindow = true;
             // マーカーを見えるようにする
-            visibleSagasuMarker(k);
+            UpdateTreasureDisplay(sagasuMarkers[k]);
           }
           // 枠外の時はなんでもいいのでマーカーはいじらない
       // }else{
@@ -368,4 +370,14 @@ function AddArrowTreasureDirection(TreasureDirection,imgRotateDegree){
   controlUI.addEventListener("click", () => {
     MoveNowPosition();
   });
+}
+
+// お宝のマーカーの表示を切り替える
+function UpdateTreasureDisplay(sagasuMarker){
+  var zoom = map.getZoom();
+  if(zoom<15){
+    sagasuMarker.setVisible(false);
+  }else{
+    sagasuMarker.setVisible(true);
+  }
 }

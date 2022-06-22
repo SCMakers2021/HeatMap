@@ -163,7 +163,7 @@ function addZoomEvent(){
     // ヒートマップの描画を更新
     if(true == IsTresureHuntMode){
       // 宝探しの時だけ専用の更新処理
-      // ViewTreasureHeatMap();
+      UpdateTreasureDisplay(sagasuMarkers[0]);
     }else{
       ViewHeatMap();
     }
