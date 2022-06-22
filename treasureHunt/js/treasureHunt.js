@@ -1,6 +1,6 @@
 var IsTresureHuntMode = false;
 var TreasureInf;
-
+const TreasureMaxNum = 4;
 const TreasureList = [
   ["マゼランの秘宝",
   "1519年スペイン王の信任を得てスペイン船5隻の艦隊を率いてスペイン・セビリアを出発したマゼランは南アメリカ大陸南端のマゼラン海峡を発見して太平洋に到達し、マゼランは途中1521年フィリピンで戦死したが、残された艦隊が1522年に史上初めての世界一周を達成した",
@@ -27,8 +27,11 @@ class classTreasure{
 
 class classTreasureHunt {
   constructor() {
+    this.isGetArray = Array(TreasureMaxNum);
+    this.isGetArray.fill(false);
     this.itemNum = 0;
     this.treasure = new classTreasure("","",0,0);
+    this.targetID = 0;  // 現在選択中のお宝のID
   }
 
   consoleLog(){
@@ -47,7 +50,8 @@ function TreasureHuntFunc(treasureNum){
 
 	var message = TreasureList[treasureNum][1];
   alert(message);
-  TreasureInf.treasure = new classTreasure(TreasureList[treasureNum][0],TreasureList[treasureNum][1],TreasureList[treasureNum][2],TreasureList[treasureNum][3])
+  TreasureInf.treasure = new classTreasure(TreasureList[treasureNum][0],TreasureList[treasureNum][1],TreasureList[treasureNum][2],TreasureList[treasureNum][3]);
+  TreasureInf.targetID = treasureNum;
   setTreasureMarker(TreasureInf.treasure);
 }
 
@@ -55,11 +59,15 @@ function TreasureHuntFunc(treasureNum){
 function TreasureHuntStart(){
   IsTresureHuntMode = true;
   TreasureInf = new classTreasureHunt();
+  // ボタンを変更
+  ChgAmariButton();
 }
 
 // 宝探し終了
 function TreasureHuntEnd(){
   IsTresureHuntMode = false;
+  // ボタンを変更
+  ChgAmariButton();
 }
 
 // 宝探しを実行
@@ -83,6 +91,11 @@ function setTreasureMarker(treasure){
   var markerImage;
   var animation;
   var markerLabel;
+
+  // 初期化しておく
+  ClearSagasuMarker();
+  // ヒートマップもクリア
+  ClearHeatMap();
 
   for (var i = 0; i < 1; i++){
       pos = {
@@ -116,7 +129,7 @@ function setTreasureMarker(treasure){
       }
 
       sagasuInfoWindows[i] = new google.maps.InfoWindow({ // 吹き出しの追加
-      content:  "<div>"
+      content:  `<div onclick="GetTreasure()">`
                   + `<div>`
                       + TreasureInf.treasure.Name
                   + "</div>"
@@ -202,7 +215,52 @@ function ViewTreasureHeatMap(){
       // }
     }
 
-    // cnt[5][5] = 10;
+    // お宝専用処理。範囲内に一つもデータがない場合、
+    if(IsSagasuMarkerInTheWindow == false){
+      var TreasureDirection;
+      var imgRotateDegree;  // 画像の回転角度。→の図を用意しているため、→を0°としている。右回りがプラス。
+      // お宝の方向を判定する
+      if(latRangeOver<=lat){
+        // 緯度の上限より小さい場合、↖↑↗の3パターン。
+        if(lngRangeOver<=lng){
+          //右の線より大きい場合は↗
+          TreasureDirection = google.maps.ControlPosition.TOP_RIGHT;
+          imgRotateDegree = -45;
+        }else if(lng<=lngRangeUnder){
+          //左の線より小さい場合は↖
+          TreasureDirection = google.maps.ControlPosition.TOP_LEFT;
+          imgRotateDegree = -135;
+        }else{
+          TreasureDirection = google.maps.ControlPosition.TOP_CENTER;
+          imgRotateDegree = -90;
+        }
+      }else if(lat<=latRangeUnder){
+        // 緯度の下の線より小さい場合、↙↓↘の3パターン。
+        if(lngRangeOver<=lng){
+          //右の線より大きい場合は↘
+          TreasureDirection = google.maps.ControlPosition.BOTTOM_RIGHT;
+          imgRotateDegree = 45;
+        }else if(lng<=lngRangeUnder){
+          //左の線より小さい場合は↙
+          TreasureDirection = google.maps.ControlPosition.BOTTOM_LEFT;
+          imgRotateDegree = 135;
+        }else{
+          TreasureDirection = google.maps.ControlPosition.BOTTOM_CENTER;
+          imgRotateDegree = 90;
+        }
+      }else{
+        // ←→の2パターン。
+        if(lngRangeOver<=lng){
+          //右の線より大きい場合は→
+          TreasureDirection = google.maps.ControlPosition.RIGHT_CENTER;
+          imgRotateDegree = 0;
+        }else{
+          TreasureDirection = google.maps.ControlPosition.LEFT_CENTER;
+          imgRotateDegree = 180;
+        }
+      }
+      AddArrowTreasureDirection(TreasureDirection,imgRotateDegree);
+    }
     
     // データを再生成してHeatMapを更新(件数のカウントが終わってから再生成する。)
     if(true == IsSagasuMarkerInTheWindow){
@@ -241,3 +299,73 @@ function ViewTreasureHeatMap(){
     }
   });
 };
+
+// アマリボタンを変化させる
+function ChgAmariButton(){
+  if(true == IsTresureHuntMode) {
+    $("#btnAmari").toggleClass("topModeChange-Amari",false);	// 通常のアマリボタンのCSSを削除
+    $("#btnAmari").toggleClass("TreasureHunt-Amari",true);	// お宝モードに変更
+    UpdateTreasureCnt();
+  }else{
+    $("#btnAmari").toggleClass("TreasureHunt-Amari",false);	// お宝モード削除
+    $("#btnAmari").toggleClass("topModeChange-Amari",true);	// 元に戻す
+    $("#btnAmari").html("アマリ");
+  }
+}
+
+// お宝ゲット
+function GetTreasure(){
+  if(TreasureInf.isGetArray[TreasureInf.targetID]==false){
+    TreasureInf.isGetArray[TreasureInf.targetID] = true;
+    TreasureInf.itemNum = TreasureInf.itemNum + 1;
+    UpdateTreasureCnt();
+  }
+}
+
+// 右上のお宝カウンタを更新する
+function UpdateTreasureCnt(){
+  var cnt = TreasureInf.itemNum;
+  var strHtml = `お宝×${cnt}`;
+  for(i=0;i<cnt;i++){
+    strHtml = strHtml + `<img src ='treasureHunt/image/takara.png' width="60" height="60">`
+  }
+  $("#btnAmari").html(strHtml);
+}
+
+// お宝の方向に矢印を配置
+var IsSetArrow = false;
+var PreArrowDirection;
+function AddArrowTreasureDirection(TreasureDirection,imgRotateDegree){
+    // 現在地ボタンのエレメントを作成
+    const ArrowTreasureDirection = document.createElement("div");
+    // ArrowTreasureDirection.classList.add("btnripple3");
+    ArrowTreasureDirection.classList.add("FadeFrame");
+    // ArrowTreasureDirection.classList.add("fadeout");
+    AddArrowTreasureSub(ArrowTreasureDirection,imgRotateDegree);
+  
+    if(true == IsSetArrow){
+      map.controls[PreArrowDirection].pop();
+    }else{
+      IsSetArrow = true;
+    }
+
+    //Google MAPS APIに作成したボタンを渡す
+    PreArrowDirection = TreasureDirection;
+    map.controls[TreasureDirection].push(ArrowTreasureDirection);
+}
+
+ // 受け取ったDivにimgタブとボタンとしての機能を割り当て
+ function AddArrowTreasureSub(controlDiv,imgRotateDegree) {
+
+  const controlUI = document.createElement("img");
+
+  controlUI.classList.add("CurrentPositionButton");
+  controlUI.setAttribute("src", "./treasureHunt/image/arrow_right.svg");
+  controlUI.setAttribute("style", `transform: rotate(${imgRotateDegree}deg);transform-origin:right top;`);
+  
+  controlDiv.appendChild(controlUI);
+
+  controlUI.addEventListener("click", () => {
+    MoveNowPosition();
+  });
+}

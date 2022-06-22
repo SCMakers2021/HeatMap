@@ -130,6 +130,11 @@ $(function(){
 	})
 	// 「アマリ」ボタン押下
 	$('#btnAmari').click(function(){
+		// 宝探し用処理
+		if(true == IsTresureHuntMode){
+			// 宝探し時は無処理
+			return;
+		}
 		if(token.IsLogin() == false){
 			alert("「アマリ」情報を登録する場合はログインしてください");
 			FadeInLoginDialog();

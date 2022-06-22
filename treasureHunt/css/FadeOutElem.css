@@ -1,0 +1,19 @@
+.FadeFrame {
+    /* border:1px solid #ff6a00; */
+    /* margin: 1rem 1rem 1rem 1rem; */
+    animation: fadein-keyframes 3s ease 0s 1 forwards;
+}
+  
+.FadeFrame.fadeout {
+    animation: fadein-keyframes 3s ease 0s 1 forwards;
+}
+
+@keyframes fadein-keyframes {
+    0% {
+    opacity: 1;
+    }
+
+    100% {
+    opacity: 0;
+    }
+}

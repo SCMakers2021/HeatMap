@@ -1,0 +1,36 @@
+ .topBar .modeSwitch .TreasureHunt-Amari{
+  position: absolute;
+  top: 20px;
+  right:100px;
+  width: 60px;
+  height:60px;  
+  /* border-radius: 50%; */
+  line-height: 60px;
+  text-align:center;
+  font-size: 13px;
+  font-weight: bolder;
+  padding:0px;
+  color: #fff;
+  background-color: #FFA500;
+  -webkit-box-shadow: 0 7px 0 #ff8c00;
+  box-shadow: 0 7px 0 #ff8c00;
+  
+}
+
+#btnAmari a{
+  background: url(../image/takara.png);
+}
+
+.topBar .modeSwitch .TreasureHunt-Amari:hover{
+  -webkit-transform: translate(0, 3px);
+  transform: translate(0, 3px);
+  -webkit-box-shadow: 0 5px 0 #ff8c00;
+  box-shadow: 0 5px 0 #ff8c00;
+} 
+.topBar .modeSwitch .TreasureHunt-Amari-hover{
+  -webkit-transform: translate(0, 3px);
+  transform: translate(0, 3px);
+  -webkit-box-shadow: 0 5px 0 #ff8c00;
+  background-color: #ffa60080;
+} 
+
