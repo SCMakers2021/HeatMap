@@ -1,0 +1,24 @@
+/* .treasureWindowGrid .purupurubutton {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+} */
+
+/* .treasureWindowGrid .purupurubutton:hover {
+  animation: hoverShake 0.15s linear 3;
+  opacity: 0.8;
+} */
+
+@keyframes hoverShake {
+  0% {transform: skew(0deg,0deg);}
+  25% {transform: skew(1deg, 1deg);}
+  75% {transform: skew(-1deg, -1deg);}
+  100% {transform: skew(0deg,0deg);}
+}
+
+@keyframes hoverShake2 {
+  0% {transform: skew(0deg,0deg);}
+  25% {transform: skew(1deg, 1deg);}
+  75% {transform: skew(-1deg, -1deg);}
+  100% {transform: skew(0deg,0deg);}
+}

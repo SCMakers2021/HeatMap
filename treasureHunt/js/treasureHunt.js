@@ -135,11 +135,13 @@ function setTreasureMarker(treasure){
       }
 
       sagasuInfoWindows[i] = new google.maps.InfoWindow({ // 吹き出しの追加
-      content:  `<div onclick="GetTreasure()">`
-                  + `<div>`
+      content:  `<div class='treasureWindowGrid'>`
+                    + `<div id='treasureButton' class='treasureGetButton treasureGetButton-negative' onclick='ClickTreasureButton()' title='お宝ゲット'>`
+                    + "</div>"
+                  + `<div class='treasureTitle'>`
                       + ` 【${TreasureInf.treasure.Name}】 `
                   + "</div>"
-                  + `<div>`
+                  + `<div class='treasureDetail'>`
                       + TreasureInf.treasure.Detail
                   + "</div>"
               + "</div>", // 吹き出しに表示する内容
@@ -153,6 +155,39 @@ function setTreasureMarker(treasure){
           // 画面内の場合、デフォルトで吹き出しを表示
           // sagasuInfoWindows[i].open(map, sagasuMarkers[i]);
       }
+  }
+}
+
+// お宝ボタンをクリック
+function ClickTreasureButton(){
+  let targButton = document.getElementById(`treasureButton`);
+  var activeClass = `treasureGetButton-active`;
+  var negativeClass = `treasureGetButton-negative`;
+  // activeかを判定
+  if(targButton.classList.contains(activeClass)){
+      // あったら削除
+      targButton.classList.remove(activeClass);
+      // negativeを追加
+      targButton.classList.add(negativeClass);
+      // AddGoodBadButton(GoodBad,index,-1);
+  }else{
+      // activeを追加
+      targButton.classList.add(activeClass);
+      // negativeを削除
+      targButton.classList.remove(negativeClass);
+      // ボタンを押す
+      GetTreasure();
+      // if(GoodBad=="Good"){
+      //     if(sagasuInf[index].IsGoodBtnOn == false){
+      //         UpdateUserReputation(sagasuInf[index].UserID,1);
+      //         sagasuInf[index].IsGoodBtnOn = true;
+      //     }
+      // }else{
+      //     if(sagasuInf[index].IsBadBtnOn == false){
+      //         UpdateUserReputation(sagasuInf[index].UserID,-1);
+      //         sagasuInf[index].IsBadBtnOn = true;
+      //     }
+      // }
   }
 }
 
