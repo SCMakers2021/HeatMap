@@ -173,6 +173,19 @@ $(function(){
 		}
 	})
 
+	$('#switch1').change(function(){
+	    if (this.checked) {
+			$('#main_mode_title').attr('hidden',true);
+			$('#sub_mode_title').attr('hidden',false);
+			movePlaceOfMFT();
+		} else {
+			$('#main_mode_title').attr('hidden',false);
+			$('#sub_mode_title').attr('hidden',true);
+			clearMFT();
+		}
+	})
+	
+
 	function MoveAmariTopPage(){
 		$('#map_modal').attr('hidden',true);
 		$('#map_hidden').attr('hidden',true);
