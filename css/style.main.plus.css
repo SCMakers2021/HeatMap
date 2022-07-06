@@ -4,6 +4,7 @@
   font-weight    : bold  ;
 }
 
+
  /* === ボタンを表示するエリア ============================== */
  .switchArea {
   line-height    : 18px;                /* 1行の高さ          */
@@ -68,3 +69,50 @@
   transform      : translateX(24px);    /* 丸も右へ移動       */
   background     : #bd7878;             /* カーソルタブの背景 */
 }
+
+
+.tweetBubble {
+  padding: 10px;
+  border: 0px;
+}
+
+/* infowindowのCSS */
+/*
+.gm-style-iw {
+  width: 250px !important;
+  top: 30px !important;
+  left: 130px !important;
+  background-color: #fff;
+}
+#content {
+	width: 250px;
+}
+.firstHeading {
+	background-color: #4285F4;
+}
+.firstHeading {
+	color: #fff;
+	margin: 0;
+	padding: 10px;
+}
+#bodyContent {
+	padding: 10px;
+	font-size: 16px;
+}
+
+.closebtn {
+	width: 30px!important;
+  height: 30px!important;
+  opacity: 1!important;
+  right: 35px!important;
+  top: 0!important;
+}
+.closebtn img {
+	display: none;
+}
+.fa-times-circle {
+	padding: 0;
+	font-size: 28px!important;
+	color: #000099;
+}
+*/
