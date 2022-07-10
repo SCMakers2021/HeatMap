@@ -114,12 +114,22 @@ function HitoMapMFT(){
     }
 
     this.serachVicinity = function(){
+        this.TweetListHitoMapTable.QueryTweetList(
+            getCurentPostionData(),this.queryResponseCallback
+        );
+    }
+    this.searchInitialLocation = function(){
         if( null == this.TweetListHitoMapTable ){
             this.TweetListHitoMapTable = new TweetListHitoMapTableAccessor();
         }
-        this.TweetListHitoMapTable.QueryTweetList(
-            getCurentPostionData()
-        );
+        var latlngRangeMFT = {
+            latUnder : 35.62856267091947 + 0.000001,
+            latUpper : 35.62856267091947 - 0.000001,
+            lngUnder : 139.79523379269762 + 0.000001,
+            lngUpper : 139.79523379269762 - 0.000001
+        };
+
+        this.TweetListHitoMapTable.QueryTweetList(latlngRangeMFT, this.queryResponseCallback);
     }
     
     this.initialize = function(){   
@@ -130,11 +140,27 @@ function HitoMapMFT(){
         this.heatMapData_.push(createMeshObject( lat = 35.62829667225012, lng = 139.79534669123365, weight = 4, "#MFT2022 AND #いらすとや" ));
         this.heatMapObject_ = createHeatMap(this.heatMapData_);
     }
+
+    this.queryResponseCallback = function( statusCode, body ){
+        if(statusCode==200){
+            console.log(body);
+            const data = JSON.parse(body);
+            const item = data['Items'];
+            data['Items'].forEach( (element, index) => {
+                console.log("lat:" + element.lat.N);
+                console.log("lng:" + element.lng.N);
+                console.log("posts_num:" + element.posts_num.N);
+                console.log("search_word:" + element.search_word.S);
+            });
+        }else{
+            console.log(result.body);
+        }
+    }
 };
 
 
 
-function post_to_http_request( url_, data_ ){
+function post_to_http_request( url_, data_ , callback_){
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     
@@ -149,6 +175,8 @@ function post_to_http_request( url_, data_ ){
     fetch( url_, requestOptions)
         .then(response => response.json())
             .then(result => {
+                callback_(result.statusCode, result.body);
+                /*
                 if(result.statusCode==200){
                     console.log(result.body);
                     const data = JSON.parse(result.body);
@@ -158,6 +186,7 @@ function post_to_http_request( url_, data_ ){
                 }else{
                     console.log(result.body);
                 }
+                */
             })
             .catch(error => console.log('error', error));
 };
@@ -166,7 +195,7 @@ function post_to_http_request( url_, data_ ){
 class TweetListHitoMapTableAccessor{
 
     // SQL送信の共通処理
-    QueryTweetList( positionRangeInfo ){
+    QueryTweetList( positionRangeInfo, callback ){
         var function_name = "QueryTweetList";
         var HitoMapURL    = "https://z06c2y3yq8.execute-api.ap-northeast-1.amazonaws.com/dev";
         var sql = [
@@ -179,7 +208,7 @@ class TweetListHitoMapTableAccessor{
         return new Promise(function(resolve, reject) {
             console.log(`SQL = ${sql}`);
             var data = { function: function_name, sql: sql };
-            post_to_http_request( HitoMapURL, data );
+            post_to_http_request( HitoMapURL, data, callback );
         });
     };
 }
@@ -191,7 +220,7 @@ var HitoMapMFTObject = new HitoMapMFT();
 function movePlaceOfMFT(){
     HitoMapMFTObject.movePlace();
     HitoMapMFTObject.initialize();
-    HitoMapMFTObject.serachVicinity();
+    HitoMapMFTObject.searchInitialLocation();
 }
 function clearMFT(){
     HitoMapMFTObject.clearMap();
