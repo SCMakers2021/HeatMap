@@ -111,7 +111,7 @@ function HitoMapMFT(){
     this.interval_timer;
     this.clearMap = function(){
         this.heatMapData_ = [];
-        this.heatMapObject_.setMap(null);
+        this.heatMapObject_ = createHeatMap(this.heatMapData_);
         clearInterval(this.interval_timer);
     }
 
@@ -144,7 +144,6 @@ function HitoMapMFT(){
         if(statusCode==200){
             console.log(body);
             const data = JSON.parse(body);
-            const item = data['Items'];
             data['Items'].forEach( (element, index) => {
                 //console.log("lat:" + element.lat.N);
                 //console.log("lng:" + element.lng.N);
@@ -162,29 +161,12 @@ function HitoMapMFT(){
             console.log(body);
         }
     }
-
-    this.queryResponseCallback = function( statusCode, body ){
-        if(statusCode==200){
-            console.log(body);
-            const data = JSON.parse(body);
-            const item = data['Items'];
-            data['Items'].forEach( (element, index) => {
-                console.log("lat:" + element.lat.N);
-                console.log("lng:" + element.lng.N);
-                console.log("posts_num:" + element.posts_num.N);
-                console.log("search_word:" + element.search_word.S);
-            });
-        }else{
-            console.log(result.body);
-        }
-    }
 };
 
 
 
 
 class TweetListHitoMapTableAccessor{
-
     // SQL送信の共通処理
     QueryTweetList( positionRangeInfo ){
         var function_name = "QueryTweetList";
