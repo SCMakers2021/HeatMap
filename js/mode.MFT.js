@@ -2,6 +2,8 @@
 // https://makezine.jp/event/mft2022/
 // 東京ビッグサイト　西4ホール
 
+var  openSpeechBubbles_ = [];
+
 
 function HitoMapMFT(){
 
@@ -36,7 +38,7 @@ function HitoMapMFT(){
         });
     }
 
-
+    
     function creatSpeechBubble( lat_, lng_, text_ ){
         var center = { lat: lat_,lng: lng_ };
         //-------------------------------------
@@ -57,7 +59,7 @@ function HitoMapMFT(){
         var jump_url = "https://twitter.com/search?q=" + encodeURIComponent(text_) + "&src=typed_query&f=top";
         const infoWindow = new google.maps.InfoWindow({
             position: center,
-            content: `<div class='tweetBubble'><a href=` + jump_url + ` target='_blank'>` + contentText + `</a>` `</div>`,
+            content: `<div class='tweetBubble'><a class='tweetJump' href=` + jump_url + ` target='_blank'>` + contentText + `</a></div>`,
             pixelOffset: new google.maps.Size( left = 10, top = -15 )
         });
 
@@ -69,7 +71,15 @@ function HitoMapMFT(){
             infoWindow.close(map, marker);
         });
         marker.addListener('click', () => {
-            infoWindow.open(map, marker);
+            let index = openSpeechBubbles_.indexOf(infoWindow);
+            if( -1 == index){
+                infoWindow.open(map, marker);
+                openSpeechBubbles_.push(infoWindow);
+            }else{
+                infoWindow.close(map, marker);
+                openSpeechBubbles_.splice(index,1);
+            }
+            // $('.tweetJump').blur();
         });
 
         return infoWindow;
@@ -140,6 +150,7 @@ function post_to_http_request( url_, data_ ){
         .then(response => response.json())
             .then(result => {
                 if(result.statusCode==200){
+                    console.log(result.body);
                     const data = JSON.parse(result.body);
                     const item = data['Items'];
                     var itemArray = ParsePartiQLtoArray(item);
@@ -179,9 +190,8 @@ var HitoMapMFTObject = new HitoMapMFT();
 
 function movePlaceOfMFT(){
     HitoMapMFTObject.movePlace();
-
-    HitoMapMFTObject.serachVicinity();
     HitoMapMFTObject.initialize();
+    HitoMapMFTObject.serachVicinity();
 }
 function clearMFT(){
     HitoMapMFTObject.clearMap();
