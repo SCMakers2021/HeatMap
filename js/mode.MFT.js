@@ -160,42 +160,11 @@ function HitoMapMFT(){
 
 
 
-function post_to_http_request( url_, data_ , callback_){
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    
-    var ele = JSON.stringify({Element: data_ }, null, ' ');
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: ele,
-        redirect: 'follow'
-    };
-
-    fetch( url_, requestOptions)
-        .then(response => response.json())
-            .then(result => {
-                callback_(result.statusCode, result.body);
-                /*
-                if(result.statusCode==200){
-                    console.log(result.body);
-                    const data = JSON.parse(result.body);
-                    const item = data['Items'];
-                    var itemArray = ParsePartiQLtoArray(item);
-                    resolve(itemArray);
-                }else{
-                    console.log(result.body);
-                }
-                */
-            })
-            .catch(error => console.log('error', error));
-};
-
 
 class TweetListHitoMapTableAccessor{
 
     // SQL送信の共通処理
-    QueryTweetList( positionRangeInfo, callback ){
+    QueryTweetList( positionRangeInfo ){
         var function_name = "QueryTweetList";
         var HitoMapURL    = "https://z06c2y3yq8.execute-api.ap-northeast-1.amazonaws.com/dev";
         var sql = [
@@ -208,7 +177,7 @@ class TweetListHitoMapTableAccessor{
         return new Promise(function(resolve, reject) {
             console.log(`SQL = ${sql}`);
             var data = { function: function_name, sql: sql };
-            post_to_http_request( HitoMapURL, data, callback );
+            post_to_http_request( HitoMapURL, data );
         });
     };
 }
@@ -229,3 +198,24 @@ function clearMFT(){
 function serachserachVicinity(){
     HitoMapMFTObject.serachVicinity();
 }
+
+
+function post_to_http_request( url_, data_ ){
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    var ele = JSON.stringify({Element: data_ }, null, ' ');
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: ele,
+        redirect: 'follow'
+    };
+
+    fetch( url_, requestOptions)
+        .then(response => response.json())
+            .then(result => {
+                HitoMapMFTObject.queryResponseCallback(result.statusCode, result.body);
+            })
+            .catch(error => console.log('error', error));
+};
