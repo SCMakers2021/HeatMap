@@ -18,12 +18,12 @@ function HitoMapMFT(){
             location: new google.maps.LatLng(Lat_, Lng_ ),
             weight: weight_
         };
-
         creatSpeechBubble(Lat_, Lng_, text_ );
         return object; 
     }
     function createHeatMap(heatMapData){
-      // 個数によって色付け
+        // 個数によって色付け
+        // https://developers.google.com/maps/documentation/javascript/heatmaplayer
         return new google.maps.visualization.HeatmapLayer({
             data: heatMapData,
             map: map,
@@ -33,36 +33,34 @@ function HitoMapMFT(){
                         'rgba( 80, 255, 240, 1)',
                         'rgba(255, 229,  80, 1)',
                         'rgba(255,  80, 226, 1)'],
-                    
         });
-            // https://developers.google.com/maps/documentation/javascript/heatmaplayer
     }
+
 
     function creatSpeechBubble( lat_, lng_, text_ ){
         var center = { lat: lat_,lng: lng_ };
-        //マーカーオプション設定
+        //-------------------------------------
+        //マーカー作成
+        //-------------------------------------
         const markerOption = {
             position: center, // マーカーを立てる位置を指定
-            map: map, // マーカーを立てる地図を指定
-            icon: {
-                url: './image/Twitter-Logo.mini.png' // お好みの画像までのパスを指定
-            },
+            map: map,         // マーカーを立てる地図を指定
+            icon: { url: './image/Twitter-Logo.mini.png'},
             animation:  google.maps.Animation.DROP,
         };
-        //マーカー作成
         const marker = new google.maps.Marker(markerOption);
 
         var contentText = text_;
         contentText = contentText.replace("||", "<br>");
         contentText = contentText.replace("&&", " + ");
 
+        var jump_url = "https://twitter.com/search?q=" + encodeURIComponent(text_) + "&src=typed_query&f=top";
         const infoWindow = new google.maps.InfoWindow({
             position: center,
-            content: `<div class='tweetBubble'>
-                        ` + contentText + `
-                      </div>`,
+            content: `<div class='tweetBubble'><a href=` + jump_url + ` target='_blank'>` + contentText + `</a>` `</div>`,
             pixelOffset: new google.maps.Size( left = 10, top = -15 )
         });
+
         //マーカーをクリックしたら情報ウィンドウを開く
         marker.addListener('mouseover', () => {
             infoWindow.open(map, marker);
@@ -71,13 +69,25 @@ function HitoMapMFT(){
             infoWindow.close(map, marker);
         });
         marker.addListener('click', () => {
-            var jump_url = "https://twitter.com/search?q=" + encodeURIComponent(text_) + "&src=typed_query&f=top";
-            window.open(jump_url);
+            infoWindow.open(map, marker);
         });
-                  
+
+        return infoWindow;
+    }
+    
+    function getCurentPostionData(){
+        var latlngBounds = map.getBounds();
+        var swLatlng = latlngBounds.getSouthWest();
+        var neLatlng = latlngBounds.getNorthEast();
+    
+        return positionRangeInfo = {
+            latUnder: swLatlng.lat() ,
+            latUpper: neLatlng.lat() ,
+            lngUnder: swLatlng.lng() ,
+            lngUpper: neLatlng.lng() 
+        };
     }
 
-    
     // this.heatMapObject_;
     this.movePlace = function(){
         var latlngMFT = new function (){
@@ -93,6 +103,15 @@ function HitoMapMFT(){
         this.heatMapObject_.setMap(null);
     }
 
+    this.serachVicinity = function(){
+        if( null == this.TweetListHitoMapTable ){
+            this.TweetListHitoMapTable = new TweetListHitoMapTableAccessor();
+        }
+        this.TweetListHitoMapTable.QueryTweetList(
+            getCurentPostionData()
+        );
+    }
+    
     this.initialize = function(){   
         this.heatMapData_ = [];
         this.heatMapData_.push(createMeshObject( lat = 35.62862657730198, lng = 139.79511748377507, weight = 1, "#MFT2022 AND #SC OR #MFT2022 AND #その発想なかったわ" ));
@@ -103,12 +122,72 @@ function HitoMapMFT(){
     }
 };
 
+
+
+function post_to_http_request( url_, data_ ){
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    var ele = JSON.stringify({Element: data_ }, null, ' ');
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: ele,
+        redirect: 'follow'
+    };
+
+    fetch( url_, requestOptions)
+        .then(response => response.json())
+            .then(result => {
+                if(result.statusCode==200){
+                    const data = JSON.parse(result.body);
+                    const item = data['Items'];
+                    var itemArray = ParsePartiQLtoArray(item);
+                    resolve(itemArray);
+                }else{
+                    console.log(result.body);
+                }
+            })
+            .catch(error => console.log('error', error));
+};
+
+
+class TweetListHitoMapTableAccessor{
+
+    // SQL送信の共通処理
+    QueryTweetList( positionRangeInfo ){
+        var function_name = "QueryTweetList";
+        var HitoMapURL    = "https://z06c2y3yq8.execute-api.ap-northeast-1.amazonaws.com/dev";
+        var latlng_vicinity = "35.6x139.7";
+        var sql = `SELECT id,latlng_vicinity,posts_num,search_word `
+                + `FROM TweetList.HitoMap `
+                + `WHERE ( latlng_vicinity = ${latlng_vicinity} )   `
+                + ` AND lat BETWEEN ${positionRangeInfo.latUnder} AND ${positionRangeInfo.latUpper}`
+                + ` AND lng BETWEEN ${positionRangeInfo.lngUnder} AND ${positionRangeInfo.lngUpper}`
+                + ` ORDER BY id ASC `;
+
+        return new Promise(function(resolve, reject) {
+            console.log(`SQL = ${sql}`);
+            var data = { function: function_name, sql: sql };
+            post_to_http_request( HitoMapURL, data );
+        });
+    };
+}
+  
+  
+
 var HitoMapMFTObject = new HitoMapMFT();
 
 function movePlaceOfMFT(){
     HitoMapMFTObject.movePlace();
+
+    HitoMapMFTObject.serachVicinity();
     HitoMapMFTObject.initialize();
 }
 function clearMFT(){
     HitoMapMFTObject.clearMap();
+}
+
+function serachserachVicinity(){
+    HitoMapMFTObject.serachVicinity();
 }
