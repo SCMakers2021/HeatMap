@@ -158,13 +158,12 @@ class TweetListHitoMapTableAccessor{
     QueryTweetList( positionRangeInfo ){
         var function_name = "QueryTweetList";
         var HitoMapURL    = "https://z06c2y3yq8.execute-api.ap-northeast-1.amazonaws.com/dev";
-        var latlng_vicinity = "35.6x139.7";
-        var sql = `SELECT id,latlng_vicinity,posts_num,search_word `
-                + `FROM TweetList.HitoMap `
-                + `WHERE ( latlng_vicinity = ${latlng_vicinity} )   `
-                + ` AND lat BETWEEN ${positionRangeInfo.latUnder} AND ${positionRangeInfo.latUpper}`
-                + ` AND lng BETWEEN ${positionRangeInfo.lngUnder} AND ${positionRangeInfo.lngUpper}`
-                + ` ORDER BY id ASC `;
+        var sql = [
+              `SELECT id,latlng_vicinity,lat,lng,posts_num,search_word `
+            , `FROM "TweetList.HitoMap"`
+            , `WHERE ( lat BETWEEN ` + positionRangeInfo.latUnder + ` AND ` + positionRangeInfo.latUpper + ` )`
+            , `AND ( lng BETWEEN ` + positionRangeInfo.lngUnder + ` AND ` + positionRangeInfo.lngUpper + ` )`
+        ].join(" ");
 
         return new Promise(function(resolve, reject) {
             console.log(`SQL = ${sql}`);
