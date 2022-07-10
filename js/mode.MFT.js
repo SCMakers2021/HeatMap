@@ -116,20 +116,13 @@ function HitoMapMFT(){
     }
 
     this.serachVicinity = function(){
-<<<<<<< HEAD
         this.TweetListHitoMapTable.QueryTweetList(getCurentPostionData());
-=======
-        this.TweetListHitoMapTable.QueryTweetList(
-            getCurentPostionData(),this.queryResponseCallback
-        );
->>>>>>> c22bd72ec0781f569e8b9ce44829d0792dd98d3e
     }
     this.searchInitialLocation = function(){
         if( null == this.TweetListHitoMapTable ){
             this.TweetListHitoMapTable = new TweetListHitoMapTableAccessor();
         }
         var latlngRangeMFT = {
-<<<<<<< HEAD
             latUnder : 35.62856267091947 - 1.0,
             latUpper : 35.62856267091947 + 1.0,
             lngUnder : 139.79523379269762 - 1.0,
@@ -137,20 +130,10 @@ function HitoMapMFT(){
         };
 
         this.TweetListHitoMapTable.QueryTweetList(latlngRangeMFT);
-=======
-            latUnder : 35.62856267091947 + 0.000001,
-            latUpper : 35.62856267091947 - 0.000001,
-            lngUnder : 139.79523379269762 + 0.000001,
-            lngUpper : 139.79523379269762 - 0.000001
-        };
-
-        this.TweetListHitoMapTable.QueryTweetList(latlngRangeMFT, this.queryResponseCallback);
->>>>>>> c22bd72ec0781f569e8b9ce44829d0792dd98d3e
     }
     
     this.initialize = function(){   
         this.heatMapData_ = [];
-<<<<<<< HEAD
         const interval_time_msec = 1000*60*15;
         this.interval_timer = setInterval(function(){
             this.searchVicinity();
@@ -178,13 +161,6 @@ function HitoMapMFT(){
         }else{
             console.log(body);
         }
-=======
-        this.heatMapData_.push(createMeshObject( lat = 35.62862657730198, lng = 139.79511748377507, weight = 1, "#MFT2022 AND #SC OR #MFT2022 AND #その発想なかったわ" ));
-        this.heatMapData_.push(createMeshObject( lat = 35.62839667225012, lng = 139.7953466912765 , weight = 4, "#MFT2022 AND #Apple" ));
-        this.heatMapData_.push(createMeshObject( lat = 35.62860279405142, lng = 139.79538936288583, weight = 2, "#MFT2022 AND #Microsof OR #MFT2022 AND #メカ" ));
-        this.heatMapData_.push(createMeshObject( lat = 35.62829667225012, lng = 139.79534669123365, weight = 4, "#MFT2022 AND #いらすとや" ));
-        this.heatMapObject_ = createHeatMap(this.heatMapData_);
->>>>>>> c22bd72ec0781f569e8b9ce44829d0792dd98d3e
     }
 
     this.queryResponseCallback = function( statusCode, body ){
@@ -241,11 +217,7 @@ function clearMFT(){
     HitoMapMFTObject.clearMap();
 }
 
-<<<<<<< HEAD
 function searchVicinity(){
-=======
-function serachserachVicinity(){
->>>>>>> c22bd72ec0781f569e8b9ce44829d0792dd98d3e
     HitoMapMFTObject.serachVicinity();
 }
 
